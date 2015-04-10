@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="details-plan-header">
+      <p class="pull-left"> Insert household income to calculate max monthly premium value </p>
+      <a ng-href="/familyDetails" class="pull-right">Family Details</a>
+  </div>
+
+  <div class="panel panel-default details-plan-first-panel">
+    <div class="panel-body">
+      <div class="row subsidy-panel">
+        <div class="household-income second-font-family">
+          <span>Household income</span>
+          <span class="dollar-sign">$</span>
+          <input id='household-income' type='text' ng-model="householdIncome" placeholder='28000.00' onfocus="this.placeholder = ''" onblur="this.placeholder = '28000.00'">
+        </div>
+        <span class="calculate-subsidy glyphicon glyphicon-arrow-right"></span>
+        <div class="calculated-subsidy second-font-family">
+          <span>Max you pay monthly</span>
+          <span class="dollar-sign">$</span>
+          <input id='calculated-subsidy' type='text' value="{{ subsidyValue }}" readonly>
+        </div>
+        <div class="clear"></div>
+        <a class="btn btn-default calculate-subsidy-btn" ng-href="/plans/subsidy/{{ householdIncome }}" rel="{{ householdIncome2 }}&&{{ subsidyValue }}">Calculate max you pay monthly</a>
+      </div>
+      <p>Cupcake ipsum dolor sit amet dessert candy lemon drops ice cream. Jujubes pastry candy canes marzipan. Fruitcake chocolate cake cotton candy pie jelly beans chocolate bar chocolate cake. Pudding marzipan carrot cake donut.</p>
+      <p>Gummies cake candy canes marzipan applicake liquorice. Chocolate bar apple pie chocolate bar tootsie roll halvah dragée. Dragée sweet roll tart pastry fruitcake jelly chocolate bar soufflé bonbon. Powder unerdwear.com sweet roll muffin cookie gummi bears.</p>
+      <p>Danish cupcake wafer oat cake lollipop bonbon biscuit chocolate. Halvah biscuit sesame snaps. Chocolate cake icing jelly jelly-o gingerbread icing gummi bears toffee.</p>
+      <div class="row confirm-subsidy-status">
+          <a href='javascript:void(0)' class="btn btn-default with-subsidy" id='apply-subsidy'>Go to shopping ( subsidy applied )</a>
+          <a href='/plans/listing/0' class="btn btn-default without-subsidy" id='not-apply-subsidy'>Continue without Subsidy</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src='js/main.js'></script>

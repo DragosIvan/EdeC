@@ -1,0 +1,129 @@
+<section id='main-iframe'>
+	<section id='filter-options'>
+		<header>
+			<span>Narrow Your Results</span>
+    		<a ng-href="/plans/subsidy/0" class="pull-right">Back to Subsidy Calculator</a>
+		</header>
+		<section id='filter-body'>
+			<article class="first-column">
+				<p>PRICE RANGE</p>
+				<div ng-repeat='Price in Prices' ng-click='filters.doClick($event)'>
+					<label rel='price-category' id='{{ Price.IntRange }}'>
+						<input class='filter-checkbox' type='checkbox' ng-model='priceCheckboxes[Price.IntRange]'>
+						{{ Price.Range }}
+						<span class="set-total-value">{{ Price.Total }}</span>
+					</label>
+					<span ng-show="loading" class="show-small-loader"></span>
+					<span ng-hide="loading" >({{ Price.Total }})</span>
+				</div>
+			</article>
+
+			<article class="second-column">
+				<p>DEDUCTIBLE RANGE</p>
+				<div ng-repeat='Deductible in Deductibles' ng-click='filters.doClick($event)'>
+					<label rel='deductible-category' id='{{ Deductible.IntRange }}'>
+						<input class='filter-checkbox' type='checkbox' ng-model='dedCheckboxes[Deductible.IntRange]'>
+						{{ Deductible.Range }}
+						<span class="set-total-value">{{ Deductible.Total }}</span>
+					</label>
+					<span ng-show="loading" class="show-small-loader"></span>
+					<span ng-hide="loading" >({{ Deductible.Total }})</span>
+				</div>
+			</article>
+
+			<article class="third-column">
+				<p>CO-INSURANCE</p>
+				<div ng-repeat='CoInsurance in CoInsurances' ng-click='filters.doClick($event)'>
+					<label rel='coinsurance-category' id='{{ CoInsurance.IntPercent }}'>
+						<input class='filter-checkbox' type='checkbox' ng-model='insuranceCheckboxes[CoInsurance.Percent]'>
+						{{ CoInsurance.Percent }}
+						<span class="set-total-value">{{ CoInsurance.Total }}</span>
+					</label>
+					<span ng-show="loading" class="show-small-loader"></span>
+					<span ng-hide="loading" >({{ CoInsurance.Total }})</span>
+				</div>
+			</article>
+
+			<article class="fourth-column">
+				<p>METAL LEVEL</p>
+				<div ng-repeat='Metal in Metals' ng-click='filters.doClick($event)'>
+					<label rel='metal-category' id='{{ Metal.Type }}'>
+						<input class='filter-checkbox' type='checkbox' ng-model='metalCheckboxes[Metal.Type]'>
+						{{ Metal.Type }}
+						<span class="set-total-value">{{ Metal.Total }}</span>
+					</label>
+					<span ng-show="loading" class="show-small-loader"></span>
+					<span ng-hide="loading" >({{ Metal.Total }})</span>
+				</div>
+			</article>
+		</section>
+		<footer>
+			<p>Available Plans</p>
+			<p>Order By:
+				<span class='filter-selected-option order-by-ded' ng-click="orderByDeductible(); dedReversed=!dedReversed">Deductible</span>
+				<span class='filter-selected-option order-by-price' ng-click="orderByPremium(); priceReversed=!priceReversed">Premium</span>
+				<span class='order-glyphicon-id glyphicon glyphicon-refresh' title='Reset Order' ng-click="orderById();"></span>
+				<span class='order-glyphicon-ded glyphicon glyphicon-minus'></span>
+				<span class='order-glyphicon-price glyphicon glyphicon-minus'></span>
+			</p>
+		</footer>
+	</section>
+
+	<p  ng-if="subsidyValue != 0" class="wrap-big-loader subsidy-p">&nbsp;&nbsp;&nbsp;You are eligible for a subsidy value of ${{ subsidyValue }}</p>
+	<section id='main-offers'>
+	<!-- <section id='main-offers' when-scrolled="loadMore()"> -->
+		<div ng-show="loading" class="wrap-big-loader">
+			<p>Loading plans, please wait...</p>
+			<div class="show-big-loader"></div>
+		</div>
+		<span ng-if="Offers.length > 0">
+			<section class='offer offer-var' rel='{{ Offer.IntPrice }}&&{{ Offer.FloatDed }}&&{{ Offer.Type }}&&0' ng-repeat="Offer in Offers | orderBy:orderByFunction:reversed">
+				<section class='compare-menu'>
+					<article class='compare-button-wrapper' ng-submit="submitSite()">
+						<div ng-if="selection.length >= 2 && selection.length < 8">
+							<a ng-href="/plans/compare/{{ selection }}&{{ subsidyValue }}" target="_blank">Compare</a>
+						</div>
+						<div ng-if="selection.length < 2 || selection.length > 7" >
+							<a class='compare-button-off' href="javascript:void(0)">Compare</a>
+						</div>
+						<input type='checkbox' name="plan-check" id="{{Offer.ID}}" ng-checked="selection.indexOf(Offer.ID) > -1" ng-click="toggleSelection(Offer.ID)" />
+					</article>
+					<p class='compare-type-title'>{{ Offer.Type }}</p>
+				</section>
+				<section class='offer-body'>
+					<header>
+						<p title='{{ Offer.TitleTag }}'>&nbsp;&nbsp;&nbsp;{{ Offer.CustomID }}. {{ Offer.Title }}</p>
+						<a ng-href="/plans/details/{{ Offer.ID }}-{{ subsidyValue }}-{{ maxMonthly }}">View Plan Details</a>
+					</header>
+					<article>
+						<div><span>Office: </span><span>{{ Offer.Office }}</span></div>
+					</article>
+					<article>
+						<div><span>Hospital: </span><span>{{ Offer.Hospital }}</span></div>
+					</article>
+					<article>
+						<div><span>Type: </span><span>{{ Offer.PpoType }}</span></div>
+						<div><span>Deductible: </span><span>{{ Offer.Ded }}</span></div>
+						<div><span>OOP Max: </span><span>{{ Offer.Oop }}</span></div>
+						<div><span>Co-Insurance: </span><span>{{ Offer.Percent }}</span></div>
+					</article>
+					<article>
+						<div>
+							<span>
+								<p class='offer-price' data-initial-price='{{ Offer.IntPrice }}'>{{ Offer.Price }}</p>
+								<p>{{ Offer.CostType }}</p>
+							</span>
+							<span>
+								<a ng-href="/plans/apply">Apply Now</a>
+							</span>
+						</div>
+					</article>
+				</section>
+			</section>
+		</span>
+		<section ng-if="areTherePlans == 0" id="search-no-results"><i>There are no results for this search.</i></section>
+	</section>
+</section>
+
+<script src='js/main.js'></script>
+<script src='libs/bootstrap/js/bootstrap.js'></script>

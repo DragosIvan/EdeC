@@ -1,0 +1,717 @@
+<div class="container">
+	<div class="details-plan-header">
+    	<p class="pull-left">{{ Plan.Name }}</p>
+    	<a ng-href="/plans/listing/{{ maxMonthly }}" class="pull-right">Back to all Medical plans</a>
+	</div>
+
+	<div class="panel panel-default details-plan-first-panel">
+		<div class="panel-body">
+			<p>
+				<spam class="second-font-family">Which members of your family would you like this plan to cover?</span>
+			</p>
+			<button type="button" class="btn btn-default select-members" ng-model="defaultMember" ng-options="member.label for member in members" bs-select>
+				Action <span class="caret"></span>
+			</button>
+			<div class="first-panel-left-side">
+                <div class="label-pay">
+                    <p>
+                        <span class="second-font-family">YOU PAY:</span>
+                    </p>
+                </div>
+                <div class="value-pay">
+                    <p>
+                        <span class="second-font-family">{{ defaultMember.value }} <i>MONTHLY</i></span>
+                    </p>
+                    <p ng-if="Plan.subsidy != '0'">
+                        <span class="pull-left"> ${{ Plan.subsidy }} <i>SUBSIDY</i></span>
+                    </p>
+                </div>
+			</div>
+			<div class="first-panel-right-side">
+                <button type="button" class="btn btn-default add-to-cart">add to cart</button>
+			</div>
+		</div>
+	</div>
+
+<section id='main-iframe-plan-details'>
+        <div class="panel panel-default details-plan-second-panel compare-panel">
+            <div class="panel-body">
+                <span class="product-key-details">KEY DETAILS OF THIS PRODUCT</span>
+                <div class="wrap-logo-image">
+                    <img ng-src='{{ Plan.CarrierLogo }}' />
+                </div>
+                <div class="clear"></div>
+                <div class="second-panel-content">
+                    <div class="item-key-details">
+                        <p class="item-title pull-left">deductible</p>
+                        <p class="pull-right in-network-detail">{{ Plan.MedicalDeductibleIn }}</p>
+                        <p class="pull-right out-network-detail">{{ Plan.MedicalDeductibleOut }}</p>
+                        <div class="clear"></div>
+                    </div>
+                    <hr>
+                    <div class="item-key-details">
+                        <p class="item-title pull-left">max out-of-pocket</p>
+                        <div class="pull-right">
+                            <p class='in-network-detail'>{{ Plan.AnnualOutOfPocketDetailsIn }}</p>
+                            <p class='out-network-detail'>{{ Plan.AnnualOutOfPocketDetailsOut }}</p>
+                            <span class="pull-right glyphicon glyphicon-info-sign custom-info-sign"></span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <hr>
+                    <div class="item-key-details">
+                        <p class="item-title pull-left">metal level</p>
+                        <p class="pull-right">{{ Plan.Type }}</p>
+                        <div class="clear"></div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="btn-group radio-buttons-network-details-page" ng-model="button.radio" bs-radio-group>
+                    <label class="btn btn-default first-btn-netw active"><input type="radio" class="btn btn-default" value="0">In-Network</label>
+                    <label class="btn btn-default second-btn-netw"><input type="radio" class="btn btn-default" value="1">Out-of-Network</label>
+                </div>
+                <!-- ngModel is optional -->
+                <section id="options-list" class="panel-group details-panel-group">
+                    <article class='column-row-title-details column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='1'></span>{{ Plan.Name }}</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='1'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Medical Deductible</span>
+                                <span class="pull-right">{{ Plan.MedicalDeductibleIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Medical Deductible</span>
+                                <span class="pull-right">{{ Plan.MedicalDeductibleOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='2'></span>Annual Out-of-Pocket</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='2'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Out of Pocket Max for Med and Drug EHB Benefits</span>
+                                <span class="pull-right">{{ Plan.AnnualOutOfPocketDetailsIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Out of Pocket Max for Med and Drug EHB Benefits</span>
+                                <span class="pull-right">{{ Plan.AnnualOutOfPocketDetailsOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='3'></span>Emergency Health</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='3'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Urgent Care Centers or Facilities</span>
+                                <span class="pull-right">{{ Plan.UrgentCareIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Urgent Care Centers or Facilities</span>
+                                <span class="pull-right">{{ Plan.UrgentCareOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Emergency Room Services</span>
+                                <span class="pull-right">{{ Plan.EmergencyRoomIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Emergency Room Services</span>
+                                <span class="pull-right">{{ Plan.EmergencyRoomOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Emergency Transportation/Ambulance</span>
+                                <span class="pull-right">{{ Plan.EmergencyTransportIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Emergency Transportation/Ambulance</span>
+                                <span class="pull-right">{{ Plan.EmergencyTransportOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='4'></span>Home Health Care</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='4'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Home Health Care Services</span>
+                                <span class="pull-right">{{ Plan.HomeHealthServicesIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Home Health Care Services</span>
+                                <span class="pull-right">{{ Plan.HomeHealthServicesOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='5'></span>Hospitalization Services</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='5'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Inpatient Physician and Surgical Services</span>
+                                <span class="pull-right">{{ Plan.InpatientPhysicianIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Inpatient Physician and Surgical Services</span>
+                                <span class="pull-right">{{ Plan.InpatientPhysicianOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Hospitalization Services</span>
+                                <span class="pull-right">{{ Plan.HospitalizationIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Hospitalization Services</span>
+                                <span class="pull-right">{{ Plan.HospitalizationOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Inpatient Hospital Services (e.g., Hospital Stay)</span>
+                                <span class="pull-right">{{ Plan.InpatientHospitalIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Inpatient Hospital Services (e.g., Hospital Stay)</span>
+                                <span class="pull-right">{{ Plan.InpatientHospitalOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Skilled Nursing Facility</span>
+                                <span class="pull-right">{{ Plan.SkilledNursingIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Skilled Nursing Facility</span>
+                                <span class="pull-right">{{ Plan.SkilledNursingOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Substance Abuse Disorder Outpatient Services</span>
+                                <span class="pull-right">{{ Plan.SubstanceAbuseOutpatientIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Substance Abuse Disorder Outpatient Services</span>
+                                <span class="pull-right">{{ Plan.SubstanceAbuseOutpatientOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Substance Abuse Disorder Inpatient Services</span>
+                                <span class="pull-right">{{ Plan.SubstanceAbuseInpatientIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Substance Abuse Disorder Inpatient Services</span>
+                                <span class="pull-right">{{ Plan.SubstanceAbuseInpatientOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='6'></span>Maternity Care</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='6'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Delivery and All Inpatient Services for Maternity Care</span>
+                                <span class="pull-right">{{ Plan.DeliveryIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Delivery and All Inpatient Services for Maternity Care</span>
+                                <span class="pull-right">{{ Plan.DeliveryOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Prenatal and Postnatal Care</span>
+                                <span class="pull-right">{{ Plan.PrenatalPostnatalIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Prenatal and Postnatal Care</span>
+                                <span class="pull-right">{{ Plan.PrenatalPostnatalOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='7'></span>Other Services</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='7'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Mental/Behavioral Health Inpatient Services</span>
+                                <span class="pull-right">{{ Plan.MentalBehavioralInpatientIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Mental/Behavioral Health Inpatient Services</span>
+                                <span class="pull-right">{{ Plan.MentalBehavioralInpatientOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Durable Medical Equipment</span>
+                                <span class="pull-right">{{ Plan.DurableEquipmentIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Durable Medical Equipment</span>
+                                <span class="pull-right">{{ Plan.DurableEquipmentOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Hospice Services</span>
+                                <span class="pull-right">{{ Plan.HospiceIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Hospice Services</span>
+                                <span class="pull-right">{{ Plan.HospiceOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Bariatric Surgery</span>
+                                <span class="pull-right">{{ Plan.BariatricIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Bariatric Surgery</span>
+                                <span class="pull-right">{{ Plan.BariatricOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Mental/Behavioral Health Outpatient Services</span>
+                                <span class="pull-right">{{ Plan.MentalBehavioralOutpatientIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Mental/Behavioral Health Outpatient Services</span>
+                                <span class="pull-right">{{ Plan.MentalBehavioralOutpatientOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Acupuncture</span>
+                                <span class="pull-right">{{ Plan.AcupunctureIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Acupuncture</span>
+                                <span class="pull-right">{{ Plan.AcupunctureOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Rehabilitative Speech Therapy</span>
+                                <span class="pull-right">{{ Plan.RehabilitativeSpeechIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Rehabilitative Speech Therapy</span>
+                                <span class="pull-right">{{ Plan.RehabilitativeSpeechOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Rehabilitative Occupational and Rehabilitative Physical Therapy</span>
+                                <span class="pull-right">{{ Plan.RehabilitativeOccupationalIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Rehabilitative Occupational and Rehabilitative Physical Therapy</span>
+                                <span class="pull-right">{{ Plan.RehabilitativeOccupationalOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Abortion for Which Public Funding is Prohibited</span>
+                                <span class="pull-right">{{ Plan.AbortionIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Abortion for Which Public Funding is Prohibited</span>
+                                <span class="pull-right">{{ Plan.AbortionOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Allergy Testing</span>
+                                <span class="pull-right">{{ Plan.AllergyTestingIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Allergy Testing</span>
+                                <span class="pull-right">{{ Plan.AllergyTestingOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Chemotherapy</span>
+                                <span class="pull-right">{{ Plan.ChemoIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Chemotherapy</span>
+                                <span class="pull-right">{{ Plan.ChemoOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Diabetes Education</span>
+                                <span class="pull-right">{{ Plan.DiabetesIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Diabetes Education</span>
+                                <span class="pull-right">{{ Plan.DiabetesOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Dialysis</span>
+                                <span class="pull-right">{{ Plan.DialysisIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Dialysis</span>
+                                <span class="pull-right">{{ Plan.DialysisOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Infusion Therapy</span>
+                                <span class="pull-right">{{ Plan.InfusionIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Infusion Therapy</span>
+                                <span class="pull-right">{{ Plan.InfusionOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Prosthetic Devices</span>
+                                <span class="pull-right">{{ Plan.ProstheticIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Prosthetic Devices</span>
+                                <span class="pull-right">{{ Plan.ProstheticOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Radiation</span>
+                                <span class="pull-right">{{ Plan.RadiationIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Radiation</span>
+                                <span class="pull-right">{{ Plan.RadiationOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Reconstructive Surgery</span>
+                                <span class="pull-right">{{ Plan.ReconstructiveIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Reconstructive Surgery</span>
+                                <span class="pull-right">{{ Plan.ReconstructiveOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Transplant</span>
+                                <span class="pull-right">{{ Plan.TransplantIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Transplant</span>
+                                <span class="pull-right">{{ Plan.TransplantOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Treatment for Temporomandibular Joint Disorders</span>
+                                <span class="pull-right">{{ Plan.JointDisordersIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Treatment for Temporomandibular Joint Disorders</span>
+                                <span class="pull-right">{{ Plan.JointDisordersOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='8'></span>Outpatient Services</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='8'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Outpatient Surgery Physician/Surgical Services</span>
+                                <span class="pull-right">{{ Plan.OutpatientSurgeryIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Outpatient Surgery Physician/Surgical Services</span>
+                                <span class="pull-right">{{ Plan.OutpatientSurgeryOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Outpatient Rehabilitation Services</span>
+                                <span class="pull-right">{{ Plan.OutpatientRehabIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Outpatient Rehabilitation Services</span>
+                                <span class="pull-right">{{ Plan.OutpatientRehabOut }}</span>
+                            </div>
+                        </article>
+                    </section>                      
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='9'></span>Prescription Drug Coverage</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='9'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Generic Drugs</span>
+                                <span class="pull-right">{{ Plan.GenericDrugsIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Generic Drugs</span>
+                                <span class="pull-right">{{ Plan.GenericDrugsOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Preferred Brand Drugs</span>
+                                <span class="pull-right">{{ Plan.PrefDrugsIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Preferred Brand Drugs</span>
+                                <span class="pull-right">{{ Plan.PrefDrugsOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Non-Preferred Brand Drugs</span>
+                                <span class="pull-right">{{ Plan.NonPrefDrugsIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Non-Preferred Brand Drugs</span>
+                                <span class="pull-right">{{ Plan.NonPrefDrugsOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Speciality Drugs</span>
+                                <span class="pull-right">{{ Plan.SpecDrugsIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Speciality Drugs</span>
+                                <span class="pull-right">{{ Plan.SpecDrugsOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='10'></span>Preventative Care</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='10'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Well Baby Visits and Care</span>
+                                <span class="pull-right">{{ Plan.WellBabyVisitsIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Well Baby Visits and Care</span>
+                                <span class="pull-right">{{ Plan.WellBabyVisitsOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Preventive Care/Screening/Immunization</span>
+                                <span class="pull-right">{{ Plan.PreventiveCSIIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Preventive Care/Screening/Immunization</span>
+                                <span class="pull-right">{{ Plan.PreventiveCSIOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='11'></span>Professional Services</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='11'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Other Practitioner Office Visit (Nurse, Physician Assistant)</span>
+                                <span class="pull-right">{{ Plan.OtherPractitionerIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Other Practitioner Office Visit (Nurse, Physician Assistant)</span>
+                                <span class="pull-right">{{ Plan.OtherPractitionerOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Imaging (CT/PET Scans, MRIs)</span>
+                                <span class="pull-right">{{ Plan.ImagingIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Imaging (CT/PET Scans, MRIs)</span>
+                                <span class="pull-right">{{ Plan.ImagingOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">X-rays and Diagnostic Imaging</span>
+                                <span class="pull-right">{{ Plan.XraysIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">X-rays and Diagnostic Imaging</span>
+                                <span class="pull-right">{{ Plan.XraysOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Specialist Visit</span>
+                                <span class="pull-right">{{ Plan.SpecialistVisitIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Specialist Visit</span>
+                                <span class="pull-right">{{ Plan.SpecialistVisitOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Laboratory Outpatient and Professional Services</span>
+                                <span class="pull-right">{{ Plan.LaboratoryOutpatientIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Laboratory Outpatient and Professional Services</span>
+                                <span class="pull-right">{{ Plan.LaboratoryOutpatientOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Primary Care Visit to Treat an Injury or Illness</span>
+                                <span class="pull-right">{{ Plan.PrimaryCareIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Primary Care Visit to Treat an Injury or Illness</span>
+                                <span class="pull-right">{{ Plan.PrimaryCareOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+
+                    <article class='column-row-title column-row-accordion-toggle'><span><span class='glyphicon glyphicon-plus plus-minus-icon-custom' data-toggle-id='12'></span>Vision</span></article>
+                    <section class='column-row-accordion' data-toggle-accordion-id='12'>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Routine Eye Exams for Children</span>
+                                <span class="pull-right">{{ Plan.RoutineEyeIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Routine Eye Exams for Children</span>
+                                <span class="pull-right">{{ Plan.RoutineEyeOut }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row in-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Eye Glasses for Children</span>
+                                <span class="pull-right">{{ Plan.EyeGlassesChildrenIn }}</span>
+                            </div>
+                        </article>
+                        <article class='column-row out-network-detail'>
+                            <div class="panel-body ng-binding">
+                                <span class="pull-left uppercase-text">Eye Glasses for Children</span>
+                                <span class="pull-right">{{ Plan.EyeGlassesChildrenOut }}</span>
+                            </div>
+                        </article>
+                    </section>
+                </section>
+            </div>
+        </div>
+</section>
+</div>
+
+<script src='js/main.js'></script>

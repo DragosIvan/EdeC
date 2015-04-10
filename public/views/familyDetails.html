@@ -1,0 +1,147 @@
+<div class="container">
+	<div class="details-plan-header">
+    	<p class="pull-left">Family Details</p>
+	</div>
+
+	<div ng-show="loadingFamilyDetails" class="wrap-big-loader">
+		<p>Loading family details screen, please wait...</p>
+		<div class="show-big-loader"></div>
+	</div>
+
+<div ng-hide="loadingFamilyDetails">
+	<form onSubmit="return false;" method="post" action="/api/familyDetails" class="form familyDetailsForm" name="form" ng-app novalidate>
+		<div class="panel panel-default details-plan-first-panel">
+			<div class="panel-body">
+				<p class="primary-applicant-information">{{ subscriberObj.FirstName }} {{ subscriberObj.LastName }}</p>
+				<div class="row family-details-panel">
+					<div class="your-zip-code family-details-block">
+						<span>Your Zip Code</span>
+						<input name="applicantZipCode" id='household-income' type='text' value="{{ subscriberObj.ZipCode }}" readonly>
+					</div>
+					<div class="select-county family-details-block">
+						<span>Select County</span>
+						<select class="btn btn-default select-members" ng-model="subscriberCountiesResult" ng-options="county.value as county.label for county in subscriberCountiesResults" bs-select></select>
+						<input name="applicantCounty" type="text" class="hide" value="{{ subscriberCountiesResult }}">
+					</div>
+					<div class="clear"></div>
+					<div class="date-last-smoked family-details-block">
+						<span>Date Tobacco Last Used <span class="if-ever-used">( leave blank if never used )</span></span>
+						<input name="applicantDateLastSmoked" type="text" class="form-control" id="date-last-smoked" ng-model="applicantSelectedDate" placeholder="mm-dd-yyyy" bs-datepicker>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id='family-details-second-panel-main' ng-if="spouseObj.length !== 0 || dependentsObj.length !== 0">
+			<div class="panel panel-default details-plan-second-panel">
+				<div class="panel-body">
+					<p class="census-information">Census Information</p>
+
+    				<div ng-show="submitted && form.$invalid" class="alert alert-danger"><strong>"Live in Household?"</strong> field is required.</div>
+
+					<div ng-if="spouseObj.length !== 0">
+						<div class="row family-details-panel-second spouse-details-panel">
+							<div class="spouse-informations">
+								<span>{{ spouseObj.FirstName }} {{ spouseObj.LastName }}</span>
+							</div>
+							<div class="spouse-one-column">
+								<div class="spouse-relationship family-details-block">
+									<span>Relationship</span>
+									<select class="btn btn-default select-members" ng-model="defaultRelationship" ng-options="relationship.value as relationship.label for relationship in relationships" bs-select></select>
+									<input name="spouseRelationship" type="text" class="hide" value="{{ defaultRelationship }}">
+								</div>
+								<div class="spouse-date-last-smoked family-details-block">
+									<span>Date Tobacco Last Used</span>
+									<input name="spouseDateLastSmoked" type="text" class="form-control" id="date-last-smoked" ng-model="selectedDate" placeholder="mm-dd-yyyy" bs-datepicker>
+								</div>
+							</div>
+							<div class="spouse-one-column">
+								<div class="spouse-gender family-details-block">
+									<span>Select Gender</span>
+									<select class="btn btn-default select-members" ng-model="defaultGender" ng-options="gender.value as gender.label for gender in genders" bs-select></select>
+									<input name="spouseGender" type="text" class="hide" value="{{ defaultGender }}">
+								</div>
+								<div class="spouse-select-county family-details-block">
+									<span>Select County</span>
+									<select class="btn btn-default select-members" ng-model="spouseCountiesResult" ng-options="county.value as county.label for county in spouseCountiesResults" bs-select></select>
+									<input name="spouseCounty" type="text" class="hide" value="{{ spouseCountiesResult }}">
+								</div>
+							</div>
+							<div class="spouse-last-column">
+								<div class="spouse-zip-code family-details-block">
+									<span>Zip Code</span>
+									<input name="spouseZipCode" id='household-income' type='text' value="{{ spouseObj.ZipCode }}" readonly>
+								</div>
+								<div class="spouse-live-in-household family-details-block" ng-if='spouseHousehold == true'>
+									<span>Live in Household?<span style="color: red">&nbsp;*</span></span>
+									<div class="btn-group" ng-model="button1.radio" bs-radio-group required>
+									  <label class="btn btn-default"><input name="spouseLiveInHousehold" type="radio" class="btn btn-default" value="Y"> Yes</label>
+									  <label class="btn btn-default"><input name="spouseLiveInHousehold" type="radio" class="btn btn-default" value="N"> No</label>
+										  <input type="text" class="hide setValidationForm" value="{{ button1.radio }}" required>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+
+					<div ng-if="dependentsObj.length !== 0">
+						<div ng-repeat="dependentObj in dependentsObj">
+							<div class="row family-details-panel-second dependent-details-panel">
+								<div class="dependent-informations">
+									<span>{{ dependentObj.FirstName }} {{ dependentObj.LastName }}</span>
+								</div>
+								<div class="dependent-one-column">
+									<div class="dependent-relationship family-details-block">
+										<span>Relationship</span>
+										<select class="btn btn-default select-members" ng-model="defaultChidRelationship" ng-options="childRelationship.value as childRelationship.label for childRelationship in childRelationships" bs-select></select>
+										<input name="dependentRelationship{{ dependentObj.dependentNr }}" type="text" class="hide" value="{{ defaultChidRelationship }}">
+									</div>
+									<div class="dependent-date-last-smoked family-details-block">
+										<span>Date Tobacco Last Used</span>
+										<input name="dependentDateLastSmoked{{ dependentObj.dependentNr }}" type="text" class="form-control" id="date-last-smoked" ng-model="selectedDate" placeholder="mm-dd-yyyy" bs-datepicker>
+									</div>
+								</div>
+								<div class="dependent-one-column">
+									<div class="dependent-gender family-details-block">
+										<span>Select Gender</span>
+										<select class="btn btn-default select-members" ng-model="defaultGender" ng-options="gender.value as gender.label for gender in genders" bs-select></select>
+										<input name="dependentGender{{ dependentObj.dependentNr }}" type="text" class="hide" value="{{ defaultGender }}">
+									</div>
+									<div class="dependent-select-county family-details-block">
+										<span>Select County</span>
+										<select class="btn btn-default select-members" ng-model="dependentObj.dependentCountiesResult" ng-options="county.value as county.label for county in dependentObj.dependentCountiesResults" bs-select></select>
+										<input name="dependentCounty{{ dependentObj.dependentNr }}" type="text" class="hide" value="{{ dependentObj.dependentCountiesResult }}">
+									</div>
+								</div>
+								<div class="dependent-last-column">
+									<div class="dependent-zip-code family-details-block">
+										<span>Zip Code</span>
+										<input name="dependentZipCode{{ dependentObj.dependentNr }}" id='household-income' type='text' value="{{ dependentObj.ZipCode }}" readonly>
+									</div>
+									<div class="dependent-live-in-household family-details-block" ng-if="dependentObj.Household == true">
+										<span>Live in Household?<span style="color: red">&nbsp;*</span></span>
+										<div class="btn-group" ng-model="button.radio" bs-radio-group required>
+										  <label class="btn btn-default"><input name="dependentLiveInHousehold{{ dependentObj.dependentNr }}" type="radio" class="btn btn-default" ng-model="dependentLiveInHouseholdValidate" value="Y"> Yes</label>
+										  <label class="btn btn-default"><input name="dependentLiveInHousehold{{ dependentObj.dependentNr }}" type="radio" class="btn btn-default" ng-model="dependentLiveInHouseholdValidate" value="N"> No</label>
+										  <input type="text" class="hide setValidationForm" value="{{ button.radio }}" required>
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-default next-step-btn" ng-click="submitted=true">Next Step</button>
+
+	</form>
+</div>
+</div>
+
+<script src='js/main.js'></script>
+<script src='js/sendData.js'></script>
