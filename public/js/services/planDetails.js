@@ -1,4 +1,4 @@
-angular.module('MaxwellHealth')
+angular.module('EDeC')
 
 	// super simple service
 	// each function returns a promise object 

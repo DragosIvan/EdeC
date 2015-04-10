@@ -1,4 +1,4 @@
-angular.module('MaxwellHealth')
+angular.module('EDeC')
     .controller('PlanSubsidyCtrl', ['$scope', '$routeParams', '$http', 'PlanSubsidy', function($scope, $routeParams, $http, PlanSubsidy) {
     // GET =====================================================================
     // when landing on the page, get subsidy value and show it

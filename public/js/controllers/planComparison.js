@@ -1,4 +1,4 @@
-angular.module('MaxwellHealth')
+angular.module('EDeC')
     .controller('PlanComparisonCtrl', ['$scope', '$routeParams', '$http', 'PlanCompare', function($scope, $routeParams, $http, PlanCompare) {
 
     // GET =====================================================================

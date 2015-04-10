@@ -1,4 +1,4 @@
-angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'infinite-scroll'])
+angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap'])
 	.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
 	
 		$locationProvider.html5Mode(true);
@@ -8,13 +8,13 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/homepage.html',
 				controller: 'HomepageCtrl'
 			})
+			.when('/tasks', {
+				templateUrl: 'views/tasks.html',
+				controller: 'TaskPageCtrl'
+			})
 			.when('/plans/subsidy/:subsid', {
 		  		templateUrl: 'views/planSubsidy.html',
 		    	controller: 'PlanSubsidyCtrl'
-		  	})
-		  	.when('/plans/apply', {
-		    	templateUrl: 'views/planApply.html',
-		    	controller: 'PlanApplyCtrl'
 		  	})
 		  	.when('/plans/listing/:subsidy', {
 		    	templateUrl: 'views/planList.html',

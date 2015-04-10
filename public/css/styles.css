@@ -1,0 +1,29 @@
+header {
+  max-width: 1200px;
+  margin: 0 auto;
+  left: 0;
+  right: 0; }
+  header section {
+    max-width: 90%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    margin-top: 50px; }
+
+.homepage-main-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  margin-top: 50px;
+  height: 1200px;
+  border: 1px solid black; }
+
+#tasks-main-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  margin-top: 50px;
+  height: 1200px;
+  border: 1px solid black; }

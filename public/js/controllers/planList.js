@@ -1,4 +1,4 @@
-angular.module('MaxwellHealth')
+angular.module('EDeC')
     .controller('PlanListCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Plans', function($scope, $routeParams, $filter, $http, Plans) {
 
     $scope.priceCheckboxes = [];

@@ -1,4 +1,4 @@
-angular.module('MaxwellHealth')
+angular.module('EDeC')
 
   .controller('PlanDetailsCtrl', ['$scope', '$routeParams', '$http', 'PlanDetails', '$sce', function($scope, $routeParams, $http, PlanDetails, $sce) {
     // GET =====================================================================

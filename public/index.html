@@ -11,14 +11,25 @@
 
 		<!-- <link href="img/maxwell.logo-heart-blue.png" rel="icon" type="image/png"> -->
 		<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
+		<link href="css/styles.css" rel="stylesheet">
 		<!-- <link href='libs/jScrollPane/jquery.jscrollpane.css' rel='stylesheet' /> -->
 
 		<script src="libs/jquery/jquery-2.1.1.js"></script>
+		<script src="libs/react/build/react.js"></script>
+		<script src="libs/react/build/JSXTransformer.js"></script>
 	</head>
 
 	<body>
+		<header>
+			<section>
+				<img src='img/edec.png' alr='EDeC Logo'>
+			<section>
+		</header>
 		<div ng-view></div>
+
+		<section class='footer'>
+			
+		</section>
 
 		<!-- AngularJS Javascript Includes  -->
 		<script src="libs/angular/angular.js"></script>
@@ -34,6 +45,7 @@
 
 		<!-- Controllers include section -->
 		<script src="js/controllers/homepage.js"></script>
+		<script src="js/controllers/taskPage.js"></script>
 		<!-- Controllers END -->
 
 		<!-- Controller Examples include section -->
@@ -52,5 +64,8 @@
 		<script src="js/services/planCompare.js"></script>
 		<script src="js/services/planSubsidy.js"></script>
 		<!-- Services Examples END -->
+
+		<script src="js/main.js"></script>
+		<!-- // <script type='text/jsx' src="js/main.jsx"></script> -->
 	</body>
 </html>

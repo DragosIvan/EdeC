@@ -1,4 +1,4 @@
-angular.module('MaxwellHealth')
+angular.module('EDeC')
     
     .config(function($datepickerProvider) {
         angular.extend($datepickerProvider.defaults, {

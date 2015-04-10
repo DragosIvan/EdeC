@@ -32,6 +32,9 @@ module.exports = function(app) {
       res.send("EDeC Homepage");
   });
 
+  app.get('/api/tasks', function(req, res) {
+    res.send("EDeC Task Page");
+  });
   // app.post('/api/familyDetails', function(req, res) {
   //     if (parsedFamilyObject == null) {
   //       parsedFamilyObject = req.body;
