@@ -17,6 +17,8 @@ Pasii ce trebuie urmati ca sa facem push pe git (adica sa ducem fisierel modific
 6. git status - inca o data, ca sa verificam daca toate fisierele au fost adaugate. Tot ce e cu verde inseamna ca e gata de dus sus, tot ce e cu rosu inca nu a fost adaugat si va trebui sa folosim:
 	5.1 git add --all - sa adaugam fisierele indiferent de natura lor (new file, delete, change etc).
 
-7. git commit -m "Un mesaj corespunzator" - adagam fisierele salvate in stash cu git add in stash-ul de commit. Intre ghilimele o sa scriem, pe scurt, ce am adaugat, modificat etc.
+7. git commit -m "Un mesaj corespunzator" - adaugam fisierele salvate in stash cu git add in stash-ul de commit. Intre ghilimele o sa scriem, pe scurt, ce am adaugat, modificat etc.
 
 8. git push origin master - facem push la fisierele din stash-ul de commit, le incarcam in repositorul de pe git.
+
+Cel mai bine ar fi sa scriem aici de fiecare data cand facem commit la ce am lucrat, ca sa putem actualiza taskurile pe blogul ala sau ce spunea proful. Vad ca redmine nu prea functioneaza cum vreau eu, o sa caut altceva. Daca nu, facem o pagina simpla pentru taskuri.
