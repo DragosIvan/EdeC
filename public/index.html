@@ -21,14 +21,38 @@
 
 	<body>
 		<header>
-			<section>
-				<img src='img/edec.png' alr='EDeC Logo'>
+			<section class='header'>
+				<img src='img/edec.png' alt='EDeC Logo'>
+				<div class='header-right'>
+					<a href='/login'>Login</a>
+					<a href='/register'>Register</a>
+					<span class='separator'></span>
+					<a href='/cart'>
+						<img src='img/cart.png' alt='EDeC Cart'>
+						<span id='cart-products'>
+					</a>
+				</div>
 			<section>
 		</header>
 		<div ng-view></div>
 
 		<section class='footer'>
-			
+			<a href='#'>
+				<img src='img/twitter.png' alt='Twitter'>
+			</a>
+			<a href='#'>
+				<img src='img/instagram.png' alt='Instagram'>
+			</a>
+			<a href='#'>
+				<img src='img/tumblr.png' alt='Tumblr'>
+			</a>
+			<a href='#'>
+				<img src='img/facebook.png' alt='Facebook'>
+			</a>
+			<a href='/about'>About us</a>
+			<a href='/faqs'>FAQs</a>
+			<a href='/privacy'>Privacy Policy</a>
+			<a href='/terms'>Terms and Conditions</a>		
 		</section>
 
 		<!-- AngularJS Javascript Includes  -->
