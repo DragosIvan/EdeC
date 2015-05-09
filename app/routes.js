@@ -3,8 +3,19 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 var fs = require('fs');
 var NodeCache = require( "node-cache" );
+var mysql     = require('mysql');
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  database : 'edec',
+  user     : 'root'
+});
+
+connection.connect();
 
 // Variables declaration
+
+var products = new NodeCache();
 
 function timeConverter(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp*1000);
@@ -29,7 +40,14 @@ function dateParser(date) {
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-      res.send("EDeC Homepage");
+  connection.query('SELECT * FROM product WHERE display_on_homepage=1', function(err, rows, fields) {
+    if (err) throw err;
+
+   // console.log('The solution is: ', rows[0]);
+
+    res.json(rows);
+  });
+     
   });
 
   app.get('/api/tasks', function(req, res) {
