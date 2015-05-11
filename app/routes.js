@@ -40,13 +40,13 @@ function dateParser(date) {
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-  connection.query('SELECT * FROM product WHERE display_on_homepage=1', function(err, rows, fields) {
-    if (err) throw err;
+  // connection.query('SELECT * FROM product WHERE display_on_homepage=1', function(err, rows, fields) {
+  //   if (err) throw err;
 
-   // console.log('The solution is: ', rows[0]);
+  //  // console.log('The solution is: ', rows[0]);
 
-    res.json(rows);
-  });
+  //   res.json(rows);
+  // });
      
   });
 

@@ -9,27 +9,25 @@
 
 		<title>EDeC - Ethic Decisions for Consummers</title>
 
-		<!-- <link href="img/maxwell.logo-heart-blue.png" rel="icon" type="image/png"> -->
+		<!-- <link href="images/maxwell.logo-heart-blue.png" rel="icon" type="image/png"> -->
 		<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/styles.css" rel="stylesheet">
 		<!-- <link href='libs/jScrollPane/jquery.jscrollpane.css' rel='stylesheet' /> -->
 
 		<script src="libs/jquery/jquery-2.1.1.js"></script>
-		<script src="libs/react/build/react.js"></script>
-		<script src="libs/react/build/JSXTransformer.js"></script>
 	</head>
 
 	<body>
 		
 		<header>
 			<section class='header'>
-				<img src='img/edec.png' alt='EDeC Logo'>
+				<img src='images/logo.png' alt='EDeC Logo'>
 				<div class='header-right'>
-					<a href='/login'>Login</a>
-					<a href='/register'>Register</a>
+					<a href='/login' class='hover-link'>Login</a>
+					<a href='/register' class='hover-link'>Register</a>
 					<span class='separator'></span>
-					<a href='/cart'>
-						<img src='img/cart.png' alt='EDeC Cart'>
+					<a href='/cart' class='cart-link'>
+						<img src='images/cart.png' alt='EDeC Cart'>
 						<span id='cart-products'>
 					</a>
 				</div>
@@ -39,16 +37,16 @@
 
 		<section class='footer'>
 			<a href='#'>
-				<img src='img/twitter.png' alt='Twitter'>
+				<img src='images/twitter.png' alt='Twitter'>
 			</a>
 			<a href='#'>
-				<img src='img/instagram.png' alt='Instagram'>
+				<img src='images/instagram.png' alt='Instagram'>
 			</a>
 			<a href='#'>
-				<img src='img/tumblr.png' alt='Tumblr'>
+				<img src='images/tumblr.png' alt='Tumblr'>
 			</a>
 			<a href='#'>
-				<img src='img/facebook.png' alt='Facebook'>
+				<img src='images/facebook.png' alt='Facebook'>
 			</a>
 			<a href='/about'>About us</a>
 			<a href='/faqs'>FAQs</a>
@@ -71,7 +69,9 @@
 		<script src="js/controllers/homepage.js"></script>
 		<!-- Controllers END -->
 
+		<!-- Services include section -->
 		<script src="js/services/homepageServ.js"></script>
+		<!-- Services END -->
 
 		<!-- Controller Examples include section -->
 		<script src="js/controllers/familyDetails.js"></script>
@@ -90,7 +90,6 @@
 		<script src="js/services/planSubsidy.js"></script>
 		<!-- Services Examples END -->
 
-		<!-- // <script src="js/main.js"></script> -->
-		<!-- // <script type='text/jsx' src="js/main.jsx"></script> -->
+		<script src="js/main.js"></script>
 	</body>
 </html>
