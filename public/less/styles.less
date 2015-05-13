@@ -3,6 +3,7 @@
 @white: #fff;
 @darkBlue: #505766;
 @lightGreen: #c2fd00;
+@red: #E62E00;
 
 @font-face {
 	font-family: steinerlight;
@@ -17,7 +18,7 @@ body {
 
 .main-wrapper {
 	width: 75%;
-	margin: 0 auto;
+	margin: 0 auto 30px auto;
 	position: relative;
 	padding: 30px 0;
 }
@@ -26,8 +27,9 @@ body {
 	margin: 25px 0;
 }
 
-.visibility-hidden {
-	visibility: hidden;
+.required-element {
+	font-size: 20px;
+	color: @red;
 }
 
 /* START INDEX PAGE LESS */
@@ -300,3 +302,78 @@ footer {
 	}
 }
 /* START HOMEPAGE LESS */
+
+
+
+/* START REGISTER LESS */
+.register-main-wrapper {
+
+	h2 {
+		text-align: center;
+		color: @darkBlue;
+	}
+
+	p {
+		width: 75%;
+		margin: 0 auto;
+		font-size: 20px;
+		margin-bottom: 30px;
+	}
+
+	form {
+		position: relative;
+		width: 75%;
+		margin: 0 auto;
+
+		.registration-optional {
+			display: none;
+		}
+
+		label, input, textarea, select {
+			width: 100%;
+		}
+
+		label {
+			font-size: 20px;
+			color: @darkBlue;
+		}
+
+		input, select, textarea {
+			color: @white;
+			color: @darkBlue;
+			// background-color: @darkBlue;
+			border: 2px solid darken(@darkBlue, 20%);
+			border: 2px solid @darkBlue;
+			border-radius: 5px;
+			padding: 5px 10px;
+			margin-bottom: 20px;
+			margin-top: 5px;
+		}
+
+		input, select {
+			height: 40px;
+		}
+
+		textarea {
+			min-width: 100%;
+			max-width: 100%;
+			max-height: 150px;
+		}
+
+		.registration-button {
+			color: @white;
+			background-color: @darkBlue;
+			border: 2px solid darken(@darkBlue, 20%);
+			border-radius: 5px;
+			padding: 10px 20px;
+			font-weight: bold;
+			font-size: 18px;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+}
+/* END REGISTER LESS */

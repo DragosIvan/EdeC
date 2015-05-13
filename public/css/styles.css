@@ -9,15 +9,16 @@ body {
 }
 .main-wrapper {
   width: 75%;
-  margin: 0 auto;
+  margin: 0 auto 30px auto;
   position: relative;
   padding: 30px 0;
 }
 .equal-header-margins-h3 {
   margin: 25px 0;
 }
-.visibility-hidden {
-  visibility: hidden;
+.required-element {
+  font-size: 20px;
+  color: #e62e00;
 }
 /* START INDEX PAGE LESS */
 header {
@@ -237,4 +238,67 @@ footer .footer-pull-right a:hover {
 .homepage-main-wrapper .cool-products article div img {
   max-height: 100%;
   display: inline-block;
+}
+/* START HOMEPAGE LESS */
+/* START REGISTER LESS */
+.register-main-wrapper h2 {
+  text-align: center;
+  color: #505766;
+}
+.register-main-wrapper p {
+  width: 75%;
+  margin: 0 auto;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+.register-main-wrapper form {
+  position: relative;
+  width: 75%;
+  margin: 0 auto;
+}
+.register-main-wrapper form .registration-optional {
+  display: none;
+}
+.register-main-wrapper form label,
+.register-main-wrapper form input,
+.register-main-wrapper form textarea,
+.register-main-wrapper form select {
+  width: 100%;
+}
+.register-main-wrapper form label {
+  font-size: 20px;
+  color: #505766;
+}
+.register-main-wrapper form input,
+.register-main-wrapper form select,
+.register-main-wrapper form textarea {
+  color: #ffffff;
+  color: #505766;
+  border: 2px solid #23262d;
+  border: 2px solid #505766;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+.register-main-wrapper form input,
+.register-main-wrapper form select {
+  height: 40px;
+}
+.register-main-wrapper form textarea {
+  min-width: 100%;
+  max-width: 100%;
+  max-height: 150px;
+}
+.register-main-wrapper form .registration-button {
+  color: #ffffff;
+  background-color: #505766;
+  border: 2px solid #23262d;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.register-main-wrapper form .registration-button:hover {
+  cursor: pointer;
 }
