@@ -4,4 +4,6 @@ $(document).ready(function() {
 
 	if ($('.main-wrapper').height() < windowHeight) $('.main-wrapper').css('height', windowHeight);
 
+	console.log
+
 });
