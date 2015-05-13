@@ -8,9 +8,9 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/homepage.html',
 				controller: 'HomepageCtrl'
 			})
-			.when('/tasks', {
-				templateUrl: 'views/tasks.html',
-				controller: 'TaskPageCtrl'
+			.when('/register', {
+				templateUrl: 'views/register.html',
+				controller: 'RegisterCtrl'
 			})
 			.when('/plans/subsidy/:subsid', {
 		  		templateUrl: 'views/planSubsidy.html',

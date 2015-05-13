@@ -24,7 +24,7 @@ function timeConverter(UNIX_timestamp) {
   var year = a.getFullYear();
   var month = months[a.getMonth()];
   var date = a.getDate() < 10 ? day[a.getDate()] : a.getDate();
-  var time = year + '-' + month + '-' + date ;
+  var time = year + '-' + month + '-' + date;
   return time;
 }
 
@@ -40,13 +40,15 @@ function dateParser(date) {
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-  // connection.query('SELECT * FROM product WHERE display_on_homepage=1', function(err, rows, fields) {
+  // connection.query('SELECT * FROM product', function(err, rows, fields) {
   //   if (err) throw err;
 
   //  // console.log('The solution is: ', rows[0]);
 
   //   res.json(rows);
   // });
+
+    // res.send("Hello ! Is it me you're.. looking for ?");
      
   });
 

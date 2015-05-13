@@ -1,7 +1,41 @@
+@grey: #dedede;
+@darkerGrey: #C8C8C8;
+@white: #fff;
+@darkBlue: #505766;
+@lightGreen: #c2fd00;
+
+@font-face {
+	font-family: steinerlight;
+	src: url("./fonts/Steinerlight.ttf");
+}
+
+body {
+	background-color: @white;
+	cursor: default;
+	font-family: steinerlight;
+}
+
+.main-wrapper {
+	width: 75%;
+	margin: 0 auto;
+	position: relative;
+	padding: 30px 0;
+}
+
+.equal-header-margins-h3 {
+	margin: 25px 0;
+}
+
+.visibility-hidden {
+	visibility: hidden;
+}
+
+/* START INDEX PAGE LESS */
+
 header {
 	width: 100%;
 	height: 100px;
-	background-color: #505766;
+	background-color: @darkBlue;
 
 	.header {
 		width: 100%;
@@ -21,7 +55,7 @@ header {
 			a {
 				  display: inline-block;
 				  position: relative;
-				  color: #dedede;
+				  color: @grey;
 				  padding: 0px 10px;
 				  margin-bottom: -6px;
 				  top: -30%;
@@ -32,8 +66,8 @@ header {
 				  }
 
 				  &.hover-link:hover {
-				  	background-color: #c2fd00;
-				  	color: #505766;
+				  	background-color: @lightGreen;
+				  	color: @darkBlue;
 				  }
 
 				  &.cart-link {
@@ -45,18 +79,18 @@ header {
 			{
 				width: 1px;
 				height: 100%;
-				background-color: #dedede;
+				background-color: @grey;
 				display: inline-block;
 			}
 		}
 	}
 }
 
-.footer {
-	padding: 20px;
+footer {
+	padding: 14px 20px;
 	width: 100%;
 	height: 100px;
-	background-color: #dedede;
+	background-color: @grey;
 
 	img  {
 		max-height: 100%;
@@ -65,20 +99,191 @@ header {
 	a {
 		display: inline-block;
 		position: relative;
-		color: #dedede;
+		color: @darkBlue;
 		padding: 0px 10px;
-		margin-bottom: -6px;
-		top: -30%;
 		text-decoration: none;
 
-		&:first-child {
-			margin-right: 10px;
-		}
-
 		&:hover {
-			background-color: #c2fd00;
-			color: #505766;
+			text-decoration: none;			
 		}
 	}
 
+	.footer-pull-right {
+		display: inline-block;
+		position: relative;
+		top: 28px;
+		float: right;
+
+		a {
+			&:hover {
+				background-color: @lightGreen;
+			}
+		}
+	}
 }
+
+/* END INDEX PAGE LESS */
+
+
+
+/* START HOMEPAGE LESS */
+.homepage-main-wrapper {
+	.slider-wrapper {
+		width: 100%;
+		height: 500px;
+		border: 2px solid @darkBlue;
+
+		.homepage-slider, .slider-products {
+			height: 100%;
+			display: inline-block;
+		}
+
+		.homepage-slider {
+			width: 70%;
+			border-right: 1px solid @darkBlue;
+			float: left;
+			position: relative;
+
+			.homepage-slider-navigation-wrapper {
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				height: 22px;
+
+				span.homepage-slider-nav {
+					width: 33.33%;
+					display: inline-block;
+					border-top: 2px solid @darkBlue;
+					text-align: center;
+					border-right: 1px solid @darkBlue;
+					border-left: 1px solid @darkBlue;
+					float: left;
+
+					&:first-of-type {
+						border-left: none;
+					}
+
+					&:last-of-type {
+						border-right: none;
+					}
+
+				}
+
+				.slider-arrow {
+					position: absolute;
+					bottom: 19px;
+					left: 17.5%;
+				}
+			}
+		}
+
+		.slider-products {
+			width: 30%;
+			border-left: 1px solid @darkBlue;
+			float: right;
+
+			.slider-product-1, .slider-product-2 {
+				height: 50%;
+				padding: 20px;
+				text-align: center;
+
+				img {
+					max-height: 100%;
+					display: inline-block;
+				}
+			}
+
+			.slider-product-1 {
+				border-bottom: 1px solid  @darkBlue;
+			}
+
+			.slider-product-2 {
+				border-top: 1px solid  @darkBlue;
+			}
+		}
+	}
+
+	.info {
+		width: 100%;
+		display: inline-block;
+
+		article {
+			width: 49%;
+			display: inline-block;
+			float: left;
+
+			&:first-child {
+				margin-right: 2%;
+			}
+		}
+	}
+
+	.util-link {
+		width: 100%;
+		height: 100px;
+		border-top: 2px solid @darkerGrey;
+		border-bottom: 2px solid @darkerGrey;
+		padding: 10px 20px;
+		text-align: center;
+		line-height: 80px;
+		margin: 20px 0;
+
+		img {
+			max-height: 100%;
+			display: inline-block;
+		}
+
+		.movers-row {
+			div {
+				display: inline-block;
+			}
+		}
+	}
+
+	.cool-products {
+		width: 100%;
+
+		article {
+			width: 49.5%;
+			height: 200px;
+			border: 2px solid @darkerGrey;
+			display: inline-block;
+			margin-bottom: 30px;
+
+			&:nth-of-type(2n+1) {
+				margin-right: 0.5%;
+			}
+
+			div {
+				width: 50%;
+				height: 100%;
+				float: right;
+				padding: 10px;
+
+				&:hover {
+					background-color: @grey;
+				}
+
+				&:first-child {
+					float: left;
+					text-align: center;
+
+					&:hover {
+						background-color: @white;
+					}
+				}
+
+				h3 {
+					text-align: center;
+					margin-top: 5px;
+				}
+
+				img {
+					max-height: 100%;
+					display: inline-block;
+				}
+			}
+		}
+	}
+}
+/* START HOMEPAGE LESS */

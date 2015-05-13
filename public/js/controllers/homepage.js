@@ -3,26 +3,26 @@ angular.module('EDeC')
 
     $scope.Products = []; // am facut vectorul global cu produse
 
-    Homepage.get()
-    .success(function(data) {
-        // The js object containing all the Carries and their Plans
-        console.log(data);
+    // Homepage.get()
+    // .success(function(data) {
+    //     // The js object containing all the Carries and their Plans
+    //     console.log(data);
 
         
 
-        data.forEach(function(product) {
-        	var temp = {};
-        	temp.id_product = product.id_product;
-        	temp.name = product.name;
-        	temp.weight = product.weight;
-        	temp.stock = product.stock;
-        	temp.price = product.price;
-        	temp.description = product.description;
-        	temp.rating = product.rating;
-        	temp.image = product.image;
+    //     data.forEach(function(product) {
+    //     	var temp = {};
+    //     	temp.id_product = product.id_product;
+    //     	temp.name = product.name;
+    //     	temp.weight = product.weight;
+    //     	temp.stock = product.stock;
+    //     	temp.price = product.price;
+    //     	temp.description = product.description;
+    //     	temp.rating = product.rating;
+    //     	temp.image = product.image;
 
-        	$scope.Products.push(temp);
-        })
-    });
+    //     	$scope.Products.push(temp);
+    //     })
+    // });
 
 }]);

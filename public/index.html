@@ -21,7 +21,7 @@
 		
 		<header>
 			<section class='header'>
-				<img src='images/logo.png' alt='EDeC Logo'>
+				<a href='/homepage'><img src='images/logo.png' alt='EDeC Logo'></a>
 				<div class='header-right'>
 					<a href='/login' class='hover-link'>Login</a>
 					<a href='/register' class='hover-link'>Register</a>
@@ -35,7 +35,7 @@
 		</header>
 		<div ng-view></div>
 
-		<section class='footer'>
+		<footer>
 			<a href='#'>
 				<img src='images/twitter.png' alt='Twitter'>
 			</a>
@@ -48,11 +48,13 @@
 			<a href='#'>
 				<img src='images/facebook.png' alt='Facebook'>
 			</a>
-			<a href='/about'>About us</a>
-			<a href='/faqs'>FAQs</a>
-			<a href='/privacy'>Privacy Policy</a>
-			<a href='/terms'>Terms and Conditions</a>		
-		</section>
+			<section class='footer-pull-right'>
+				<a href='/about'>About us</a>
+				<a href='/faqs'>FAQs</a>
+				<a href='/privacy'>Privacy Policy</a>
+				<a href='/terms'>Terms and Conditions</a>
+			</section>	
+		</footer>
 		<!-- AngularJS Javascript Includes  -->
 		<script src="libs/angular/angular.js"></script>
 		<script src="libs/angular/angular-strap.js"></script>
@@ -67,10 +69,12 @@
 
 		<!-- Controllers include section -->
 		<script src="js/controllers/homepage.js"></script>
+		<script src="js/controllers/register.js"></script>
 		<!-- Controllers END -->
 
 		<!-- Services include section -->
 		<script src="js/services/homepageServ.js"></script>
+		<script src="js/services/register.js"></script>
 		<!-- Services END -->
 
 		<!-- Controller Examples include section -->
