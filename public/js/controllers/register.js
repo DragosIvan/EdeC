@@ -117,5 +117,5 @@ angular.module('EDeC')
         // });
 
         Register.post()
-        .success(function() {});
+        .success(function(data) { console.log(data);});
     }]);

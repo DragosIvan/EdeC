@@ -2,11 +2,10 @@ angular.module('EDeC')
     .controller('HomepageCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Homepage', function($scope, $routeParams, $filter, $http, Homepage) {
 
     $scope.Products = []; // am facut vectorul global cu produse
-
     // Homepage.get()
-    // .success(function(data) {
-    //     // The js object containing all the Carries and their Plans
-    //     console.log(data);
+    // .success(function(data) {      
+    //      console.log("Am inserat obectul");
+    //      console.log(data);
 
         
 
@@ -23,6 +22,6 @@ angular.module('EDeC')
 
     //     	$scope.Products.push(temp);
     //     })
-    // });
+     //});
 
 }]);
