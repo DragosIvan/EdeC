@@ -171,7 +171,7 @@ footer {
 
 				.slider-arrow {
 					position: absolute;
-					bottom: 19px;
+					bottom: 20px;
 					left: 17.5%;
 				}
 			}
@@ -228,14 +228,27 @@ footer {
 		line-height: 80px;
 		margin: 20px 0;
 
-		img {
-			max-height: 100%;
-			display: inline-block;
-		}
-
 		.movers-row {
+			height: 100%;
 			div {
+				float: left;
+				width: 15%;
+				height: 100%;
 				display: inline-block;
+				margin-left: 2%;
+
+				&:first-child {
+					margin-left: 0;
+				}
+
+				img {
+					max-height: 100%;
+					max-width: 100%;
+					display: inline-block;
+					position: relative;
+					vertical-align: middle;
+					display: inline;
+				}
 			}
 		}
 	}

@@ -116,6 +116,6 @@ angular.module('EDeC')
         //     $scope.loadingFamilyDetails = false;
         // });
 
-        // Register.post()
-        // .success(function() {});
+        Register.post()
+        .success(function() {});
     }]);

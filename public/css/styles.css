@@ -133,7 +133,7 @@ footer .footer-pull-right a:hover {
 }
 .homepage-main-wrapper .slider-wrapper .homepage-slider .homepage-slider-navigation-wrapper .slider-arrow {
   position: absolute;
-  bottom: 19px;
+  bottom: 20px;
   left: 17.5%;
 }
 .homepage-main-wrapper .slider-wrapper .slider-products {
@@ -180,12 +180,26 @@ footer .footer-pull-right a:hover {
   line-height: 80px;
   margin: 20px 0;
 }
-.homepage-main-wrapper .util-link img {
-  max-height: 100%;
-  display: inline-block;
+.homepage-main-wrapper .util-link .movers-row {
+  height: 100%;
 }
 .homepage-main-wrapper .util-link .movers-row div {
+  float: left;
+  width: 15%;
+  height: 100%;
   display: inline-block;
+  margin-left: 2%;
+}
+.homepage-main-wrapper .util-link .movers-row div:first-child {
+  margin-left: 0;
+}
+.homepage-main-wrapper .util-link .movers-row div img {
+  max-height: 100%;
+  max-width: 100%;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  display: inline;
 }
 .homepage-main-wrapper .cool-products {
   width: 100%;
