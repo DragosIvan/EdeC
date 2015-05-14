@@ -32,6 +32,12 @@ body {
 	color: @red;
 }
 
+.vertical-align-helper {
+	display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
 /* START INDEX PAGE LESS */
 
 header {
@@ -74,6 +80,7 @@ header {
 
 				  &.cart-link {
 				  	height: 30px;
+				  	top: -40%;
 				  }
 			}
 
@@ -146,6 +153,27 @@ footer {
 			float: left;
 			position: relative;
 
+			.homepage-slider-slide {
+				width: 100%;
+				height: 100%;
+				padding: 10px 20px 20px 20px;
+				display: none;
+				text-align: center;
+				font: 0/0 a;
+
+				&.active-slide {
+					display: block;
+				}
+
+				img {
+					max-width: 100%;
+					max-height: 90%;
+					position: relative;
+					display: inline;
+					vertical-align: middle;
+				}
+			}
+
 			.homepage-slider-navigation-wrapper {
 				position: absolute;
 				bottom: 0;
@@ -160,6 +188,7 @@ footer {
 					border-right: 1px solid @darkBlue;
 					border-left: 1px solid @darkBlue;
 					float: left;
+					font-size: 16px;
 
 					&:first-of-type {
 						border-left: none;
@@ -167,6 +196,10 @@ footer {
 
 					&:last-of-type {
 						border-right: none;
+					}
+
+					&:hover {
+						cursor: pointer;
 					}
 
 				}
@@ -186,12 +219,17 @@ footer {
 
 			.slider-product-1, .slider-product-2 {
 				height: 50%;
+				width: 100%;
 				padding: 20px;
 				text-align: center;
+				vertical-align: middle;
+				font: 0/0 a;
 
 				img {
 					max-height: 100%;
-					display: inline-block;
+					max-width: 100%;
+					display: inline;
+					vertical-align: middle;
 				}
 			}
 
@@ -282,6 +320,7 @@ footer {
 				&:first-child {
 					float: left;
 					text-align: center;
+					font: 0/0 a;
 
 					&:hover {
 						background-color: @white;
@@ -295,6 +334,8 @@ footer {
 
 				img {
 					max-height: 100%;
+					max-width: 100%;
+					vertical-align: middle;
 					display: inline-block;
 				}
 			}
@@ -308,26 +349,27 @@ footer {
 /* START REGISTER LESS */
 .register-main-wrapper {
 
+	.registration-optional {
+		display: none;
+	}
+
 	h2 {
 		text-align: center;
 		color: @darkBlue;
 	}
 
 	p {
-		width: 75%;
 		margin: 0 auto;
 		font-size: 20px;
 		margin-bottom: 30px;
+		display: inline-block;
+		margin-left: 20px;
 	}
 
 	form {
 		position: relative;
 		width: 75%;
 		margin: 0 auto;
-
-		.registration-optional {
-			display: none;
-		}
 
 		label, input, textarea, select {
 			width: 100%;
@@ -377,3 +419,79 @@ footer {
 
 }
 /* END REGISTER LESS */
+
+
+
+/* START MEDIA QUERIES */
+
+@media screen and (max-width: 1071px) {
+	.homepage-main-wrapper .cool-products article {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	.homepage-main-wrapper .slider-wrapper {
+		height: 748px;
+
+		.homepage-slider {
+			width: 100%;
+			height: 496px;
+			float: none;
+			border-right: none;
+		}
+
+		.slider-products {
+			width: 100%;
+			height: 250px;
+			border-left: none;
+			border-top: 2px solid @darkBlue;
+
+			.slider-product-1, .slider-product-2 {
+				width: 50%;
+				height: 100%;
+				float: left;
+				border: none;
+				border-left: 1px solid @darkBlue;
+			}
+
+			.slider-product-1 {
+				border-right: 1px solid @darkBlue;
+				border-left: none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 821px) {
+	footer {
+		height: 140px;
+		text-align: center;
+
+		.footer-pull-right {
+			float: none;
+		}
+	}
+}
+
+@media screen and (max-width: 522px) {
+
+	.homepage-main-wrapper .slider-wrapper .slider-products {
+		height: 242px;
+	}
+
+}
+
+@media screen and (max-width: 450px) {
+	.register-main-wrapper p {
+		margin-left: 10px;
+	}
+
+	footer {
+		a {
+			padding: 0 2px;
+		}
+	}
+}
+
+/* END MEDIA QUERIES */

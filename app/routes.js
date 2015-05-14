@@ -41,48 +41,43 @@ module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
    
- //  connection.query('SELECT * FROM product', function(err, rows, fields) {
- //    if (err) throw err;
+  //  connection.query('SELECT * FROM product', function(err, rows, fields) {
+  //    if (err) throw err;
 
- // console.log('The solution is: ', rows[0]);
+  // console.log('The solution is: ', rows[0]);
 
- //    //res.json(rows);
- //   });
+  //    //res.json(rows);
+  //   });
 
-    // res.send("Hello ! Is it me you're.. looking for ?");
-     // var temp = {
-     //    username: "Yolanda",password :"cacat", question:
-     //    "first pet name" , answer :" Rica", mail: "banana.ioana@yahoo.com"
-     //    ,name: "iftenie", lastname : "Ioana", gender: "f",
-     //    birthday : "16-01-1994", adress: "iasi"
+  // res.send("Hello ! Is it me you're.. looking for ?");
+  // var temp = {
+  //    username: "Yolanda",password :"cacat", question:
+  //    "first pet name" , answer :" Rica", mail: "banana.ioana@yahoo.com"
+  //    ,name: "iftenie", lastname : "Ioana", gender: "f",
+  //    birthday : "16-01-1994", adress: "iasi"
 
-     // };
-   //res.json(temp);
-// connection.query('insert into '+EDeC.users +( 'username', 'password', 'question', 'answer', 
-//   'mail', 'name', 'lastname', 'gender', 'birthday', 'adress')VALUES (temp.username ,
-//    temp.password , temp.question , temp.answer, temp.mail,
-//    temp.name, temp.lastname ,temp.gender,temp.birthday ),
-// function selectCb(err, results, fields) {
-//     if (err) throw err;
-//     else res.send('success');
-// });
- //  connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
- //   if (err) throw err;
- //   else
- //    result = "doneaaaaa";
- //    res.json(result);
- // });
- //  connection.query('SELECT * FROM users', function(err, rows, fields) {
- //    if (err) throw err;
- //    res.json(rows);
- //   });
-});
+  // };
+  //res.json(temp);
+  // connection.query('insert into '+EDeC.users +( 'username', 'password', 'question', 'answer', 
+  //   'mail', 'name', 'lastname', 'gender', 'birthday', 'adress')VALUES (temp.username ,
+  //    temp.password , temp.question , temp.answer, temp.mail,
+  //    temp.name, temp.lastname ,temp.gender,temp.birthday ),
+  // function selectCb(err, results, fields) {
+  //     if (err) throw err;
+  //     else res.send('success');
+  // });
+  //  connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
+  //   if (err) throw err;
+  //   else
+  //    result = "doneaaaaa";
+  //    res.json(result);
+  // });
+  //  connection.query('SELECT * FROM users', function(err, rows, fields) {
+  //    if (err) throw err;
+  //    res.json(rows);
+  //   });
+  });
      
-
-
-
-
-
   app.get('/api/tasks', function(req, res) {
     res.send("EDeC Task Page");
   });

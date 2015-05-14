@@ -1,7 +1,6 @@
 <section class='main-wrapper register-main-wrapper'>
 
-<h2>User Registration</h2>
-<p><span class='required-element'>*</span> = required field</p>
+<h2>User Registration - <span class='registration-mandatory'>Mandatory Information</span><span class='registration-optional'>Optional Information</span></h2>
 	<form class='register-form' method='post' action='/api/register'>
 
 		<section class='registration-pane registration-mandatory registration-active'>
@@ -19,6 +18,7 @@
 			<label for='security-answer'>Security answer: <span class='required-element'>*</span><input type='text' id='security-answer' name='security_answer' value='Ivan'/></label>
 			<label for='mail'>Email address: <span class='required-element'>*</span><input type='email' id='mail' name='mail' value='dragos.ivan94@gmail.com' /></label>
 			<span class='registration-button go-to-optional-registration'>Next</span>
+			<p><span class='required-element'>*</span> = required field</p>
 		</section>
 		<section class='registration-pane registration-optional'>
 			<label for='first-name'>First Name: <input type='text' id='first-name' name='first_name' /></label>
