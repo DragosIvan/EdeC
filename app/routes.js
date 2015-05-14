@@ -90,6 +90,9 @@ module.exports = function(app) {
   app.post('/api/register', function(req, res) {
 
     console.log(req.body);
+    var ok=1;
+    var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= ? ';
+    var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail=? ';
     var temp = {
         username : req.body.username ,
         password : req.body.password,
@@ -102,17 +105,48 @@ module.exports = function(app) {
         birthday : req.body.birthday ,
         adress   : req.body.address
     };
-      
-      if (temp.username) {
-        connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
+    if(temp.username)
+
+        {
+
+             connection.query (queryStringUsername, [temp.username],function(err, rows, fields) {
              if (err) throw err;
-              });
-        connection.query('SELECT * FROM users', function(err, rows, fields) {
-             if (err) throw err;
-                res.json(rows);
-           });
-      }
-    });
+                 console.log(" nr pentru username este " + rows[0].userNumber);
+                 if(rows[0].userNumber>0)
+                 {
+                      console.log("Username already exists" ); 
+                      res.send("The username is already in use !");
+                 }
+
+              else
+                 {
+                      connection.query (queryStringMail,[temp.mail], function(err, rows,fields) {
+                      if (err) throw err;
+                      console.log(" nr  pentru mail este " + rows[0].mailNumber);
+                        if(rows[0].mailNumber>0)
+                        {
+                            console.log("Mail already exists");
+                            res.send("The email address is already in use !");
+                        }
+                        else
+                        {
+                            connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
+                              if (err) throw err; 
+                              res.send("You have successfully registered !");
+                            });        
+                            connection.query('SELECT * FROM users', function(err, rows, fields) {
+                            if (err) throw err;
+                               
+                            });
+
+                        }
+                 
+                      });
+                }
+                });
+         }
+     
+         });
   // app.post('/api/familyDetails', function(req, res) {
   //     if (parsedFamilyObject == null) {
   //       parsedFamilyObject = req.body;
