@@ -38,6 +38,21 @@ body {
     vertical-align: middle;
 }
 
+.error-message {
+	background-color: rgba(242, 23, 23, 0.13);
+  	border: 2px solid rgba(230, 0, 0, 0.42);
+	border-radius: 5px;
+	padding: 20px 20px 10px 0px;
+
+	li {
+		width: 100%;
+		margin: 0 !important;
+		color: #DD1717;
+		margin-bottom: 5px;
+		font-size: 15px;
+	}
+}
+
 /* START INDEX PAGE LESS */
 
 header {
@@ -471,6 +486,12 @@ footer {
 		.footer-pull-right {
 			float: none;
 		}
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.main-wrapper.register-main-wrapper {
+		width: 100%;
 	}
 }
 
