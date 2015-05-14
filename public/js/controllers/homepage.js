@@ -23,5 +23,8 @@ angular.module('EDeC')
     //     	$scope.Products.push(temp);
     //     })
      //});
+    Homepage.get()
+    .success(function(){
+    });
 
 }]);

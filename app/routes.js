@@ -40,6 +40,11 @@ function dateParser(date) {
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
+    connection.query('SELECT COUNT(*) AS usernumber FROM users', function(err, rows, fields) {
+      if (err) throw err;
+      
+      console.log(rows[0].usernumber);     
+    });
    
   //  connection.query('SELECT * FROM product', function(err, rows, fields) {
   //    if (err) throw err;
