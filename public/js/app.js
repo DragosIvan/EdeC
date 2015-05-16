@@ -12,6 +12,19 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/register.html',
 				controller: 'RegisterCtrl'
 			})
+			.when('/about', {
+				templateUrl: 'views/aboutUs.html'
+			})
+			.when('/terms', {
+				templateUrl: 'views/termsAndConditions.html'
+			})
+			.when('/privacy', {
+				templateUrl: 'views/privacyPolicy.html'
+			})
+			.when('/products', {
+				templateUrl: 'views/products.html',
+				controller: 'ProductsCtrl'
+			})
 			.when('/plans/subsidy/:subsid', {
 		  		templateUrl: 'views/planSubsidy.html',
 		    	controller: 'PlanSubsidyCtrl'

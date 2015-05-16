@@ -353,6 +353,94 @@ footer .footer-pull-right a:hover {
   cursor: pointer;
 }
 /* END REGISTER LESS */
+/*START PRODUCTS LESS*/
+.products-main-wrapper .products {
+  height: 100%;
+  width: 100%;
+}
+.products-main-wrapper .products article {
+  width: 32.9%;
+  height: 200px;
+  border: 2px solid #c8c8c8;
+  margin-bottom: 30px;
+  display: inline-block;
+}
+.products-main-wrapper .products article:nth-of-type(n) {
+  margin-right: 0.15%;
+}
+.products-main-wrapper .products article div {
+  height: 100%;
+  width: 55%;
+  float: right;
+  text-align: justify;
+  display: inline-block;
+}
+.products-main-wrapper .products article div:hover {
+  background-color: #dedede;
+}
+.products-main-wrapper .products article div:hover .product-right-down-left {
+  background-color: #dedede;
+}
+.products-main-wrapper .products article div:first-child {
+  height: 100%;
+  width: 45%;
+  float: left;
+}
+.products-main-wrapper .products article div:first-child img {
+  max-height: 65%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 35px;
+}
+.products-main-wrapper .products article div:first-child:hover {
+  background-color: #ffffff;
+}
+.products-main-wrapper .products article div div {
+  height: 12%;
+  width: 100%;
+  display: inline-block;
+}
+.products-main-wrapper .products article div div:first-child {
+  height: 88%;
+  width: 100%;
+  display: inline-block;
+}
+.products-main-wrapper .products article div div:first-child:hover {
+  background-color: #dedede;
+}
+.products-main-wrapper .products article div div div {
+  height: 100%;
+  width: 50%;
+  float: right;
+  text-align: center;
+  background-color: #505766;
+  color: #ffffff;
+  display: inline-block;
+}
+.products-main-wrapper .products article div div div:hover {
+  background-color: #c2fd00;
+  color: #505766;
+}
+.products-main-wrapper .products article div div div:first-child {
+  height: 100%;
+  width: 50%;
+  float: left;
+  background-color: #ffffff;
+}
+.products-main-wrapper .products article div div div:first-child span img {
+  width: 16%;
+  display: inline-block;
+  margin-top: -10px;
+}
+.products-main-wrapper .products article div div div:first-child span:hover {
+  background-color: #505766;
+}
+.products-main-wrapper .products h4 {
+  text-align: left;
+  margin-top: 15px;
+}
+/*END PRODUCTS LESS*/
 /* START MEDIA QUERIES */
 @media screen and (max-width: 1071px) {
   .homepage-main-wrapper .cool-products article {
