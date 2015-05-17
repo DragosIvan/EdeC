@@ -1,6 +1,22 @@
 angular.module('EDeC')
     .controller('ProductsCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Products', function($scope, $routeParams, $filter, $http, Products) {
 
+$scope.Products = [];
+
+ Products.get()
+    .success(function(data) {
+        console.log(data);
+        
+        data.forEach(function(product) {
+            var temp = {};
+            temp.name = product.name;
+            temp.description = product.description;
+            temp.rating = product.rating;
+            temp.image = product.image;
+
+            $scope.Products.push(temp);
+        })
+    });
     // $scope.priceCheckboxes = [];
     // $scope.dedCheckboxes = [];
     // $scope.insuranceCheckboxes = [];

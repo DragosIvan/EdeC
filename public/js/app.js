@@ -21,7 +21,7 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 			.when('/privacy', {
 				templateUrl: 'views/privacyPolicy.html'
 			})
-			.when('/products', {
+			.when('/products/:pager', {
 				templateUrl: 'views/products.html',
 				controller: 'ProductsCtrl'
 			})
@@ -43,7 +43,6 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 		  	})
 		  	.when('/faqs', {
 				templateUrl: 'views/faqs.html'
-				
 			})
 		  	.otherwise({
 		    	redirectTo: '/homepage'
