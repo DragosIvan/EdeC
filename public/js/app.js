@@ -12,6 +12,10 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/register.html',
 				controller: 'RegisterCtrl'
 			})
+			.when('/login', {
+				templateUrl: 'views/login.html',
+				controller: 'LoginCtrl'
+			})
 			.when('/about', {
 				templateUrl: 'views/aboutUs.html'
 			})
@@ -47,4 +51,17 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 		  	.otherwise({
 		    	redirectTo: '/homepage'
 		  	});
-	}]);
+	}])
+	.run( function($http, $rootScope) {
+    $http.defaults.useXDomain = true;     
+
+    $http({method: 'GET', url: '/'}).
+      success(function(data, status, headers, config) {
+
+        $rootScope.logged = 'Logged in !';
+
+      }).
+      error(function(data, status, headers, config) {
+        console.log(status);
+      });
+  });

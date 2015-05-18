@@ -21,6 +21,7 @@
 		
 		<header>
 			<section class='header'>
+				<!-- <p>{{ logged }}</p> -->
 				<a href='/homepage'><img src='images/logo.png' alt='EDeC Logo'></a>
 				<div class='header-right'>
 					<a href='/login' class='hover-link'>Login</a>
@@ -33,6 +34,7 @@
 				</div>
 			<section>
 		</header>
+
 		<div ng-view></div>
 
 		<footer>
@@ -55,6 +57,7 @@
 				<a href='/terms'>Terms and Conditions</a>
 			</section>	
 		</footer>
+		
 		<!-- AngularJS Javascript Includes  -->
 		<script src="libs/angular/angular.js"></script>
 		<script src="libs/angular/angular-strap.js"></script>
@@ -70,12 +73,14 @@
 		<!-- Controllers include section -->
 		<script src="js/controllers/homepage.js"></script>
 		<script src="js/controllers/register.js"></script>
+		<script src="js/controllers/login.js"></script>
 		<script src="js/controllers/products.js"></script>
 		<!-- Controllers END -->
 
 		<!-- Services include section -->
 		<script src="js/services/homepageServ.js"></script>
 		<script src="js/services/register.js"></script>
+		<script src="js/services/login.js"></script>
 		<script src="js/services/products.js"></script>
 		<!-- Services END -->
 

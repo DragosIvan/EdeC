@@ -369,6 +369,41 @@ footer .footer-pull-right a:hover {
   cursor: pointer;
 }
 /* END REGISTER LESS */
+/* START LOGIN LESS */
+.login-main-wrapper {
+  background: url('../images/login_logo.png') no-repeat center;
+  background-size: contain;
+}
+.login-main-wrapper form {
+  width: 30%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  margin-top: -97.5px;
+}
+.login-main-wrapper form input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  font-size: 24px;
+}
+.login-main-wrapper form button {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  font-size: 24px;
+  background-color: #505766;
+  padding: 0px 30px;
+  color: #dedede;
+  border: none;
+}
+.login-main-wrapper form a {
+  display: inline-block;
+  text-decoration: none;
+  color: #c8c8c8;
+}
+/* END LOGIN  LESS */
 /*START PRODUCTS LESS*/
 .products-main-wrapper .products {
   height: 100%;

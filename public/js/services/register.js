@@ -9,9 +9,6 @@ angular.module('EDeC')
 			},
 			post : function() {
 				return $http.post('/api/register');
-				
-
-
 			}
 		}
 	}]);

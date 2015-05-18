@@ -115,50 +115,215 @@ module.exports = function(app) {
         lastname : req.body.last_name ,
         gender   : req.body.gender ,
         birthday : req.body.birthday ,
-        adress   : req.body.address
+        address  : req.body.address
     };
-    if(temp.username)
 
-        {
+    var registerErrorCode = 0;
 
-             connection.query (queryStringUsername, [temp.username],function(err, rows, fields) {
-             if (err) throw err;
-                 console.log(" nr pentru username este " + rows[0].userNumber);
-                 if(rows[0].userNumber>0)
-                 {
-                      console.log("Username already exists" ); 
-                      res.send("The username is already in use !");
-                 }
+    if (temp.username) {
+       connection.query (queryStringUsername, [temp.username],function(err, rows, fields) {
+        if (err) throw err;
+          if(rows[0].userNumber > 0) {
+                console.log("Username already exists" ); 
+                registerErrorCode = 1;
+          } else {
+            connection.query (queryStringMail, [temp.mail], function(err, rows,fields) {
+              if (err) throw err;
 
-              else
-                 {
-                      connection.query (queryStringMail,[temp.mail], function(err, rows,fields) {
-                      if (err) throw err;
-                      console.log(" nr  pentru mail este " + rows[0].mailNumber);
-                        if(rows[0].mailNumber>0)
-                        {
-                            console.log("Mail already exists");
-                            res.send("The email address is already in use !");
-                        }
-                        else
-                        {
-                            connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
-                              if (err) throw err; 
-                              res.send("You have successfully registered !");
-                            });        
-                            connection.query('SELECT * FROM users', function(err, rows, fields) {
-                            if (err) throw err;
-                               
-                            });
-
-                        }
-                 
-                      });
-                }
+              if(rows[0].mailNumber > 0) {
+                  console.log("Mail already exists");
+                  registerErrorCode = 2;
+              } else {
+                connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
+                  if (err) throw err; 
                 });
-         }
-     
-         });
+
+                connection.query('SELECT * FROM users', function(err, rows, fields) {
+                  if (err) throw err;
+                });
+              }
+            });
+          }
+          res.redirect('/register?error=' + registerErrorCode);
+      });
+    }
+  });
+
+  app.post('/api/login', function(req, res) {
+
+  });
+  
+  // app.post('/api/familyDetails', function(req, res) {
+  //     if (parsedFamilyObject == null) {
+  //       parsedFamilyObject = req.body;
+
+  //       soap.createClient( url, endpoint, function( err, client ) {
+  //       if (err)
+  //         console.log(err);
+  //       else {
+  //         var getCountiesXml = new XML("<ns:GetCounties xmlns:ns='http://www.quotit.com/Services/ActWS/ACA/2'>" +
+  //           "<ns:GetCountiesRequest>" +
+  //             "<AccessKeys>" +
+  //               "<RemoteAccessKey>392B9F8F-4E75-4B19-B509-D6A6602B6E5B</RemoteAccessKey>" +
+  //             "</AccessKeys>" +
+  //             "<Inputs>" +
+  //               "<ZipCode>" + parsedFamilyObject.Members[0].ZipCode + "</ZipCode>" +
+  //             "</Inputs>" +
+  //           "</ns:GetCountiesRequest>" +
+  //          "</ns:GetCounties>" );
+
+  //         globalClient = client;
+  //         globalClient.ACA.BasicHttpBinding_IACA.GetCounties(getCountiesXml.toXMLString(), function(err, result) {
+  //           if (err)
+  //             console.log(err);
+  //           else {
+  //             if (parsedFamilyObject.Members[0].CountyName == null || parsedFamilyObject.Members[0].CountyName == '') {
+  //               parsedFamilyObject.Members[0].CountyName = '';
+                
+  //               result.GetCountiesResult.Counties['GetCounties.Response.County'].forEach( function(county) {
+  //                 parsedFamilyObject.Members[0].CountyName += county.CountyName + '&&';
+  //               });
+
+  //               parsedFamilyObject.CountyName = parsedFamilyObject.Members[0].CountyName;
+  //               parsedFamilyObject.State = result.GetCountiesResult.Counties['GetCounties.Response.County'][0].State;
+  //             }
+
+  //             parsedFamilyObject.Members.forEach(function(member) {
+  //               if (member.ZipCode == parsedFamilyObject.Members[0].ZipCode && (member.CountyName == null || member.CountyName == ''))
+  //                 member.CountyName = parsedFamilyObject.Members[0].CountyName;
+  //               else if (member.Zipcode != parsedFamilyObject.Members[0].ZipCode && (member.CountyName == null || member.CountyName == '')) {
+  //                 getCountiesXml = new XML("<ns:GetCounties xmlns:ns='http://www.quotit.com/Services/ActWS/ACA/2'>" +
+  //                   "<ns:GetCountiesRequest>" +
+  //                     "<AccessKeys>" +
+  //                       "<RemoteAccessKey>392B9F8F-4E75-4B19-B509-D6A6602B6E5B</RemoteAccessKey>" +
+  //                     "</AccessKeys>" +
+  //                     "<Inputs>" +
+  //                       "<ZipCode>" + member.ZipCode + "</ZipCode>" +
+  //                     "</Inputs>" +
+  //                   "</ns:GetCountiesRequest>" +
+  //                  "</ns:GetCounties>" );
+  //                 globalClient.ACA.BasicHttpBinding_IACA.GetCounties(getCountiesXml.toXMLString(), function(err, result) {
+  //                   if (err)
+  //                     console.log(err);
+  //                   else {
+  //                     member.CountyName = '';
+              
+  //                     result.GetCountiesResult.Counties['GetCounties.Response.County'].forEach( function(county) {
+  //                       member.CountyName += county.CountyName + '&&';
+  //                     });
+  //                   }
+  //                 });
+  //               }
+  //             });
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+
+  //   if (req.body.applicantCounty != undefined) {
+  //     HouseholdSize = 1;
+  //     parsedFamilyObject.HouseholdSize = 1;
+
+  //     parsedFamilyObject.CountyName = req.body.applicantCounty;
+
+  //     parsedFamilyObject.Members[0].LiveinHousehold = '1';
+  //     parsedFamilyObject.Members[0].CountyName = req.body.applicantCounty;
+  //     parsedFamilyObject.Members[0].RelationshipType = 'Self';
+
+  //     if (req.body.applicantDateLastSmoked != '')
+  //         parsedFamilyObject.Members[0].DateLastSmoked = req.body.applicantDateLastSmoked;
+  //       else parsedFamilyObject.Members[0].DateLastSmoked = '0' 
+
+  //     if (req.body.applicantDateLastSmoked != '') {
+  //       parsedFamilyObject.Members[0].DateLastSmoked = req.body.applicantDateLastSmoked;
+  //       parsedFamilyObject.Members[0].IsSmoker = '1';
+  //     }
+  //     else {
+  //       parsedFamilyObject.Members[0].DateLastSmoked = '0';
+  //       parsedFamilyObject.Members[0].IsSmoker = '0';
+  //     }
+
+  //     // Spouse Field
+  //     if (req.body.spouseRelationship != undefined) {
+
+  //       if (req.body.spouseLiveInHousehold == 'Y') {
+  //         HouseholdSize++;
+  //         parsedFamilyObject.HouseholdSize++;
+  //         parsedFamilyObject.Members[1].LiveinHousehold = '1';
+  //       } else {
+  //         parsedFamilyObject.Members[1].LiveinHousehold = '0';
+  //       }
+
+  //       parsedFamilyObject.Members[1].Gender = req.body.spouseGender;
+  //       parsedFamilyObject.Members[1].RelationshipType = req.body.spouseRelationship;
+  //       parsedFamilyObject.Members[1].CountyName = req.body.spouseCounty;
+
+  //       if (req.body.spouseDateLastSmoked != '') {
+  //         parsedFamilyObject.Members[1].DateLastSmoked = req.body.spouseDateLastSmoked;
+  //         parsedFamilyObject.Members[1].IsSmoker = '1';
+  //       }
+  //       else {
+  //         parsedFamilyObject.Members[1].DateLastSmoked = '0';
+  //         parsedFamilyObject.Members[1].IsSmoker = '0';
+  //       } 
+  //     }
+  //     // End Spouse Field
+
+  //     //Dependents Fields
+  //     var i = 0;
+  //     parsedFamilyObject.Members.forEach( function(member) {
+  //       if (member.MemberType == 'Dependent') {
+  //         i++;
+
+  //         if (req.body['dependentLiveInHousehold'+i] == 'Y') {
+  //           HouseholdSize++;
+  //           parsedFamilyObject.HouseholdSize++;
+  //           member.LiveinHousehold = '1';
+  //         } else {
+  //           member.LiveinHousehold = '0';
+  //         }
+
+  //         member.Gender = req.body['dependentGender'+i];
+  //         member.RelationshipType = req.body['dependentRelationship'+i];
+  //         member.CountyName = req.body['dependentCounty'+i];
+
+  //         if (req.body['dependentDateLastSmoked'+i] != ''){
+  //           member.DateLastSmoked = req.body['dependentDateLastSmoked'+i];
+  //           member.IsSmoker = '1';
+  //         }
+  //         else {
+  //           member.DateLastSmoked = '0';
+  //           member.IsSmoker = '0';
+  //         }
+  //       }
+  //     });
+  //     //End Dependents Fields
+
+  //   }
+    
+  //   oldOnOff = '';
+  //   familyId = null;
+
+  //   res.redirect('/plans/subsidy/0');
+  // });
+
+
+  // // api ---------------------------------------------------------------------
+  // // get all plans
+  // allPlansCache.set( "allPlans" );
+
+  // app.get('/api/plans', function(req, res) {
+  //   var onOff = estimatedMaxMonthlyPremium > 0 ? "HealthOnExchange" : "HealthOffExchange";
+
+  //   if (onOff != oldOnOff) {
+  //     allPlansCache.set( "allPlans", null, function( err, success ) {
+  //       if (err) console.log(err);
+  //     });
+  //     oldOnOff = onOff;
+  //   }
+
+        
   // application -------------------------------------------------------------
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

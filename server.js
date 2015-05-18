@@ -4,9 +4,16 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 app.set('port', process.env.PORT || 7380);
 app.use(logger('dev'));
+app.use(session({
+	secret: 'banana',
+	saveUninitialized: false,
+	resave: true
+
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());

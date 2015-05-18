@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	// START GENERAL JS //
 	// setTimeout(function() {
-		var windowHeight = $(window).height() - 200;	
+		var windowHeight = $(window).height() - 220;	
 
 		if ($('.main-wrapper').height() < windowHeight) {
 			$('.main-wrapper').css('height', windowHeight);
@@ -15,7 +15,7 @@ $(document).ready(function() {
 	// }, 500)
 
 	$(window).on('resize', function() {
-		var windowHeight = $(window).height() - 200;	
+		var windowHeight = $(window).height() - 220;	
 
 		if ($('.main-wrapper').height() < windowHeight) $('.main-wrapper').css('height', windowHeight);
 		$('.slider-arrow').css('left', ($('.active-nav').width()/2 - 15)*$('.active-nav').data('nav'));
