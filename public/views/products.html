@@ -22,5 +22,37 @@
 				</div>
 			</div>
 		</article>	
+
+	<div class="pagination-centered">
+		<a href="#" id="Previous" onclick="PreviousFunction()"> 
+			<img  src='images/previous.png' alt='Previous'>
+		</a>
+		
+		<a href="#" id="Next" onclick="NextFunction()">
+			<img  src='images/next.png' alt='Next'>
+		</a>
+	</div>
+	<script type="text/javascript">
+		var number =1;
+		var page= window.location.origin+"/products/";
+		var address;
+		function NextFunction()  
+		{
+			number=number+1;
+			address="";
+			var address= page+number;
+			document.getElementById("Next").href=address;
+		}
+
+		function PreviousFunction()
+		{
+			var string=window.location.href;
+    		var res = string.split("/");
+			number=res[4]-1;
+			address="";
+			var address= page+number;
+			document.getElementById("Previous").href=address;
+		}
+	</script>
 	</section>
 </section>
