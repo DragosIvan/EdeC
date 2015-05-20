@@ -29,24 +29,22 @@ $(document).ready(function() {
 				$('.menu-bubble-3').fadeIn(500);
 			}, 350);
 			setTimeout(function() {
-				$('.open-close-menu').text('<');
+				$('.open-close-menu').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-left');
 				$('.open-close-menu').addClass('open');
-			}, 850);
+			}, 750);
 		} else {
 			$('.outer-circular-menu').addClass('closed');
-			setTimeout(function() {
-				$('.menu-bubble-3').fadeOut(500);
-			}, 150);
+			$('.menu-bubble-3').fadeOut(500);
 			setTimeout(function() {
 				$('.menu-bubble-2').fadeOut(500);
-			}, 250);
+			}, 100);
 			setTimeout(function() {
 				$('.menu-bubble-1').fadeOut(500);
-			}, 350);
+			}, 200);
 			setTimeout(function() {
-				$('.open-close-menu').text('>');
+				$('.open-close-menu').removeClass('glyphicon-menu-left').addClass('glyphicon-menu-right');
 				$('.open-close-menu').removeClass('open');
-			}, 850);
+			}, 700);
 		}
 	});
 	// END GENERAL JS //
