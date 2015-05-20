@@ -42,6 +42,15 @@
 			<form id='logout-form' action='/api/logout' method='GET' hidden></form>
 		</header>
 
+		<aside class='outer-circular-menu closed'>
+			<section class='inner-circular-menu'>
+				<span class='open-close-menu'> > </span>
+			</section>
+			<section class='menu-bubble-wrapper menu-bubble-1 closed'><a href='/products/1' class='menu-bubble'>Products</a></section>
+			<section class='menu-bubble-wrapper menu-bubble-2 closed'><a href='/products/1' class='menu-bubble'>Products</a></section>
+			<section class='menu-bubble-wrapper menu-bubble-3 closed'><a href='/products/1' class='menu-bubble'>Products</a></section>
+		</aside>
+
 		<div ng-view></div>
 
 		<footer>
@@ -108,6 +117,5 @@
 		<script src="js/services/planSubsidy.js"></script>
 		<!-- Services Examples END -->
 
-		<script src="js/main.js"></script>
 	</body>
 </html>

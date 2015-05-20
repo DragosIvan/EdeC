@@ -3,7 +3,7 @@ angular.module('EDeC')
 
     Homepage.get()
     .success(function(data){
-    	console.log(data);
+    	// console.log(data);
     	if (data == 0 && typeof $rootScope.username === 'undefined') {
     		$rootScope.username == '';
     	} else {

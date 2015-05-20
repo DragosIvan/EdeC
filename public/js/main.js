@@ -3,7 +3,9 @@ $(document).ready(function() {
 	// START GENERAL JS //
 	resizeWrapper();
 	$('.slider-arrow').css('left', ($('.active-nav').width()/2 - 15)*$('.active-nav').data('nav'));
-	$('.main-wrapper').css('visibility', 'visible');
+	setTimeout(function() {
+		$('body').css('visibility', 'visible');
+	}, 300);
 
 	$(window).on('resize', function() {
 		resizeWrapper();
@@ -12,6 +14,40 @@ $(document).ready(function() {
 
 	$('body').on('click', '#logout', function() {
 		$('#logout-form').submit();
+	});
+
+	$('body').on('click', '.open-close-menu', function() {
+		if ($('.outer-circular-menu').hasClass('closed')) {
+			$('.outer-circular-menu').removeClass('closed');
+			setTimeout(function() {
+				$('.menu-bubble-1').fadeIn(500);
+			}, 150);
+			setTimeout(function() {
+				$('.menu-bubble-2').fadeIn(500);
+			}, 250);
+			setTimeout(function() {
+				$('.menu-bubble-3').fadeIn(500);
+			}, 350);
+			setTimeout(function() {
+				$('.open-close-menu').text('<');
+				$('.open-close-menu').addClass('open');
+			}, 850);
+		} else {
+			$('.outer-circular-menu').addClass('closed');
+			setTimeout(function() {
+				$('.menu-bubble-3').fadeOut(500);
+			}, 150);
+			setTimeout(function() {
+				$('.menu-bubble-2').fadeOut(500);
+			}, 250);
+			setTimeout(function() {
+				$('.menu-bubble-1').fadeOut(500);
+			}, 350);
+			setTimeout(function() {
+				$('.open-close-menu').text('>');
+				$('.open-close-menu').removeClass('open');
+			}, 850);
+		}
 	});
 	// END GENERAL JS //
 

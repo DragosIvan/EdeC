@@ -16,10 +16,12 @@ body {
 	background-color: @white;
 	cursor: default;
 	font-family: steinerlight;
+	visibility: hidden;
+	position: relative;
 }
 
 .main-wrapper {
-	width: 70%;
+	width: 60%;
 	margin: 0 auto 0px auto;
 	position: relative;
 	padding: 30px 0;
@@ -74,6 +76,100 @@ body {
 	}
 }
 
+.outer-circular-menu {
+	
+	width: 314px;
+	height: 314px;
+	border-radius: 157px;
+	position: fixed;
+	top: 200px;
+	left: -200px;
+	border: 2px solid @darkerGrey;
+	transition: all .5s ease;
+
+	&.closed {
+		left: -280px;
+
+		&:hover {
+			cursor: pointer;
+			left: -270px;
+		}
+	}
+
+	.inner-circular-menu {
+		width: 300px;
+		height: 300px;
+		background-color: @darkBlue;
+		border-radius: 150px;
+		border: 2px solid @darkerGrey;
+		position: relative;
+		top: 5px;
+		left: 5px;
+	}
+
+	.open-close-menu {
+		  color: #ffffff;
+		  font-size: 33px;
+		  position: absolute;
+		  top: 50%;
+		  margin-top: -16px;
+		  right: 5px;
+		  line-height: 36px;
+		  transition: all .5s ease;
+
+	  	&:hover {
+			cursor: pointer;
+		}
+
+		&.open {
+			right: 40px;
+		}
+	}
+
+	.menu-bubble-wrapper {
+		  width: 94px;
+		  height: 94px;
+		  border-radius: 57px;
+		  position: absolute;
+		  border: 2px solid #c8c8c8;
+		  text-align: center;
+		  background-color: #ffffff;
+		  right: -10px;
+
+		.menu-bubble {
+			display: block;
+			width: 80px;
+			height: 80px;
+			background-color: @darkBlue;
+			border-radius: 50px;
+			border: 2px solid @darkerGrey;
+			position: relative;
+			top: 5px;
+			left: 5px;
+			text-decoration: none;
+			color: white;
+			font-size: 18px;
+			line-height: 78px;
+		}
+
+		&.menu-bubble-1 {
+			top: -30px;
+		}
+
+		&.menu-bubble-2 {
+			top: 110px;
+  			right: -55px;
+		}
+
+		&.menu-bubble-3 {
+			bottom: -30px;
+		}
+
+		&.closed {
+			display: none;
+		}
+	}
+}
 
 
 /* START INDEX PAGE LESS */
@@ -271,7 +367,6 @@ footer {
 				.slider-arrow {
 					position: absolute;
 					bottom: 20px;
-					left: 17.5%;
 				}
 			}
 		}
@@ -692,9 +787,9 @@ footer {
 	}
 }
 
-@media screen and (max-width: 750px) {
-	.main-wrapper.register-main-wrapper {
-		width: 100%;
+@media screen and (max-width: 768px) {
+	.main-wrapper {
+		width: 90%;
 	}
 }
 
