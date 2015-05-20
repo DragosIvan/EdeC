@@ -1,25 +1,18 @@
 $(document).ready(function() {
 
 	// START GENERAL JS //
-	// setTimeout(function() {
-		var windowHeight = $(window).height() - 220;	
-
-		if ($('.main-wrapper').height() < windowHeight) {
-			$('.main-wrapper').css('height', windowHeight);
-			$('.main-wrapper').addClass('adjusted-height');
-		}
-
-		$('.slider-arrow').css('left', ($('.active-nav').width()/2 - 15)*$('.active-nav').data('nav'));
-
-		$('.main-wrapper').css('visibility', 'visible');
-	// }, 500)
+	resizeWrapper();
+	$('.slider-arrow').css('left', ($('.active-nav').width()/2 - 15)*$('.active-nav').data('nav'));
+	$('.main-wrapper').css('visibility', 'visible');
 
 	$(window).on('resize', function() {
-		var windowHeight = $(window).height() - 220;	
-
-		if ($('.main-wrapper').height() < windowHeight) $('.main-wrapper').css('height', windowHeight);
+		resizeWrapper();
 		$('.slider-arrow').css('left', ($('.active-nav').width()/2 - 15)*$('.active-nav').data('nav'));
 	})
+
+	$('body').on('click', '#logout', function() {
+		$('#logout-form').submit();
+	});
 	// END GENERAL JS //
 
 // ######################################################################################################################################
@@ -48,9 +41,10 @@ $(document).ready(function() {
 // ######################################################################################################################################
 
 	// START REGISTRATION PAGE JS //
-	var error = '<div class="error-message"><ul>';
+	var error;
 
-	$('.go-to-optional-registration').on('click', function() {
+	$('body').on('click', '.go-to-optional-registration', function() {
+		error = '<div class="error-message"><ul>';
 		var r = '.register-form .registration-mandatory ';
 		if ($(r+'#password').val() != $(r+'#repeat-password').val()) error += '<li>The two passwords do not match !</li>';
 		$(r+'input').each(function(){
@@ -61,19 +55,22 @@ $(document).ready(function() {
 		
 		if (error == '<div class="error-message"><ul>') {
 			error = '';
+			$('.error-message').remove();
 			$('.registration-mandatory').fadeOut(500);
 			setTimeout(function(){
+				resizeWrapper();
 				$('.registration-optional').fadeIn(500);
 			}, 500)
 		} else {
 			error += "</ul></div>";
 			$('.error-message').remove();
 			$('.register-main-wrapper h2').before(error);
+			var windowHeight = $(window).height() - 200;
 			if ($('.main-wrapper').hasClass('adjusted-height')) $('.main-wrapper').height(windowHeight + $('.error-message').height());
 		}
 	});
 
-	$('.go-to-mandatory-registration').on('click', function() {
+	$('body').on('click', '.go-to-mandatory-registration', function() {
 		error = '<div class="error-message"><ul>';
 		scrollToTop();
 		$('.registration-optional').fadeOut(500);
@@ -82,7 +79,7 @@ $(document).ready(function() {
 		}, 500)
 	});	
 
-	$('.submit-registration').on('click', function() {
+	$('body').on('click', '.submit-registration', function() {
 		if (error == '') $('.register-form').submit();
 		else {
 			scrollToTop();
@@ -103,4 +100,9 @@ function scrollToTop() {
     window.scrollBy(0, -50);
     timeOut = setTimeout('scrollToTop()', 10);
   } else clearTimeout(timeOut);
+}
+
+function resizeWrapper() {
+	var windowHeight = $(window).height()-200;
+	$('.main-wrapper').css('min-height', windowHeight);
 }

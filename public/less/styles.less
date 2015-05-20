@@ -20,7 +20,7 @@ body {
 
 .main-wrapper {
 	width: 70%;
-	margin: 0 auto 30px auto;
+	margin: 0 auto 0px auto;
 	position: relative;
 	padding: 30px 0;
 }
@@ -50,6 +50,25 @@ body {
 		width: 100%;
 		margin: 0 !important;
 		color: #DD1717;
+		margin-bottom: 5px;
+		font-size: 15px;
+	}
+}
+
+.notification-message {
+
+}
+
+.validation-message {
+	background-color: rgba(28, 231, 38, 0.21);
+  	border: 2px solid rgba(17, 113, 26, 0.35);
+	border-radius: 5px;
+	padding: 20px 20px 10px 0px;
+
+	li {
+		width: 100%;
+		margin: 0 !important;
+		color: #187C19;
 		margin-bottom: 5px;
 		font-size: 15px;
 	}
@@ -470,12 +489,14 @@ footer {
 	background-size: contain;
 
 	form {
-		width: 30%;
-		margin: 0 auto;
-		text-align: center;
-		position: relative;
-		top: 50%;
-		margin-top: -97.5px;
+		  width: 30%;
+		  margin: 0 auto;
+		  text-align: center;
+		  position: absolute;
+		  left: 0;
+		  right: 0;
+		  top: 50%;
+		  margin-top: -97.5px;
 		
 		input {
 			width: 100%;

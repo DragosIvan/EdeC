@@ -13,6 +13,7 @@
     "body-parser": "~1.0.0",
     "express-session": "*",
     "node-cache": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "bcrypt-nodejs": "*"
   }
 }

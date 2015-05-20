@@ -11,7 +11,11 @@ angular.module('EDeC')
         // GET, POST =====================================================================
         // when landing on the page, get/post family details and show them
         // use the service to get/post all the family details
-    
+        
+        $scope.errorCode = $routeParams.error;
+
+        // console.log($scope.errorCode);
+
         Register.get()
         .success(function(data) {
             

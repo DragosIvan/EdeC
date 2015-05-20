@@ -4,6 +4,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 var fs = require('fs');
 var NodeCache = require( "node-cache" );
 var mysql     = require('mysql');
+var bcrypt    = require('bcrypt-nodejs');
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -40,53 +41,11 @@ function dateParser(date) {
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-    connection.query('SELECT COUNT(*) AS usernumber FROM users', function(err, rows, fields) {
-      if (err) throw err;
-      
-      console.log(rows[0].usernumber);     
-    });
-   
-  //  connection.query('SELECT * FROM product', function(err, rows, fields) {
-  //    if (err) throw err;
-
-  // console.log('The solution is: ', rows[0]);
-
-  //    //res.json(rows);
-  //   });
-
-  // res.send("Hello ! Is it me you're.. looking for ?");
-  // var temp = {
-  //    username: "Yolanda",password :"cacat", question:
-  //    "first pet name" , answer :" Rica", mail: "banana.ioana@yahoo.com"
-  //    ,name: "iftenie", lastname : "Ioana", gender: "f",
-  //    birthday : "16-01-1994", adress: "iasi"
-
-  // };
-  //res.json(temp);
-  // connection.query('insert into '+EDeC.users +( 'username', 'password', 'question', 'answer', 
-  //   'mail', 'name', 'lastname', 'gender', 'birthday', 'adress')VALUES (temp.username ,
-  //    temp.password , temp.question , temp.answer, temp.mail,
-  //    temp.name, temp.lastname ,temp.gender,temp.birthday ),
-  // function selectCb(err, results, fields) {
-  //     if (err) throw err;
-  //     else res.send('success');
-  // });
-  //  connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
-  //   if (err) throw err;
-  //   else
-  //    result = "doneaaaaa";
-  //    res.json(result);
-  // });
-  //  connection.query('SELECT * FROM users', function(err, rows, fields) {
-  //    if (err) throw err;
-  //    res.json(rows);
-  //   });
+    if (req.session) {
+      console.log(req.session.username);
+      res.json(req.session.username);
+    } else res.json(0);
   });
-     
-  app.get('/api/tasks', function(req, res) {
-    res.send("EDeC Task Page");
-  });
-
 
   app.get('/api/products/:pager', function(req, res) {
     console.log(req.params.pager);
@@ -107,7 +66,7 @@ module.exports = function(app) {
     var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail=? ';
     var temp = {
         username : req.body.username ,
-        password : req.body.password,
+        password : bcrypt.hashSync(req.body.password),
         question : req.body.security_question , 
         answer   : req.body.security_answer ,
         mail     : req.body.mail ,
@@ -121,7 +80,7 @@ module.exports = function(app) {
     var registerErrorCode = 0;
 
     if (temp.username) {
-       connection.query (queryStringUsername, [temp.username],function(err, rows, fields) {
+       connection.query (queryStringUsername, [temp.username], function(err, rows, fields) {
         if (err) throw err;
           if(rows[0].userNumber > 0) {
                 console.log("Username already exists" ); 
@@ -150,7 +109,33 @@ module.exports = function(app) {
   });
 
   app.post('/api/login', function(req, res) {
+    var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
+    var loginErrorCode = 0;
 
+    connection.query(queryStringLogin, [req.body.username], function(err, rows, fields) {
+      if (err) throw err;
+
+      if (rows[0] == null) {
+        loginErrorCode = 1;
+        console.log("Username is invalid" ); 
+        res.redirect('/login?error=' + loginErrorCode);
+      } else if (!bcrypt.compareSync(req.body.password, rows[0].password)) {
+        loginErrorCode = 1;
+        console.log("Password is invalid");
+        res.redirect('/login?error=' + loginErrorCode);
+      } else {
+        console.log("Good credentials");
+        req.session.username = req.body.username;
+        res.redirect('/homepage');
+      }
+    })
+  });
+
+  app.get('/api/logout', function(req, res) {
+    console.log(req.session);
+    req.session.destroy();
+    console.log(req.session);
+    res.redirect('/');
   });
   
   // app.post('/api/familyDetails', function(req, res) {

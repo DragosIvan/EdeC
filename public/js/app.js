@@ -51,17 +51,17 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 		  	.otherwise({
 		    	redirectTo: '/homepage'
 		  	});
-	}])
-	.run( function($http, $rootScope) {
-    $http.defaults.useXDomain = true;     
+	}]);
+	// .run( function($http, $rootScope) {
+ //    $http.defaults.useXDomain = true;     
 
-    $http({method: 'GET', url: '/'}).
-      success(function(data, status, headers, config) {
+ //    $http({method: 'GET', url: '/'}).
+ //      success(function(data, status, headers, config) {
 
-        $rootScope.logged = 'Logged in !';
+ //        $rootScope.logged = 'Logged in !';
 
-      }).
-      error(function(data, status, headers, config) {
-        console.log(status);
-      });
-  });
+ //      }).
+ //      error(function(data, status, headers, config) {
+ //        console.log(status);
+ //      });
+ //  });

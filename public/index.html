@@ -21,11 +21,16 @@
 		
 		<header>
 			<section class='header'>
-				<!-- <p>{{ logged }}</p> -->
 				<a href='/homepage'><img src='images/logo.png' alt='EDeC Logo'></a>
 				<div class='header-right'>
-					<a href='/login' class='hover-link'>Login</a>
-					<a href='/register' class='hover-link'>Register</a>
+					<span ng-if='!username'>
+						<a href='/login' class='hover-link'>Login</a>
+						<a href='/register' class='hover-link'>Register</a>
+					</span>
+					<span ng-if='username'>
+						<a href='/profile' class='hover-link'>Profile</a>
+						<a href='' id='logout' class='hover-link'>Logout</a>
+					</span>
 					<span class='separator'></span>
 					<a href='/cart' class='cart-link'>
 						<img src='images/cart.png' alt='EDeC Cart'>
@@ -33,6 +38,8 @@
 					</a>
 				</div>
 			<section>
+
+			<form id='logout-form' action='/api/logout' method='GET' hidden></form>
 		</header>
 
 		<div ng-view></div>
