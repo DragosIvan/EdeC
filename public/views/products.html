@@ -1,10 +1,13 @@
 <section class='main-wrapper products-main-wrapper'>
 	<section class='products' ng-if="Products.length > 0">
 
-		<h1 class='equal-header-margins-h3'>Products</h1>
+		<h1 class='title'>Products</h1>
 
 		<article ng-repeat="Product in Products">
-			<div class ='product-left'><img src='{{Product.image}}' alt='prod1'></div> 
+			<div class = 'product-left'>
+				<span class='vertical-align-helper'></span>
+				<img src='{{Product.image}}' alt='prod1'>
+			</div> 
 			<div class = 'product-right'>
 				<div class = 'product-right-up'>
 					<h4>{{Product.name}}</h4>
@@ -18,7 +21,7 @@
 						<span><img src='images/empty_star.png' alt='d'></span>
 						<span><img src='images/empty_star.png' alt='e'></span>
 					</div>
-					<div class = 'product-right-down-right'>Add to cart</div>
+					<div class = 'product-right-down-right'><p>Add to cart</p></div>
 				</div>
 			</div>
 		</article>	

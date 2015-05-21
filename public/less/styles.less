@@ -640,15 +640,22 @@ footer {
 			   
 		
 
+		.title {
+			text-align: left;
+			margin-bottom: 20px;
+		}
+
 		article{
-			width: 32.9%;
-			height: 200px;
+			width: 49%;
+			height: 220px;
 			border: 2px solid @darkerGrey;
-			margin-bottom: 30px;
+			margin-bottom: 10px;
 			display: inline-block;
 			
+			
 			&:nth-of-type(n) {
-				margin-right: 0.15%;
+				margin-right: 0.5%;
+				margin-left: 0.5%;
 			}
 
 			&:hover {
@@ -663,29 +670,32 @@ footer {
 				width: 55%;
 				float: right;
 				display: inline-block;
-				padding: 1px;
+				padding: 1.5px;
 
-				&:first-child{//partea stanga
+				&.product-left {//partea stanga
 					height: 100%;
 					width: 45%;
 					float: left;
+					font: 0/0 a;
+					text-align: center;
+					padding: 20px;
 
 					img {
-						max-height: 65%;
-						display: block;
-						margin-left: auto;
-						margin-right: auto;
-						margin-top: 35px;
+						max-height: 100%;
+						max-width: 100%;
+						display: inline;
+						position: relative;
+						margin: 0 auto;
 						}
 				}
 
 				div{//partea dreapta jos
-					height: 12%;
+					height: 15%;
 					width: 100%;
 					display: inline-block;
 
 					&:first-child{//partea dreapta sus
-						height: 88%;
+						height: 85%;
 						width: 100%;
 						display: inline-block;
 					}
@@ -694,10 +704,14 @@ footer {
 						height: 100%;
 						width: 50%;
 						float: right;
-						text-align: center;
 						background-color: @darkBlue;
 						color: @white;
-						display: inline-block;
+
+						p {
+							text-align: center;
+							vertical-align: middle;
+							margin-top: 3px;
+						}
 
 						&:hover {
 								background-color: @lightGreen;
@@ -709,15 +723,15 @@ footer {
 							width: 50%;
 							float: left;
 							background-color: @white;
-							padding-right: 1.6px;
+							padding-right: 1.5px;
 
 							span{
 
 								img{
 								width: 16%;
-								max-height: 70%;
+								max-height: 65%;
 								display: inline-block;
-								margin-top: -4px;
+								margin-top: 5px;
 								}
 							}
 						}
