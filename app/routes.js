@@ -49,12 +49,24 @@ module.exports = function(app) {
 
   app.get('/api/products/:pager', function(req, res) {
     console.log(req.params.pager);
+    console.log(req.body);
     var limitUpperProduct = req.params.pager;
     var limitLowerProduct = req.params.pager - 1;
-    var queryStringUsername = 'SELECT name, description, rating, image FROM product WHERE id_product BETWEEN 21*?+1 AND 21*?';
+    var queryStringUsername = 'SELECT id_product,name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
     connection.query (queryStringUsername, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
          if (err) throw err;
+         console.log('querried');
          res.json(rows);
+    });         
+  });
+
+  app.get('/api/product/:idProduct', function(req, res) {
+    console.log(req.params.idProduct);
+    var queryStringUsername = 'SELECT * FROM product WHERE id_product=?';
+    connection.query (queryStringUsername, [req.params.idProduct], function(err, rows, fields) {
+         if (err) throw err;
+         res.json(rows);
+        console.log(rows);
     });         
   });
 

@@ -126,6 +126,39 @@ $(document).ready(function() {
 	// END REGISTRATION PAGE JS//
 
 // ######################################################################################################################################
+
+	// START PRODUCTS PAGE JS //
+
+	var page = window.location.origin+"/products/";
+	var pageProduct = window.location.origin+"/product/";
+	var address, strigng, arr, number;
+	console.log("here mutter fucker")
+
+	$('body').on('click', '#products-next img', function() {
+		string = window.location.href;
+		arr    = string.split("/");
+		number = parseInt(arr[4])+1;
+		address = page + number;
+		window.location = address;
+
+	});
+
+	$('body').on('click', '#products-previous img', function() {
+		string = window.location.href;
+		arr    = string.split("/");
+		number = parseInt(arr[4])-1;
+		address = page + number;
+		window.location = address;
+	});
+
+	$('body').on('click', '.edec-product', function() {	
+		number = $(this).find('.hidden-product-number').text();
+		address = pageProduct+number;
+		console.log("numarul este "+ number);
+		window.location = address;
+	});
+
+	// END PRODUCTS PGAE JS //
 });
 
 var timeOut;

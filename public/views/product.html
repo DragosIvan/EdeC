@@ -1,23 +1,24 @@
-<section class='main-wrapper product-main-wrapper'>
-	<section class='products'>
-			<div class='back-to-products'></div>
-			<article class='main-product'>
-				<div class='product-left'>
-					<div class='product-image'></div>
-					<div class='product-rating'><>
+<section class='main-wrapper products-main-wrapper'>
+	<section class='product'>
+		<div class ='product-left'><img src='{{Product.image}}' alt='prod1'></div> 
+			<div class = 'product-right'>
+				<div class = 'product-right-up'>
+					<h4>{{Product.name}}</h4>
+					<p>{{Product.description}}</p>
+					<p>{{Product.price}}</p>
 				</div>
-				<div class='product-right'>
-					<div class='product-description'>
-						<h3>Product name</h3>
-						<div class='product-text'></div>
+				<div class = 'product-right-down'>
+					<div class = 'product-right-down-left'>
+						<span><img src='images/full_star.png' alt='a'></span>
+						<span><img src='images/full_star.png' alt='b'></span>
+						<span><img src='images/full_star.png' alt='c'></span>
+						<span><img src='images/empty_star.png' alt='d'></span>
+						<span><img src='images/empty_star.png' alt='e'></span>
 					</div>
-					<div class='price-buy'>
-						<div class='price'></div>
-						<div class='buy'></div>
-					</div>
-
-					</div>
+					<div class = 'product-right-down-right'>Add to cart</div>
 				</div>
-			</article>
+			</div>
 	</section>
 </section>
+
+<script src="js/main.js"></script>
