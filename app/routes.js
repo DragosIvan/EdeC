@@ -60,13 +60,23 @@ module.exports = function(app) {
     });         
   });
 
-  app.get('/api/product/:idProduct', function(req, res) {
+   app.get('/api/product/:idProduct', function(req, res) {
     console.log(req.params.idProduct);
-    var queryStringUsername = 'SELECT * FROM product WHERE id_product=?';
-    connection.query (queryStringUsername, [req.params.idProduct], function(err, rows, fields) {
-         if (err) throw err;
-         res.json(rows);
-        console.log(rows);
+    var response = {
+      productData: '',
+      productComments: ''
+    };
+    var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+    connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
+        if (err) throw err;
+        response.productData=rows;
+        connection.query (queryStringComments, function(err, rows, fields) {
+        if (err) throw err;
+        //console.log(rows);
+         response.productComments=rows;
+         res.json(response);
+        });   
     });         
   });
 

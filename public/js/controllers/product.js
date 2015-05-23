@@ -5,9 +5,8 @@ $scope.Product;
 
  Product.get()
     .success(function(data) {
-        console.log("Am pus in vector1");
-        console.log(product);
-       var product = data[0];
+        console.log(data);
+        var product = data.productData[0];
             var temp = {};
             temp.id_product=product.id_product;
             temp.name = product.name;
@@ -20,8 +19,7 @@ $scope.Product;
 
             $scope.Product = temp;
             console.log($scope.Product);
-             console.log("Am pus in vector");
-        
+            $scope.Comments =data.productComments;           
         })
     }]);
  
