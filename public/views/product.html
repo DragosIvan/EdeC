@@ -1,29 +1,103 @@
-<section class='main-wrapper products-main-wrapper'>
+<section class='main-wrapper product-main-wrapper'>
 	<section class='product'>
-		<div class ='product-left'><img src='{{Product.image}}' alt='prod1'></div> 
-			<div class = 'product-right'>
-				<div class = 'product-right-up'>
-					<h4>{{Product.name}}</h4>
-					<p>{{Product.description}}</p>
-					<p>{{Product.price}}</p>
-				</div>
-				<div class = 'product-right-down'>
-					<div class = 'product-right-down-left'>
-						<span><img src='images/full_star.png' alt='a'></span>
-						<span><img src='images/full_star.png' alt='b'></span>
-						<span><img src='images/full_star.png' alt='c'></span>
-						<span><img src='images/empty_star.png' alt='d'></span>
-						<span><img src='images/empty_star.png' alt='e'></span>
-					</div>
-					<div class = 'product-right-down-right'>Add to cart</div>
-				</div>
+		<div class ='product-left'>
+			<div class ='product-left-up'><img src='{{Product.image}}' alt='prod1'></div>
+			<div class='product-left-down'>
+				<span><img src='images/full_star.png' alt='a'></span>
+				<span><img src='images/full_star.png' alt='b'></span>
+				<span><img src='images/full_star.png' alt='c'></span>
+				<span><img src='images/empty_star.png' alt='d'></span>
+				<span><img src='images/empty_star.png' alt='e'></span>
 			</div>
+		</div> 
+		<div class = 'product-right'>
+			<div class = 'product-right-up'>
+				<h3>{{Product.name}}</h3>
+				<p>{{Product.description}}</p>	
+			</div>
+			<div class = 'product-right-down'>
+				<div class = 'product-price'><p>{{Product.price}}</p></div>
+				<div class = 'product-cart'><p>Add to cart</p></div>
+			</div>
+		</div>
 	</section>
-	<section  class="comments">
-	<article clss="comment" ng-repeat="Comment in Comments">
-	{{Comment.comm}}
-	</article>
+
+	<section class= 'comment'>
+		<div class= 'comm-left'>
+			<div class= 'comm-left-up'>
+				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
+				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
+			</div>
+			<div class= 'comm-left-down'>
+				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
+			</div>
+		</div>
+		<div class= 'comm-right'>
+			<span><img src='images/full_star.png' alt='a'></span>
+			<span><img src='images/full_star.png' alt='b'></span>
+			<span><img src='images/full_star.png' alt='c'></span>
+			<span><img src='images/empty_star.png' alt='d'></span>
+			<span><img src='images/empty_star.png' alt='e'></span>
+		</div>
 	</section>
+
+	<section class= 'comment'>
+		<div class= 'comm-left'>
+			<div class= 'comm-left-up'>
+				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
+				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
+			</div>
+			<div class= 'comm-left-down'>
+				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
+			</div>
+		</div>
+		<div class= 'comm-right'>
+			<span><img src='images/full_star.png' alt='a'></span>
+			<span><img src='images/full_star.png' alt='b'></span>
+			<span><img src='images/full_star.png' alt='c'></span>
+			<span><img src='images/empty_star.png' alt='d'></span>
+			<span><img src='images/empty_star.png' alt='e'></span>
+		</div>
+	</section>
+
+		<section class= 'comment'>
+		<div class= 'comm-left'>
+			<div class= 'comm-left-up'>
+				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
+				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
+			</div>
+			<div class= 'comm-left-down'>
+				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
+			</div>
+		</div>
+		<div class= 'comm-right'>
+			<span><img src='images/full_star.png' alt='a'></span>
+			<span><img src='images/full_star.png' alt='b'></span>
+			<span><img src='images/full_star.png' alt='c'></span>
+			<span><img src='images/empty_star.png' alt='d'></span>
+			<span><img src='images/empty_star.png' alt='e'></span>
+		</div>
+	</section>
+
+		<section class= 'comment'>
+		<div class= 'comm-left'>
+			<div class= 'comm-left-up'>
+				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
+				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
+			</div>
+			<div class= 'comm-left-down'>
+				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
+			</div>
+		</div>
+		<div class= 'comm-right'>
+			<span><img src='images/full_star.png' alt='a'></span>
+			<span><img src='images/full_star.png' alt='b'></span>
+			<span><img src='images/full_star.png' alt='c'></span>
+			<span><img src='images/empty_star.png' alt='d'></span>
+			<span><img src='images/empty_star.png' alt='e'></span>
+		</div>
+	</section>
+
 </section>
 
 <script src="js/main.js"></script>
