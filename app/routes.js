@@ -129,6 +129,13 @@ module.exports = function(app) {
       });
     }
   });
+app.get('/api/profile', function(req, res) {
+    var queryStringUser = 'SELECT id_users,username,mail,name,lastname,gender,DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday ,address FROM users WHERE username = ?';
+    connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
+         if (err) throw err;
+         res.json(rows);
+    });         
+  });
 
   app.post('/api/login', function(req, res) {
     var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
@@ -136,7 +143,7 @@ module.exports = function(app) {
 
     connection.query(queryStringLogin, [req.body.username], function(err, rows, fields) {
       if (err) throw err;
-
+   
       if (rows[0] == null) {
         loginErrorCode = 1;
         console.log("Username is invalid" ); 

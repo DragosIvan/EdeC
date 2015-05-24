@@ -1,0 +1,55 @@
+<section class='main-wrapper profile-main-wrapper'>
+	<section class='profile'>
+		<article class="edec-profile">
+			<span class="hidden-product-number">
+			{{Profile.id_users}}
+			</span>
+			<div class = 'profile-left'>
+				<h2>{{Profile.username}}</h2>
+				<article ng-if='Profile.name'>
+				{{Profile.name}} </article>
+				<article ng-if='Profile.lastname'>
+				{{Profile.lastname}} </article>
+				<article ng-if='Profile.gender'>
+				{{Profile.gender}} </article>
+				<article ng-if='Profile.birthday'>
+				{{Profile.birthday}} </article>
+				<article ng-if='Profile.mail'>
+				{{Profile.mail}} </article>
+				<article ng-if='if Profile.address'>
+				{{Profile.address}} </article>
+			</div> 
+
+			<div class = 'profile-right' >
+			<!-- Prieteni	 -->
+			<h2> Friends </h2>
+			<article class="my-friends">
+			<p>Hurdubae Diana </p>
+			<p>shjty </p>
+			<p>f Diana </p>
+			<p>Hurdubae kkk </p>
+			<p>Hurdubae Dykiana </p>
+			</article>
+			</div>
+		</article>	
+	
+	</section>
+
+	<section class="edit-profile">
+		<article class="profile-info">
+
+		<h2>Edit user data </h2>
+		<form class='edit-profile-info-form' method='post' action='/api/profile'>
+				<label for='first-name'>First Name: <input type='text' id='first-name' name='first_name' /></label>
+				<label for='last-name'>Last Name: <input type='text' id='last-name' name='last_name' /></label>
+				<label for='adresss'>Address: <textarea id='address' name='address'></textarea></label>
+				<label for='username'>Username: <input type='username' id='username' name='username' /></label>
+				<label for='password'>Password: <input type='password' id='password' name='password' /></label>
+				<label for='repeat-password'>Repeat password: <input type='password' id='repeat-password' name='repeat_password' /></label>
+				<label for='mail'>Email address: <input type='email' id='mail' name='mail'/></label>
+				<span class='profile-button submit-edit-info'>Register</span>
+		</form>
+		</article>
+	</section>
+</section>
+<script src="js/main.js"></script>

@@ -22,4 +22,4 @@ $scope.Product;
             $scope.Comments =data.productComments;           
         })
     }]);
- 
+  
