@@ -41,21 +41,30 @@ function dateParser(date) {
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-    if (req.session) {
-      console.log(req.session.username);
-      res.json(req.session.username);
-    } else res.json(0);
+    var response = {
+      randomProducts: '',
+      username: 0
+    }
+    var getRandomProductsQuery = 'SELECT id_product, name, description, image FROM product ORDER BY RAND() LIMIT 4';
+    connection.query (getRandomProductsQuery, function(err, rows, fields) {
+      if (err) throw err;
+      response.randomProducts = rows;
+
+      if (req.session.username) {
+        response.username = req.session.username;
+      }
+
+      res.json(response);
+
+    });
   });
 
   app.get('/api/products/:pager', function(req, res) {
-    console.log(req.params.pager);
-    console.log(req.body);
     var limitUpperProduct = req.params.pager;
     var limitLowerProduct = req.params.pager - 1;
-    var queryStringUsername = 'SELECT id_product,name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
+    var queryStringUsername = 'SELECT id_product, name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
     connection.query (queryStringUsername, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
          if (err) throw err;
-         console.log('querried');
          res.json(rows);
     });         
   });

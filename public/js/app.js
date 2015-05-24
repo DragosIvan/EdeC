@@ -59,17 +59,12 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 		  	.otherwise({
 		    	redirectTo: '/homepage'
 		  	});
-	}]);
-	// .run( function($http, $rootScope) {
- //    $http.defaults.useXDomain = true;     
-
- //    $http({method: 'GET', url: '/'}).
- //      success(function(data, status, headers, config) {
-
- //        $rootScope.logged = 'Logged in !';
-
- //      }).
- //      error(function(data, status, headers, config) {
- //        console.log(status);
- //      });
- //  });
+	}])
+	.filter('range', function() {
+        return function(input, total) {
+            total = parseInt(total);
+            for (var i=0; i < total; i++)
+                input.push(i);
+            return input;
+        }
+    });

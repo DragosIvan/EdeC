@@ -4,9 +4,7 @@
 		<h1 class='title'>Products</h1>
 
 		<article ng-repeat="Product in Products" class="edec-product">
-			<span class="hidden-product-number">
-			{{Product.id_product}}
-			</span>
+			<a href='/product/{{ Product.id_product }}'>
 			<div class = 'product-left'>
 				<span class='vertical-align-helper'></span>
 				<img src='{{Product.image}}' alt='prod1'>
@@ -20,26 +18,28 @@
 				</div>
 				<div class = 'product-right-down'>
 					<div class = 'product-right-down-left'>
-						<span><img src='images/full_star.png' alt='a'></span>
-						<span><img src='images/full_star.png' alt='b'></span>
-						<span><img src='images/full_star.png' alt='c'></span>
-						<span><img src='images/empty_star.png' alt='d'></span>
-						<span><img src='images/empty_star.png' alt='e'></span>
+						<span ng-repeat='i in [] | range:Product.positiveRating'>
+							<span><img src='images/full_star.png' alt='a'></span>
+						</span>
+						<span ng-repeat='i in [] | range:Product.negativeRating'>
+							<span><img src='images/empty_star.png' alt='a'></span>
+						</span>
 					</div>
 					<div class = 'product-right-down-right'><p>Add to cart</p></div>
 				</div>
 			</div>
+			</a>
 		</article>	
 	<div class="pagination-centered">
-		<a href="" id="products-previous"> 
+		<a href="/products/1" id="products-previous"> 
 			<img src='images/previous.png' alt='Previous'>
 		</a>
 		
-		<a href="" id="products-next">
+		<a href="/products/2" id="products-next">
 			<img  src='images/next.png' alt='Next'>
 		</a>
 	</div>
 	</section>
 </section>
 
-<script src="js/main.js"></script>
+<script src="js/resize.js"></script>

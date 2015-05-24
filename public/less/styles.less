@@ -20,6 +20,12 @@ body {
 	position: relative;
 }
 
+a, a:hover, a:active, a:focus {
+  outline: 0;
+  color: #000;
+  text-decoration: none;
+}
+
 .main-wrapper {
 	width: 60%;
 	margin: 0 auto 0px auto;
@@ -76,6 +82,68 @@ body {
 	}
 }
 
+
+.hidden-product-number {
+	display: none;
+}
+
+/* START INDEX PAGE LESS */
+
+header {
+	width: 100%;
+	height: 100px;
+	background-color: @darkBlue;
+
+	.header {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		padding: 20px 70px;
+
+		img {
+			max-height: 100%;
+		}
+
+		.header-right {
+			float: right;
+			height: 100%;
+			padding: 15px 0;
+
+			a {
+				  display: inline-block;
+				  position: relative;
+				  color: @grey;
+				  padding: 0px 10px;
+				  margin-bottom: -6px;
+				  top: -30%;
+				  text-decoration: none;
+
+				  &:first-child {
+				  	margin-right: 10px;
+				  }
+
+				  &.hover-link:hover {
+				  	background-color: @lightGreen;
+				  	color: @darkBlue;
+				  }
+
+				  &.cart-link {
+				  	height: 30px;
+				  	top: -40%;
+				  }
+			}
+
+			.separator
+			{
+				width: 1px;
+				height: 100%;
+				background-color: @grey;
+				display: inline-block;
+			}
+		}
+	}
+}
+
 .outer-circular-menu {
 	
 	width: 314px;
@@ -86,6 +154,8 @@ body {
 	left: -220px;
 	border: 2px solid @darkerGrey;
 	transition: all .5s ease;
+	background-color: @white;
+	z-index: 9999;
 
 	&.closed {
 		left: -280px;
@@ -150,6 +220,11 @@ body {
 			color: white;
 			font-size: 18px;
 			line-height: 78px;
+
+			&:hover {
+				background-color: @lightGreen;
+				color: @darkBlue;
+			}
 		}
 
 		&.menu-bubble-1 {
@@ -171,72 +246,10 @@ body {
 	}
 }
 
-
-.hidden-product-number {
-	display: none;
-}
-
-/* START INDEX PAGE LESS */
-
-header {
-	width: 100%;
-	height: 100px;
-	background-color: @darkBlue;
-
-	.header {
-		width: 100%;
-		height: 100%;
-		position: relative;
-		padding: 20px 50px;
-
-		img {
-			max-height: 100%;
-		}
-
-		.header-right {
-			float: right;
-			height: 100%;
-			padding: 15px 0;
-
-			a {
-				  display: inline-block;
-				  position: relative;
-				  color: @grey;
-				  padding: 0px 10px;
-				  margin-bottom: -6px;
-				  top: -30%;
-				  text-decoration: none;
-
-				  &:first-child {
-				  	margin-right: 10px;
-				  }
-
-				  &.hover-link:hover {
-				  	background-color: @lightGreen;
-				  	color: @darkBlue;
-				  }
-
-				  &.cart-link {
-				  	height: 30px;
-				  	top: -40%;
-				  }
-			}
-
-			.separator
-			{
-				width: 1px;
-				height: 100%;
-				background-color: @grey;
-				display: inline-block;
-			}
-		}
-	}
-}
-
 footer {
-	padding: 14px 20px;
+	padding: 14px 70px;
 	width: 100%;
-	height: 100px;
+	height: 80px;
 	background-color: @grey;
 
 	img  {
@@ -244,24 +257,22 @@ footer {
 	}
 
 	a {
-		display: inline-block;
 		position: relative;
 		color: @darkBlue;
 		padding: 0px 10px;
 		text-decoration: none;
-
-		&:hover {
-			text-decoration: none;			
-		}
+		max-height: 100%;
 	}
 
 	.footer-pull-right {
 		display: inline-block;
 		position: relative;
-		top: 28px;
+		top: 20px;
 		float: right;
 
 		a {
+			padding: 5px;
+
 			&:hover {
 				background-color: @lightGreen;
 			}
@@ -547,6 +558,7 @@ footer {
 				h3 {
 					text-align: center;
 					margin-top: 5px;
+					font-size: 20px;
 				}
 
 				img {
@@ -690,28 +702,32 @@ footer {
 	.products{
 		height: 100%;
 		width: 100%;
-		 .pagination-centered {
-			 padding-left: 380px;
-			 float: center; 
-			 img{
-			 	margin-left: 50px;
-			 }
-			 }
-			
-			   
 		
+		.pagination-centered {
+			text-align: center;
 
+				a {
+					display: inline-block;
+					margin-left: 50px;
+
+					&:first-child {
+						margin-left: 0;
+					}
+				}
+		}
+			
 		.title {
 			text-align: left;
 			margin-bottom: 20px;
 		}
 
-		article{
+		article {
 			width: 49%;
 			height: 220px;
 			border: 2px solid @darkerGrey;
 			margin-bottom: 10px;
 			display: inline-block;
+			z-index: 10;
 			
 			
 			&:nth-of-type(n) {
@@ -720,11 +736,12 @@ footer {
 			}
 
 			&:hover {
+				background-color: @grey;
+				
+				.product-right-down-left{
 					background-color: @grey;
-					.product-right-down-left{
-								background-color: @grey;
-								}
 				}
+			}
 
 			div{//partea dreapta
 				height: 100%;
@@ -772,6 +789,8 @@ footer {
 							text-align: center;
 							vertical-align: middle;
 							margin-top: 3px;
+							z-index: 999;
+							position: relative;
 						}
 
 						&:hover {
@@ -785,12 +804,12 @@ footer {
 							float: left;
 							background-color: @white;
 							padding-right: 1.5px;
+							margin-top: -4px;
 
 							span{
 
 								img{
 								width: 16%;
-								max-height: 65%;
 								display: inline-block;
 								margin-top: 5px;
 								}
@@ -864,7 +883,7 @@ footer {
 
 @media screen and (max-width: 768px) {
 	.main-wrapper {
-		width: 90%;
+		width: 89%;
 	}
 }
 

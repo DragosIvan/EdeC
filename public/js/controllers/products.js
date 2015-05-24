@@ -1,9 +1,9 @@
 angular.module('EDeC')
     .controller('ProductsCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Products', function($scope, $routeParams, $filter, $http, Products) {
 
-$scope.Products = [];
+    $scope.Products = [];
 
- Products.get()
+    Products.get()
     .success(function(data) {
         console.log(data);
         
@@ -11,11 +11,13 @@ $scope.Products = [];
             var temp = {};
             temp.id_product=product.id_product;
             temp.name = product.name;
-            temp.description = product.description;
-            temp.rating = product.rating;
+            temp.description = product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description;
+            temp.positiveRating = product.rating;
+            temp.negativeRating = 5 - product.rating;
             temp.image = product.image;
 
             $scope.Products.push(temp);
         })
     });
+
   }]);

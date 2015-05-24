@@ -57,48 +57,20 @@
 
 	<section class='cool-products'>
 		<h3 class='equal-header-margins-h3'>More cool products</h3>
-		<article>
-			<div>
-				<span class='vertical-align-helper'></span>
-				<img src='images/products/name13.png' alt='prod1'>
-			</div>
-			<div>
-				<h3>Product nr. 1</h3>
-				Oat cake donut pastry fruitcake candy canes ice cream chocolate apple pie pie. Sweet roll liquorice candy canes pastry liquorice soufflé.
-			</div>
-		</article>
-		<article>
-			<div>
-				<span class='vertical-align-helper'></span>
-				<img src='images/products/name38.png' alt='prod1'>
-			</div>
-			<div>
-				<h3>Product nr. 2</h3>
-				Oat cake donut pastry fruitcake candy canes ice cream chocolate apple pie pie. Sweet roll liquorice candy canes pastry liquorice soufflé.
-			</div>
-		</article>
-		<article>
-			<div>
-				<span class='vertical-align-helper'></span>
-				<img src='images/products/name40.png' alt='prod1'>
-			</div>
-			<div>
-				<h3>Product nr. 3</h3>
-				Oat cake donut pastry fruitcake candy canes ice cream chocolate apple pie pie. Sweet roll liquorice candy canes pastry liquorice soufflé.
-			</div>
-		</article>
-		<article>
-			<div>
-				<span class='vertical-align-helper'></span>
-				<img src='images/products/name6.png' alt='prod1'>
-			</div>
-			<div>
-				<h3>Product nr. 4</h3>
-				Oat cake donut pastry fruitcake candy canes ice cream chocolate apple pie pie. Sweet roll liquorice candy canes pastry liquorice soufflé.
-			</div>
+		<article ng-repeat='Product in HomepageProducts'>
+			<a href='/product/{{ Product.id_product }}'>
+				<div>
+					<span class='vertical-align-helper'></span>
+					<img src='{{ Product.image }}' alt='prod1'>
+				</div>
+				<div>
+					<h3>{{ Product.name }}</h3>
+					{{ Product.description }}
+				</div>
+			</a>
 		</article>
 	</section>
 	
 </section>
 
-<script src="js/main.js"></script>
+<script src="js/resize.js"></script>

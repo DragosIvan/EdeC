@@ -17,42 +17,44 @@ $(document).ready(function() {
 	});
 
 	$('body').on('click', '.open-close-menu', function() {
-		if ($('.outer-circular-menu').hasClass('closed')) {
-			$('.outer-circular-menu').removeClass('closed');
+		if ($('body .outer-circular-menu').hasClass('closed')) {
+			$('body .outer-circular-menu').removeClass('closed');
 			setTimeout(function() {
-				$('.menu-bubble-1').fadeIn(500);
+				$('body .menu-bubble-1').fadeIn(500);
 			}, 150);
 			setTimeout(function() {
-				$('.menu-bubble-2').fadeIn(500);
+				$('body .menu-bubble-2').fadeIn(500);
 			}, 250);
 			setTimeout(function() {
-				$('.menu-bubble-3').fadeIn(500);
+				$('body .menu-bubble-3').fadeIn(500);
 			}, 350);
 			setTimeout(function() {
-				$('.open-close-menu').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-left');
-				$('.open-close-menu').addClass('open');
+				$('body .open-close-menu').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-left');
+				$('body .open-close-menu').addClass('open');
 			}, 750);
 		} else {
-			$('.outer-circular-menu').addClass('closed');
-			$('.menu-bubble-3').fadeOut(500);
+			$('body .outer-circular-menu').addClass('closed');
+			$('body .menu-bubble-3').fadeOut(500);
 			setTimeout(function() {
-				$('.menu-bubble-2').fadeOut(500);
+				$('body .menu-bubble-2').fadeOut(500);
 			}, 100);
 			setTimeout(function() {
-				$('.menu-bubble-1').fadeOut(500);
+				$('body .menu-bubble-1').fadeOut(500);
 			}, 200);
 			setTimeout(function() {
-				$('.open-close-menu').removeClass('glyphicon-menu-left').addClass('glyphicon-menu-right');
-				$('.open-close-menu').removeClass('open');
+				$('body .open-close-menu').removeClass('glyphicon-menu-left').addClass('glyphicon-menu-right');
+				$('body .open-close-menu').removeClass('open');
 			}, 700);
 		}
 	});
+
+
 	// END GENERAL JS //
 
 // ######################################################################################################################################
 
 	// START REGISTRATION PAGE JS //
-	$('.homepage-slider-nav').on('click', function() {
+	$('body').on('click', '.homepage-slider-nav', function() {
 		if (!$('.active-slide').hasClass('slide-' + $(this).data('nav'))) {
 			$('.active-slide').fadeOut(500);
 			var slideNumber = $(this).data('nav');
@@ -128,35 +130,6 @@ $(document).ready(function() {
 // ######################################################################################################################################
 
 	// START PRODUCTS PAGE JS //
-
-	var page = window.location.origin+"/products/";
-	var pageProduct = window.location.origin+"/product/";
-	var address, strigng, arr, number;
-	console.log("here mutter fucker")
-
-	$('body').on('click', '#products-next img', function() {
-		string = window.location.href;
-		arr    = string.split("/");
-		number = parseInt(arr[4])+1;
-		address = page + number;
-		window.location = address;
-
-	});
-
-	$('body').on('click', '#products-previous img', function() {
-		string = window.location.href;
-		arr    = string.split("/");
-		number = parseInt(arr[4])-1;
-		address = page + number;
-		window.location = address;
-	});
-
-	$('body').on('click', '.edec-product', function() {	
-		number = $(this).find('.hidden-product-number').text();
-		address = pageProduct+number;
-		console.log("numarul este "+ number);
-		window.location = address;
-	});
 
 	// END PRODUCTS PGAE JS //
 });

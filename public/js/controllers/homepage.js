@@ -4,11 +4,17 @@ angular.module('EDeC')
     Homepage.get()
     .success(function(data){
     	// console.log(data);
-    	if (data == 0 && typeof $rootScope.username === 'undefined') {
+    	if (data.username == 0 && typeof $rootScope.username === 'undefined') {
     		$rootScope.username == '';
     	} else {
-    		$rootScope.username = data;
+    		$rootScope.username = data.username;
     	}
+
+        data.randomProducts.forEach(function(item) {
+            item.description = item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description;
+        })
+
+        $scope.HomepageProducts = data.randomProducts;
     });
 
 }]);
