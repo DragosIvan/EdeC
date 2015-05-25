@@ -15,9 +15,11 @@ angular.module('EDeC')
        
 $scope.Profile ;
 
- Profile.get()
+
+Profile.get()
     .success(function(data) {
-        console.log(data)
+        console.log(data);
+
         var profile= data[0];
             var temp = {};
             temp.id_users=profile.id_users;
@@ -29,6 +31,16 @@ $scope.Profile ;
             temp.birthday = profile.birthday;
             temp.address = profile.address;
             $scope.Profile = temp; 
-            console.log($scope.Profile);    
+    });
+
+ Profile.post()
+    .success(function(data) {
+        console.log('aici am ajuns si afisez data');
+        console.log(data);
+        console.log('am afisat data ');
+
+          
+            //console.log($scope.Profile);    
+       
         })
     }]);

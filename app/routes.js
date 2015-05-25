@@ -138,18 +138,139 @@ module.exports = function(app) {
       });
     }
   });
+
 app.get('/api/profile', function(req, res) {
-    var queryStringUser = 'SELECT id_users,username,mail,name,lastname,gender,DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday ,address FROM users WHERE username = ?';
+  var queryStringUser = 'SELECT id_users,username,mail,name,lastname,gender,DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday ,address FROM users WHERE username = ?';
     connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
          if (err) throw err;
          res.json(rows);
-    });         
+    }); 
+});
+app.post('/api/profile', function(req, res) {
+  var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail= ?  and username != ? ';
+  //var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= ?  and id_users != ?';
+    console.log(req.body);
+    if(req.body.password)
+    {
+    var temp ={
+      first_name:  req.body.first_name,
+      last_name :  req.body.last_name,
+      address   :  req.body.address,
+      //username  :  req.body.username,
+      password  :  bcrypt.hashSync(req.body.password),
+      mail      :  req.body.mail
+      };
+
+      // connection.query('UPDATE users SET name = ? ,lastname= ?, address = ?,password=?, mail= ? where username=?' ,[temp.first_name, temp.last_name, temp.address, temp.password,temp.mail, req.session.username], function(err, rows,fields) {
+      //     if(err) throw err;
+      // });
+    }
+    else
+    {
+
+      var temp ={
+      first_name:  req.body.first_name,
+      last_name :  req.body.last_name,
+      address   :  req.body.address,
+      //username  :  req.body.username,
+      mail      :  req.body.mail
+      };
+      // connection.query('UPDATE users SET name = ? ,lastname= ?, address = ?, mail= ? where username=?' ,[temp.first_name, temp.last_name, temp.address, temp.mail, req.session.username], function(err, rows,fields) {
+      //     if(err) throw err;
+      // });
+    }
+
+
+
+    // if(temp.username)
+    // {
+    //       connection.query(queryStringUsername,[temp.username], function(err,rows,fields)
+    //       {
+    //       if(err) throw err;
+    //            if(rows[0].userNumber>0) 
+    //            {
+    //                 console.log("Username already exists" ); 
+    //                // registerErrorCode = 1;
+    //                 okUser=1;
+    //            } 
+    //       });
+    //  }
+
+    if(temp.mail!= null)
+    {
+          connection.query (queryStringMail, [temp.mail,req.session.username], function(err, rows,fields) 
+          {
+              if (err) throw err;
+
+              if(rows[0].mailNumber > 0) 
+              {
+                  console.log("Mail already exists");
+                  //registerErrorCode = 2;
+                 
+              }
+              else
+              {
+                connection.query('UPDATE users SET mail = ? WHERE username = ?' , [temp.mail, req.session.username], function(err,rows,fields)
+                {
+                    if(err) throw err;
+                });
+
+              }
+          });
+    }
+                    
+
+  if(temp.first_name)
+  {
+    connection.query('UPDATE users SET name = ? WHERE username = ?' , [temp.first_name, req.session.username], function(err,rows,fields)
+    {
+        if(err) throw err;
+    });
+  }
+
+  if(temp.username)
+    {
+      connection.query(queryStringUpdate , [username,temp.username, req.session.username], function(err,rows,fields)
+      {
+          if(err) throw err;
+      });
+    }
+
+  
+
+  if(temp.last_name)
+    {
+      connection.query('UPDATE users SET lastname = ? WHERE username = ?' , [temp.last_name, req.session.username], function(err,rows,fields)
+      {
+          if(err) throw err;
+      });
+    }
+
+  if(temp.address)
+    {
+      connection.query('UPDATE users SET address = ? WHERE username = ?', [temp.address, req.session.username], function(err,rows,fields)
+      {
+          if(err) throw err;
+      });
+    }
+
+  if(temp.password!= null)
+    {
+      connection.query('UPDATE users SET password = ? WHERE username = ?', [temp.password, req.session.username], function(err,rows,fields)
+      {
+          if(err) throw err;
+      });
+    }
+
+
+    res.redirect('/homepage');
+        
   });
 
   app.post('/api/login', function(req, res) {
     var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
     var loginErrorCode = 0;
-
+    console.log(req.body.username, req.body.password);
     connection.query(queryStringLogin, [req.body.username], function(err, rows, fields) {
       if (err) throw err;
    
@@ -175,7 +296,7 @@ app.get('/api/profile', function(req, res) {
     console.log(req.session);
     res.redirect('/');
   });
-  
+   
   // app.post('/api/familyDetails', function(req, res) {
   //     if (parsedFamilyObject == null) {
   //       parsedFamilyObject = req.body;

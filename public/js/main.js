@@ -124,7 +124,7 @@ $(document).ready(function() {
 				$('.registration-mandatory').fadeIn(500);
 			}, 500)
 		}
-	})
+	}) 
 	// END REGISTRATION PAGE JS//
 
 // ######################################################################################################################################
@@ -146,3 +146,24 @@ function resizeWrapper() {
 	var windowHeight = $(window).height()-200;
 	$('.main-wrapper').css('min-height', windowHeight);
 }
+
+
+// START PROFILE PAGE
+
+
+$('body').on('click', '.submit-edit-info', function() {
+	$('.edit-profile-info-form').submit();
+});
+
+
+// if($('body').on('click','.edit-profile-info-form#password-edit').val()!=$('body').on('click','edit-profile-info-form#repeat-password-edit').val())
+// 	console.log('password dont match');
+
+
+var er;
+$('body').on('click', '.mail', function() {
+var re = '.edit-profile-info-form';
+		if ($(re+'#password-edit').val() != $(re+'#repeat-password-edit').val()) er += '<li>The two passwords do not match !</li>';
+		console.log(er);
+	});
+// END PROFILE PAGE
