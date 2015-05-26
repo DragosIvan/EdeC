@@ -23,6 +23,11 @@ $(document).ready(function() {
 	if (pageNumberPrev == 0) pageNumberPrev = 1;
 	address = page + pageNumberPrev;
 	$('#products-previous').attr('href', address);
+
+	$('body #birthday').datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
 })
 
 function resizeWrapper() {

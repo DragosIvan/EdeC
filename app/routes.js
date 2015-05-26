@@ -6,10 +6,17 @@ var NodeCache = require( "node-cache" );
 var mysql     = require('mysql');
 var bcrypt    = require('bcrypt-nodejs');
 
+// var connection = mysql.createConnection({
+//   host     : 'localhost',
+//   database : 'edec',
+//   user     : 'root'
+// });
+
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  database : 'edec',
-  user     : 'root'
+  host     : '85.122.23.145',
+  database : 'EDeC',
+  user     : 'EDeC',
+  password : 'HYsMJeN3LH'
 });
 
 connection.connect();
@@ -35,7 +42,73 @@ function dateParser(date) {
   return newDate;
 }
 
+function getTodayDate() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
+
+  if(dd < 10) {
+      dd='0'+dd
+  } 
+
+  if(mm < 10) {
+      mm='0'+mm
+  } 
+
+  today = dd+'-'+mm+'-'+yyyy;
+  return today;
+}
+
 //************************************************
+
+
+var commentText = "This is a test comment generated automatically, in order to populate the comments table with 500.000 records.";
+
+// connection.query ('SELECT * FROM users', function(err, rows, fields) {
+//   if (err) throw err;
+//   else {
+  
+//     console.log(rows);
+
+//     var i;
+
+//     for (i = 0; i < 1; i++) {
+//       var randomUser = (Math.floor((Math.random() * rows.length) + 1)) - 1;
+//       // if (randomUser >= rows.length) randomUser = rows.length - 1;
+//       // console.log(randomUser);
+//       var userToComment = rows[randomUser].username;
+//       var idUserToComment = rows[randomUser].id_users;
+      
+//       var today = getTodayDate();
+//       // console.log(today);
+
+//       var numberOfCommentLines = Math.floor((Math.random() * 2) + 1);
+//       // console.log(numberOfCommentLines);
+//       var j, tempComment = commentText + " ";
+//       for (j = 0; j < numberOfCommentLines; j++) {
+//         tempComment += commentText + " ";
+//       }
+
+//       var tempRating = Math.floor((Math.random() * 5) + 1);
+
+//       var productToComment = Math.floor((Math.random() * 50) + 1);
+
+//       var comment = {
+//         id_user    : idUserToComment,
+//         id_product : productToComment,
+//         postDate   : today,
+//         comm       : tempComment,
+//         rating     : tempRating
+//       }
+
+//       // connection.query('INSERT INTO comments SET ?', comment, function(err, results) {
+//       //   if (err) throw err;
+//       // });
+//     }
+//   }
+// });
+
 
 // expose the routes to our app with module.exports
 module.exports = function(app) {

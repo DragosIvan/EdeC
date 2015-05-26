@@ -9,11 +9,11 @@ angular.module('EDeC')
         
         data.forEach(function(product) {
             var temp = {};
-            temp.id_product=product.id_product;
+            temp.id_product = product.id_product;
             temp.name = product.name;
             temp.description = product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description;
-            temp.positiveRating = product.rating;
-            temp.negativeRating = 5 - product.rating;
+            temp.positiveRating = Math.round(product.rating);
+            temp.negativeRating = 5 - temp.positiveRating;
             temp.image = product.image;
 
             $scope.Products.push(temp);

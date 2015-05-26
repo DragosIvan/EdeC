@@ -3,11 +3,12 @@
 		<div class ='product-left'>
 			<div class ='product-left-up'><img src='{{Product.image}}' alt='prod1'></div>
 			<div class='product-left-down'>
-				<span><img src='images/full_star.png' alt='a'></span>
-				<span><img src='images/full_star.png' alt='b'></span>
-				<span><img src='images/full_star.png' alt='c'></span>
-				<span><img src='images/empty_star.png' alt='d'></span>
-				<span><img src='images/empty_star.png' alt='e'></span>
+				<span ng-repeat='i in [] | range:Product.positiveRating'>
+					<span><img src='images/full_star.png' alt='a'></span>
+				</span>
+				<span ng-repeat='i in [] | range:Product.negativeRating'>
+					<span><img src='images/empty_star.png' alt='a'></span>
+				</span>
 			</div>
 		</div> 
 		<div class = 'product-right'>
@@ -16,88 +17,29 @@
 				<p>{{Product.description}}</p>	
 			</div>
 			<div class = 'product-right-down'>
-				<div class = 'product-price'><p>{{Product.price}}</p></div>
+				<div class = 'product-price'><p>{{Product.price}} RON</p></div>
 				<div class = 'product-cart'><p>Add to cart</p></div>
 			</div>
 		</div>
 	</section>
 
-	<section class= 'comment'>
+	<section class= 'comment' ng-repeat='Comment in Comments'>
 		<div class= 'comm-left'>
 			<div class= 'comm-left-up'>
-				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
-				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
+				<div class= 'comm-left-up-name'><p>{{ Comment.username }}</p></div>
+				<div class= 'comm-left-up-date'><p>{{ Comment.postDate }}</p></div>
 			</div>
-			<div class= 'comm-left-down'>
-				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
-			</div>
+			<div class= 'comm-left-down'>{{ Comment.comm }}</div>
 		</div>
 		<div class= 'comm-right'>
-			<span><img src='images/full_star.png' alt='a'></span>
-			<span><img src='images/full_star.png' alt='b'></span>
-			<span><img src='images/full_star.png' alt='c'></span>
-			<span><img src='images/empty_star.png' alt='d'></span>
-			<span><img src='images/empty_star.png' alt='e'></span>
+			<span ng-repeat='i in [] | range:Comment.positiveRating'>
+				<span><img src='images/full_star.png' alt='a'></span>
+			</span>
+			<span ng-repeat='i in [] | range:Comment.negativeRating'>
+				<span><img src='images/empty_star.png' alt='a'></span>
+			</span>
 		</div>
 	</section>
-
-	<section class= 'comment'>
-		<div class= 'comm-left'>
-			<div class= 'comm-left-up'>
-				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
-				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
-			</div>
-			<div class= 'comm-left-down'>
-				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
-			</div>
-		</div>
-		<div class= 'comm-right'>
-			<span><img src='images/full_star.png' alt='a'></span>
-			<span><img src='images/full_star.png' alt='b'></span>
-			<span><img src='images/full_star.png' alt='c'></span>
-			<span><img src='images/empty_star.png' alt='d'></span>
-			<span><img src='images/empty_star.png' alt='e'></span>
-		</div>
-	</section>
-
-		<section class= 'comment'>
-		<div class= 'comm-left'>
-			<div class= 'comm-left-up'>
-				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
-				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
-			</div>
-			<div class= 'comm-left-down'>
-				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
-			</div>
-		</div>
-		<div class= 'comm-right'>
-			<span><img src='images/full_star.png' alt='a'></span>
-			<span><img src='images/full_star.png' alt='b'></span>
-			<span><img src='images/full_star.png' alt='c'></span>
-			<span><img src='images/empty_star.png' alt='d'></span>
-			<span><img src='images/empty_star.png' alt='e'></span>
-		</div>
-	</section>
-
-		<section class= 'comment'>
-		<div class= 'comm-left'>
-			<div class= 'comm-left-up'>
-				<div class= 'comm-left-up-name'><p>Matthew River</p></div>
-				<div class= 'comm-left-up-date'><p>21.11.2014</p></div>
-			</div>
-			<div class= 'comm-left-down'>
-				Pie danish candy chupa chups cupcake. Croissant carrot cake marshmallow gummies tiramisu carrot cake chocolate cake pie powder. Lemon drops macaroon jelly beans lollipop chocolate cake jelly. Danish marshmallow macaroon apple pie biscuit caramels tiramisu cookie macaroon. 
-			</div>
-		</div>
-		<div class= 'comm-right'>
-			<span><img src='images/full_star.png' alt='a'></span>
-			<span><img src='images/full_star.png' alt='b'></span>
-			<span><img src='images/full_star.png' alt='c'></span>
-			<span><img src='images/empty_star.png' alt='d'></span>
-			<span><img src='images/empty_star.png' alt='e'></span>
-		</div>
-	</section>
-
 </section>
 
 <script src="js/resize.js"></script>
