@@ -12,6 +12,28 @@ var bcrypt    = require('bcrypt-nodejs');
 //   user     : 'root'
 // });
 
+var oracledb = require('oracledb');
+var oracleConnection;
+
+oracledb.getConnection({
+    user          : "system",
+    password      : "19940210",
+    connectString : "localhost/XE"
+}, function(err, connection) {
+    if (err) {
+      throw err;
+    } else {
+      oracleConnection = connection;
+      oracleConnection.execute("SELECT username, password FROM users",
+      function(err, result) {
+        if (err) throw err;
+        console.log(result);
+      });
+    }
+});
+
+
+
 var connection = mysql.createConnection({
   host     : '85.122.23.145',
   database : 'EDeC',
@@ -20,6 +42,7 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
+
 
 // Variables declaration
 
