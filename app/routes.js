@@ -16,8 +16,8 @@ var oracledb = require('oracledb');
 var oracleConnection;
 
 oracledb.getConnection({
-    user          : "system",
-    password      : "19940210",
+    user          : "EDeC",
+    password      : "edec",
     connectString : "localhost/XE"
 }, function(err, connection) {
     if (err) {
@@ -137,30 +137,21 @@ var commentText = "This is a test comment generated automatically, in order to p
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-    var response = {
-      randomProducts: '',
-      username: 0
-    }
-    var getRandomProductsQuery = 'SELECT id_product, name, description, image FROM product ORDER BY RAND() LIMIT 4';
-    connection.query (getRandomProductsQuery, function(err, rows, fields) {
-      if (err) throw err;
-      response.randomProducts = rows;
-
-      if (req.session.username) {
-        response.username = req.session.username;
-      }
-
-      res.json(response);
-
-    });
+    if (req.session) {
+      console.log(req.session.username);
+      res.json(req.session.username);
+    } else res.json(0);
   });
 
   app.get('/api/products/:pager', function(req, res) {
+    console.log(req.params.pager);
+    console.log(req.body);
     var limitUpperProduct = req.params.pager;
     var limitLowerProduct = req.params.pager - 1;
-    var queryStringUsername = 'SELECT id_product, name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
+    var queryStringUsername = 'SELECT id_product,name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
     connection.query (queryStringUsername, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
          if (err) throw err;
+         console.log('querried');
          res.json(rows);
     });         
   });
@@ -172,7 +163,9 @@ module.exports = function(app) {
       productComments: ''
     };
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
-    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+    //var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.post_date,"%d/%m/%Y") AS postDate, c.commtext, c.rating FROM usercomm c ,users u  WHERE c.id_users=u.id_users  AND c.id_product=' + req.params.idProduct + ' ORDER BY c.post_date DESC LIMIT 4 ';
+
     connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;
         response.productData=rows;
@@ -189,8 +182,9 @@ module.exports = function(app) {
 
     console.log(req.body);
     var ok=1;
-    var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= ? ';
-    var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail=? ';
+    var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= :username ';
+    var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail= :mail ';
+    var queryStringInsert = 'INSERT INTO USERS (USERNAME,PASSWORD,QUESTION,ANSWER,MAIL,NAME,LASTNAME,GENDER,BIRTHDAY,ADDRESS) VALUES (:1,:2,:3,:4,:5,:6,:7,:8,:9,:10)';
     var temp = {
         username : req.body.username ,
         password : bcrypt.hashSync(req.body.password),
@@ -220,9 +214,20 @@ module.exports = function(app) {
                   console.log("Mail already exists");
                   registerErrorCode = 2;
               } else {
-                connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
-                  if (err) throw err; 
-                });
+                //connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
+                  // connection.query ('INSERT INTO users VALUES  (:username,:password,:question,:answer,:mail,:firstname,:lastname,:gender,:birthday,:address ) 
+                  // ', [ username:temp.username,password: temp.password, question :temp.question, answer:temp.answer,mail:temp.mail,firstname:temp.firstname, lastname: temp.lastname, gender:temp.gender, birthday:temp.birthday,address: temp.address] function(err, result) {
+                 
+        //           INSERT INTO person (name) VALUES (:1) RETURNING id INTO :2",
+        // ['joe ferner', new oracle.OutParam()],
+                    connection.query( queryStringInsert, [temp.username ,temp.password,temp.question, temp.answer,temp.mail, temp.name,temp.lastname, temp.gender,temp.birthday,temp.address], function(err, result) {
+
+
+                  // connection.query ('INSERT INTO users (id_users,username,password,question,answer,mail,firstname,lastname,gender,birthday,address) VALUES  (:id_users,:username,:password,:question,:answer,:mail,:firstname,:lastname,:gender,:birthday,:address ) 
+                  // ', ['3', temp.username, temp.password, temp.question, temp.answer,temp.mail,temp.firstname,  temp.lastname,temp.gender,temp.birthday,temp.address] function(err, result) {
+                 
+                   if (err) throw err; 
+                }); 
 
                 connection.query('SELECT * FROM users', function(err, rows, fields) {
                   if (err) throw err;
@@ -234,16 +239,16 @@ module.exports = function(app) {
       });
     }
   });
-
+ 
 app.get('/api/profile', function(req, res) {
-  var queryStringUser = 'SELECT id_users,username,mail,name,lastname,gender,DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday ,address FROM users WHERE username = ?';
+  var queryStringUser = 'SELECT id_users,username,mail,name,lastname,gender,DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday ,address FROM users WHERE username = :username';
     connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
          if (err) throw err;
          res.json(rows);
     }); 
 });
 app.post('/api/profile', function(req, res) {
-  var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail= ?  and username != ? ';
+  var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail= :mail  and username != :username ';
   //var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= ?  and id_users != ?';
     console.log(req.body);
     if(req.body.password)
@@ -301,12 +306,12 @@ app.post('/api/profile', function(req, res) {
               if(rows[0].mailNumber > 0) 
               {
                   console.log("Mail already exists");
-                  //registerErrorCode = 2;
+                  registerErrorCode = 2;
                  
               }
               else
               {
-                connection.query('UPDATE users SET mail = ? WHERE username = ?' , [temp.mail, req.session.username], function(err,rows,fields)
+                connection.query('UPDATE users SET mail = :mail WHERE username = :username' , [temp.mail, req.session.username], function(err,rows,fields)
                 {
                     if(err) throw err;
                 });
@@ -318,7 +323,7 @@ app.post('/api/profile', function(req, res) {
 
   if(temp.first_name)
   {
-    connection.query('UPDATE users SET name = ? WHERE username = ?' , [temp.first_name, req.session.username], function(err,rows,fields)
+    connection.query('UPDATE users SET name = :name WHERE username = :username' , [temp.first_name, req.session.username], function(err,rows,fields)
     {
         if(err) throw err;
     });
@@ -336,7 +341,7 @@ app.post('/api/profile', function(req, res) {
 
   if(temp.last_name)
     {
-      connection.query('UPDATE users SET lastname = ? WHERE username = ?' , [temp.last_name, req.session.username], function(err,rows,fields)
+      connection.query('UPDATE users SET lastname = :lastname WHERE username = :username' , [temp.last_name, req.session.username], function(err,rows,fields)
       {
           if(err) throw err;
       });
@@ -344,7 +349,7 @@ app.post('/api/profile', function(req, res) {
 
   if(temp.address)
     {
-      connection.query('UPDATE users SET address = ? WHERE username = ?', [temp.address, req.session.username], function(err,rows,fields)
+      connection.query('UPDATE users SET address = :address WHERE username = :username', [temp.address, req.session.username], function(err,rows,fields)
       {
           if(err) throw err;
       });
@@ -352,7 +357,7 @@ app.post('/api/profile', function(req, res) {
 
   if(temp.password!= null)
     {
-      connection.query('UPDATE users SET password = ? WHERE username = ?', [temp.password, req.session.username], function(err,rows,fields)
+      connection.query('UPDATE users SET password = :password WHERE username = :username', [temp.password, req.session.username], function(err,rows,fields)
       {
           if(err) throw err;
       });
@@ -364,7 +369,7 @@ app.post('/api/profile', function(req, res) {
   });
 
   app.post('/api/login', function(req, res) {
-    var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
+    var queryStringLogin = 'SELECT password FROM users WHERE username = :username';
     var loginErrorCode = 0;
     console.log(req.body.username, req.body.password);
     connection.query(queryStringLogin, [req.body.username], function(err, rows, fields) {
