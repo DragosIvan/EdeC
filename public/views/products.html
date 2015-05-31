@@ -31,11 +31,11 @@
 			</a>
 		</article>	
 	<div class="pagination-centered">
-		<a href="/products/1" id="products-previous"> 
+		<a href="/products/{{ Pager }}" id="products-previous" ng-if="Pager != 0"> 
 			<img src='images/previous.png' alt='Previous'>
 		</a>
 		
-		<a href="/products/2" id="products-next">
+		<a href="/products/{{ PagerNext }}" id="products-next" ng-if="PagerNext <= 5">
 			<img  src='images/next.png' alt='Next'>
 		</a>
 	</div>

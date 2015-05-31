@@ -1,4 +1,14 @@
 <section class='main-wrapper profile-main-wrapper'>
+	<div class="error-message" ng-if='errorCode == 1'>
+		<ul>
+			<li>The data you are trying to change has already been altered !</li>
+		</ul>
+	</div>
+	<div class="validation-message" ng-if='errorCode == 0'>
+		<ul>
+			<li>You have successfully changed your information !</li>
+		</ul>
+	</div>
 	<section class='profile'>
 		<article class="edec-profile" >
 			<span class="hidden-product-number">
@@ -43,13 +53,18 @@
 				<label for='first-name'>First Name: <input type='text' id='first-name' name='first_name' value='{{Profile.name}}'  /></label>
 				<label for='last-name'>Last Name: <input type='text' id='last-name' name='last_name' value='{{Profile.lastname}}'  /></label>
 				<label for='adresss'>Address: <textarea id='address' name='address' value='{{Profile.address}}' ></textarea></label>
-				<!-- <label for='username'>Username: <input type='username' id='username' name='username' value='{{Profile.username}}' /></label> -->
 				<label for='password'>New Password: <input type='password' id='password' name='password' /></label>
 				<label for='repeat-password'>Repeat new password: <input type='password' id='repeat-password' name='repeat_password' /></label>
-				<label for='mail'>Email address: <input type='email' id='mail' name='mail' value='{{Profile.mail}}'/></label>
+				<label for='mail'>Email address: <span class='required-element'>*</span><input type='email' id='mail' name='mail' value='{{Profile.mail}}' required/></label>
+				<!-- HIDDEN VALUES -->
+				<input type='text' name='hidden_first_name' value='{{Profile.name}}' hidden/>
+				<input type='text' name='hidden_last_name' value='{{Profile.lastname}}' hidden/>
+				<input type='text' name='hidden_address' value='{{Profile.address}}' hidden/>
+				<input type='text' name='hidden_mail' value='{{Profile.mail}}' hidden/>
+				<!-- END HIDDEN VALUES -->
 				<span class='profile-button submit-edit-info'>Save</span>
 		</form>
 		</article>
 	</section>
 </section>
-<script src="js/main.js"></script>
+<script src="js/resize.js"></script>

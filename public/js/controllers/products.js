@@ -2,11 +2,11 @@ angular.module('EDeC')
     .controller('ProductsCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Products', function($scope, $routeParams, $filter, $http, Products) {
 
     $scope.Products = [];
+    $scope.Pager = parseInt($routeParams.pager) - 1;
+    $scope.PagerNext = parseInt($routeParams.pager) + 1;
 
     Products.get()
     .success(function(data) {
-        console.log(data);
-        
         data.forEach(function(product) {
             var temp = {};
             temp.id_product = product.id_product;

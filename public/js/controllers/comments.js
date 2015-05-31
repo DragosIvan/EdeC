@@ -1,12 +1,13 @@
 angular.module('EDeC')
-    .controller('ProductCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Product', function($scope, $routeParams, $filter, $http, Product) {
+    .controller('CommentsCtrl', ['$scope', '$routeParams', '$filter', '$http', 'Comments', function($scope, $routeParams, $filter, $http, Comments) {
 
 $scope.Product;
 $scope.Comments = [];
+$scope.Pager = parseInt($routeParams.pager) - 1;
+$scope.PagerNext = parseInt($routeParams.pager) + 1;
 
- Product.get()
+ Comments.get()
     .success(function(data) {
-        console.log(data);
         var product = data.productData[0];
         var temp = {};
         temp.id_product = product.id_product;
@@ -27,6 +28,7 @@ $scope.Comments = [];
             temp.comm = comment.commtext;
             temp.username = comment.username;
             temp.postDate = comment.postDate;
+            temp.id_usercomm = comment.id_usercomm;
             $scope.Comments.push(temp);
         });
     });

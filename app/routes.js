@@ -12,28 +12,6 @@ var bcrypt    = require('bcrypt-nodejs');
 //   user     : 'root'
 // });
 
-var oracledb = require('oracledb');
-var oracleConnection;
-
-oracledb.getConnection({
-    user          : "EDeC",
-    password      : "edec",
-    connectString : "localhost/XE"
-}, function(err, connection) {
-    if (err) {
-      throw err;
-    } else {
-      oracleConnection = connection;
-      oracleConnection.execute("SELECT username, password FROM users",
-      function(err, result) {
-        if (err) throw err;
-        console.log(result);
-      });
-    }
-});
-
-
-
 var connection = mysql.createConnection({
   host     : '85.122.23.145',
   database : 'EDeC',
@@ -47,6 +25,7 @@ connection.connect();
 // Variables declaration
 
 var products = new NodeCache();
+var commentLimit = []; commentLimit[0] = 0;
 
 function timeConverter(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp*1000);
@@ -85,106 +64,131 @@ function getTodayDate() {
 
 //************************************************
 
-
-var commentText = "This is a test comment generated automatically, in order to populate the comments table with 500.000 records.";
-
-// connection.query ('SELECT * FROM users', function(err, rows, fields) {
-//   if (err) throw err;
-//   else {
-  
-//     console.log(rows);
-
-//     var i;
-
-//     for (i = 0; i < 1; i++) {
-//       var randomUser = (Math.floor((Math.random() * rows.length) + 1)) - 1;
-//       // if (randomUser >= rows.length) randomUser = rows.length - 1;
-//       // console.log(randomUser);
-//       var userToComment = rows[randomUser].username;
-//       var idUserToComment = rows[randomUser].id_users;
-      
-//       var today = getTodayDate();
-//       // console.log(today);
-
-//       var numberOfCommentLines = Math.floor((Math.random() * 2) + 1);
-//       // console.log(numberOfCommentLines);
-//       var j, tempComment = commentText + " ";
-//       for (j = 0; j < numberOfCommentLines; j++) {
-//         tempComment += commentText + " ";
-//       }
-
-//       var tempRating = Math.floor((Math.random() * 5) + 1);
-
-//       var productToComment = Math.floor((Math.random() * 50) + 1);
-
-//       var comment = {
-//         id_user    : idUserToComment,
-//         id_product : productToComment,
-//         postDate   : today,
-//         comm       : tempComment,
-//         rating     : tempRating
-//       }
-
-//       // connection.query('INSERT INTO comments SET ?', comment, function(err, results) {
-//       //   if (err) throw err;
-//       // });
-//     }
-//   }
-// });
-
-
 // expose the routes to our app with module.exports
 module.exports = function(app) {
 
   app.get('/api/homepage', function(req, res) {
-    if (req.session) {
-      console.log(req.session.username);
-      res.json(req.session.username);
-    } else res.json(0);
+    var response = {
+      randomProducts: '',
+      username: 0
+    }
+    var getRandomProductsQuery = 'SELECT id_product, name, description, image FROM product ORDER BY RAND() LIMIT 4';
+    connection.query(getRandomProductsQuery, function(err, rows, fields) {
+      if (err) throw err;
+      response.randomProducts = rows;
+
+      if (req.session.username) {
+        response.username = req.session.username;
+      }
+
+      res.json(response);
+
+    });
   });
 
   app.get('/api/products/:pager', function(req, res) {
-    console.log(req.params.pager);
-    console.log(req.body);
     var limitUpperProduct = req.params.pager;
     var limitLowerProduct = req.params.pager - 1;
-    var queryStringUsername = 'SELECT id_product,name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
+    var queryStringProducts = 'SELECT id_product, name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
     connection.query (queryStringUsername, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
          if (err) throw err;
-         console.log('querried');
          res.json(rows);
-    });         
+    });        
   });
 
-   app.get('/api/product/:idProduct', function(req, res) {
-    console.log(req.params.idProduct);
+  app.get('/api/product/:idProduct/comments/:pager', function(req, res) {
+    var response = {
+      productData: '',
+      productComments: ''
+    };
+
+    var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+
+    connection.query(queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
+        if (err) throw err;
+        response.productData = rows;
+        connection.query(queryStringComments, function(err, rows, fields) {
+        if (err) throw err;
+         response.productComments = rows;
+         res.json(response);
+        });   
+    });        
+  });
+
+  app.get('/api/product/:idProduct', function(req, res) {
     var response = {
       productData: '',
       productComments: ''
     };
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
-    //var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
-    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.post_date,"%d/%m/%Y") AS postDate, c.commtext, c.rating FROM usercomm c ,users u  WHERE c.id_users=u.id_users  AND c.id_product=' + req.params.idProduct + ' ORDER BY c.post_date DESC LIMIT 4 ';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
 
     connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;
-        response.productData=rows;
+        response.productData = rows;
         connection.query (queryStringComments, function(err, rows, fields) {
         if (err) throw err;
-        //console.log(rows);
-         response.productComments=rows;
+         response.productComments = rows;
          res.json(response);
         });   
-    });         
+    });        
+  });
+ 
+  app.get('/api/profile', function(req, res) {
+    var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE username = ?';
+    connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
+         if (err) throw err;
+         res.json(rows);
+    }); 
   });
 
+  app.post('/api/profile', function(req, res) {
+    if (req.body.mail !== undefined) {
+      var queryStringUpdateWithoutPassword = 'UPDATE users SET mail = ?, name = ?, lastname = ?, address = ? WHERE username = ?';
+      var queryStringUpdateWithPassword = 'UPDATE users SET password = ?, MAIL = ?, NAME = ?, LASTNAME = ?, ADDRESS = ? WHERE username = ?';
+      //var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= ?  and id_users != ?';
+      var hidden = {
+        name    : req.body.hidden_first_name != '' ? req.body.hidden_first_name : null,
+        lname   : req.body.hidden_last_name != '' ? req.body.hidden_last_name : null,
+        address : req.body.hidden_address != '' ? req.body.hidden_address : null,
+        mail    : req.body.hidden_mail
+      };
+      var temp = {
+        name       :  req.body.first_name,
+        lname      :  req.body.last_name,
+        address    :  req.body.address,
+        mail       :  req.body.mail
+      };
+      oracleConnection.execute('SELECT mail, name, lastname, address FROM users WHERE username = ?', [req.session.username], function(err, rows, fields) {
+        if (err) throw err;
+        else {
+          if (rows[0].name != hidden.name || rows[0].lastname != hidden.lname || rows[0].address != hidden.address || rows[0].mail != hidden.mail) {
+            res.redirect('/profile?error=1');
+          } else {
+            if (req.body.password) {
+              temp.password = bcrypt.hashSync(req.body.password);
+              oracleConnection.execute(queryStringUpdateWithPassword, [temp.password, temp.mail, temp.name, temp.lname, temp.address, req.session.username], function(err, rows, fields) {
+                if (err) throw err;
+                res.redirect('/profile?error=0');
+              });
+            } else {
+              oracleConnection.execute(queryStringUpdateWithoutPassword, [temp.mail, temp.name, temp.lname, temp.address, req.session.username], function(err, rows, fields) {
+                if (err) throw err;
+                res.redirect('/profile?error=0');
+              });
+            }
+          }
+        }
+      }); 
+    }       
+  });
+  
   app.post('/api/register', function(req, res) {
-
-    console.log(req.body);
     var ok=1;
-    var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= :username ';
-    var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail= :mail ';
-    var queryStringInsert = 'INSERT INTO USERS (USERNAME,PASSWORD,QUESTION,ANSWER,MAIL,NAME,LASTNAME,GENDER,BIRTHDAY,ADDRESS) VALUES (:1,:2,:3,:4,:5,:6,:7,:8,:9,:10)';
+    var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username = ? ';
+    var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail = ? ';
+    var queryStringInsert = 'INSERT INTO users SET ?';
     var temp = {
         username : req.body.username ,
         password : bcrypt.hashSync(req.body.password),
@@ -204,187 +208,41 @@ module.exports = function(app) {
        connection.query (queryStringUsername, [temp.username], function(err, rows, fields) {
         if (err) throw err;
           if(rows[0].userNumber > 0) {
-                console.log("Username already exists" ); 
                 registerErrorCode = 1;
+                res.redirect('/register?error=' + registerErrorCode);
           } else {
-            connection.query (queryStringMail, [temp.mail], function(err, rows,fields) {
+            connection.query (queryStringMail, [temp.mail], function(err, rows, fields) {
               if (err) throw err;
 
               if(rows[0].mailNumber > 0) {
-                  console.log("Mail already exists");
                   registerErrorCode = 2;
+                  res.redirect('/register?error=' + registerErrorCode);
               } else {
-                //connection.query ('INSERT INTO users SET ?', temp, function(err, result) {
-                  // connection.query ('INSERT INTO users VALUES  (:username,:password,:question,:answer,:mail,:firstname,:lastname,:gender,:birthday,:address ) 
-                  // ', [ username:temp.username,password: temp.password, question :temp.question, answer:temp.answer,mail:temp.mail,firstname:temp.firstname, lastname: temp.lastname, gender:temp.gender, birthday:temp.birthday,address: temp.address] function(err, result) {
-                 
-        //           INSERT INTO person (name) VALUES (:1) RETURNING id INTO :2",
-        // ['joe ferner', new oracle.OutParam()],
-                    connection.query( queryStringInsert, [temp.username ,temp.password,temp.question, temp.answer,temp.mail, temp.name,temp.lastname, temp.gender,temp.birthday,temp.address], function(err, result) {
-
-
-                  // connection.query ('INSERT INTO users (id_users,username,password,question,answer,mail,firstname,lastname,gender,birthday,address) VALUES  (:id_users,:username,:password,:question,:answer,:mail,:firstname,:lastname,:gender,:birthday,:address ) 
-                  // ', ['3', temp.username, temp.password, temp.question, temp.answer,temp.mail,temp.firstname,  temp.lastname,temp.gender,temp.birthday,temp.address] function(err, result) {
-                 
-                   if (err) throw err; 
-                }); 
-
-                connection.query('SELECT * FROM users', function(err, rows, fields) {
+                connection.query ('INSERT INTO users SET ?', temp, function(err, rows, fields) {
                   if (err) throw err;
+                  res.redirect('/register?error=' + registerErrorCode);
                 });
               }
             });
           }
-          res.redirect('/register?error=' + registerErrorCode);
+          
       });
     }
-  });
- 
-app.get('/api/profile', function(req, res) {
-  var queryStringUser = 'SELECT id_users,username,mail,name,lastname,gender,DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday ,address FROM users WHERE username = :username';
-    connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
-         if (err) throw err;
-         res.json(rows);
-    }); 
-});
-app.post('/api/profile', function(req, res) {
-  var queryStringMail = 'SELECT Count(mail) AS mailNumber FROM users WHERE mail= :mail  and username != :username ';
-  //var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username= ?  and id_users != ?';
-    console.log(req.body);
-    if(req.body.password)
-    {
-    var temp ={
-      first_name:  req.body.first_name,
-      last_name :  req.body.last_name,
-      address   :  req.body.address,
-      //username  :  req.body.username,
-      password  :  bcrypt.hashSync(req.body.password),
-      mail      :  req.body.mail
-      };
-
-      // connection.query('UPDATE users SET name = ? ,lastname= ?, address = ?,password=?, mail= ? where username=?' ,[temp.first_name, temp.last_name, temp.address, temp.password,temp.mail, req.session.username], function(err, rows,fields) {
-      //     if(err) throw err;
-      // });
-    }
-    else
-    {
-
-      var temp ={
-      first_name:  req.body.first_name,
-      last_name :  req.body.last_name,
-      address   :  req.body.address,
-      //username  :  req.body.username,
-      mail      :  req.body.mail
-      };
-      // connection.query('UPDATE users SET name = ? ,lastname= ?, address = ?, mail= ? where username=?' ,[temp.first_name, temp.last_name, temp.address, temp.mail, req.session.username], function(err, rows,fields) {
-      //     if(err) throw err;
-      // });
-    }
-
-
-
-    // if(temp.username)
-    // {
-    //       connection.query(queryStringUsername,[temp.username], function(err,rows,fields)
-    //       {
-    //       if(err) throw err;
-    //            if(rows[0].userNumber>0) 
-    //            {
-    //                 console.log("Username already exists" ); 
-    //                // registerErrorCode = 1;
-    //                 okUser=1;
-    //            } 
-    //       });
-    //  }
-
-    if(temp.mail!= null)
-    {
-          connection.query (queryStringMail, [temp.mail,req.session.username], function(err, rows,fields) 
-          {
-              if (err) throw err;
-
-              if(rows[0].mailNumber > 0) 
-              {
-                  console.log("Mail already exists");
-                  registerErrorCode = 2;
-                 
-              }
-              else
-              {
-                connection.query('UPDATE users SET mail = :mail WHERE username = :username' , [temp.mail, req.session.username], function(err,rows,fields)
-                {
-                    if(err) throw err;
-                });
-
-              }
-          });
-    }
-                    
-
-  if(temp.first_name)
-  {
-    connection.query('UPDATE users SET name = :name WHERE username = :username' , [temp.first_name, req.session.username], function(err,rows,fields)
-    {
-        if(err) throw err;
-    });
-  }
-
-  if(temp.username)
-    {
-      connection.query(queryStringUpdate , [username,temp.username, req.session.username], function(err,rows,fields)
-      {
-          if(err) throw err;
-      });
-    }
-
-  
-
-  if(temp.last_name)
-    {
-      connection.query('UPDATE users SET lastname = :lastname WHERE username = :username' , [temp.last_name, req.session.username], function(err,rows,fields)
-      {
-          if(err) throw err;
-      });
-    }
-
-  if(temp.address)
-    {
-      connection.query('UPDATE users SET address = :address WHERE username = :username', [temp.address, req.session.username], function(err,rows,fields)
-      {
-          if(err) throw err;
-      });
-    }
-
-  if(temp.password!= null)
-    {
-      connection.query('UPDATE users SET password = :password WHERE username = :username', [temp.password, req.session.username], function(err,rows,fields)
-      {
-          if(err) throw err;
-      });
-    }
-
-
-    res.redirect('/homepage');
-        
   });
 
   app.post('/api/login', function(req, res) {
-    var queryStringLogin = 'SELECT password FROM users WHERE username = :username';
+    var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
     var loginErrorCode = 0;
-    console.log(req.body.username, req.body.password);
     connection.query(queryStringLogin, [req.body.username], function(err, rows, fields) {
       if (err) throw err;
    
       if (rows[0] == null) {
         loginErrorCode = 1;
-        console.log("Username is invalid" ); 
         res.redirect('/login?error=' + loginErrorCode);
       } else if (!bcrypt.compareSync(req.body.password, rows[0].password)) {
         loginErrorCode = 1;
-        console.log("Password is invalid");
         res.redirect('/login?error=' + loginErrorCode);
       } else {
-        console.log("Good credentials");
         req.session.username = req.body.username;
         res.redirect('/homepage');
       }
@@ -392,183 +250,10 @@ app.post('/api/profile', function(req, res) {
   });
 
   app.get('/api/logout', function(req, res) {
-    console.log(req.session);
     req.session.destroy();
-    console.log(req.session);
     res.redirect('/');
   });
-   
-  // app.post('/api/familyDetails', function(req, res) {
-  //     if (parsedFamilyObject == null) {
-  //       parsedFamilyObject = req.body;
-
-  //       soap.createClient( url, endpoint, function( err, client ) {
-  //       if (err)
-  //         console.log(err);
-  //       else {
-  //         var getCountiesXml = new XML("<ns:GetCounties xmlns:ns='http://www.quotit.com/Services/ActWS/ACA/2'>" +
-  //           "<ns:GetCountiesRequest>" +
-  //             "<AccessKeys>" +
-  //               "<RemoteAccessKey>392B9F8F-4E75-4B19-B509-D6A6602B6E5B</RemoteAccessKey>" +
-  //             "</AccessKeys>" +
-  //             "<Inputs>" +
-  //               "<ZipCode>" + parsedFamilyObject.Members[0].ZipCode + "</ZipCode>" +
-  //             "</Inputs>" +
-  //           "</ns:GetCountiesRequest>" +
-  //          "</ns:GetCounties>" );
-
-  //         globalClient = client;
-  //         globalClient.ACA.BasicHttpBinding_IACA.GetCounties(getCountiesXml.toXMLString(), function(err, result) {
-  //           if (err)
-  //             console.log(err);
-  //           else {
-  //             if (parsedFamilyObject.Members[0].CountyName == null || parsedFamilyObject.Members[0].CountyName == '') {
-  //               parsedFamilyObject.Members[0].CountyName = '';
-                
-  //               result.GetCountiesResult.Counties['GetCounties.Response.County'].forEach( function(county) {
-  //                 parsedFamilyObject.Members[0].CountyName += county.CountyName + '&&';
-  //               });
-
-  //               parsedFamilyObject.CountyName = parsedFamilyObject.Members[0].CountyName;
-  //               parsedFamilyObject.State = result.GetCountiesResult.Counties['GetCounties.Response.County'][0].State;
-  //             }
-
-  //             parsedFamilyObject.Members.forEach(function(member) {
-  //               if (member.ZipCode == parsedFamilyObject.Members[0].ZipCode && (member.CountyName == null || member.CountyName == ''))
-  //                 member.CountyName = parsedFamilyObject.Members[0].CountyName;
-  //               else if (member.Zipcode != parsedFamilyObject.Members[0].ZipCode && (member.CountyName == null || member.CountyName == '')) {
-  //                 getCountiesXml = new XML("<ns:GetCounties xmlns:ns='http://www.quotit.com/Services/ActWS/ACA/2'>" +
-  //                   "<ns:GetCountiesRequest>" +
-  //                     "<AccessKeys>" +
-  //                       "<RemoteAccessKey>392B9F8F-4E75-4B19-B509-D6A6602B6E5B</RemoteAccessKey>" +
-  //                     "</AccessKeys>" +
-  //                     "<Inputs>" +
-  //                       "<ZipCode>" + member.ZipCode + "</ZipCode>" +
-  //                     "</Inputs>" +
-  //                   "</ns:GetCountiesRequest>" +
-  //                  "</ns:GetCounties>" );
-  //                 globalClient.ACA.BasicHttpBinding_IACA.GetCounties(getCountiesXml.toXMLString(), function(err, result) {
-  //                   if (err)
-  //                     console.log(err);
-  //                   else {
-  //                     member.CountyName = '';
-              
-  //                     result.GetCountiesResult.Counties['GetCounties.Response.County'].forEach( function(county) {
-  //                       member.CountyName += county.CountyName + '&&';
-  //                     });
-  //                   }
-  //                 });
-  //               }
-  //             });
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-
-  //   if (req.body.applicantCounty != undefined) {
-  //     HouseholdSize = 1;
-  //     parsedFamilyObject.HouseholdSize = 1;
-
-  //     parsedFamilyObject.CountyName = req.body.applicantCounty;
-
-  //     parsedFamilyObject.Members[0].LiveinHousehold = '1';
-  //     parsedFamilyObject.Members[0].CountyName = req.body.applicantCounty;
-  //     parsedFamilyObject.Members[0].RelationshipType = 'Self';
-
-  //     if (req.body.applicantDateLastSmoked != '')
-  //         parsedFamilyObject.Members[0].DateLastSmoked = req.body.applicantDateLastSmoked;
-  //       else parsedFamilyObject.Members[0].DateLastSmoked = '0' 
-
-  //     if (req.body.applicantDateLastSmoked != '') {
-  //       parsedFamilyObject.Members[0].DateLastSmoked = req.body.applicantDateLastSmoked;
-  //       parsedFamilyObject.Members[0].IsSmoker = '1';
-  //     }
-  //     else {
-  //       parsedFamilyObject.Members[0].DateLastSmoked = '0';
-  //       parsedFamilyObject.Members[0].IsSmoker = '0';
-  //     }
-
-  //     // Spouse Field
-  //     if (req.body.spouseRelationship != undefined) {
-
-  //       if (req.body.spouseLiveInHousehold == 'Y') {
-  //         HouseholdSize++;
-  //         parsedFamilyObject.HouseholdSize++;
-  //         parsedFamilyObject.Members[1].LiveinHousehold = '1';
-  //       } else {
-  //         parsedFamilyObject.Members[1].LiveinHousehold = '0';
-  //       }
-
-  //       parsedFamilyObject.Members[1].Gender = req.body.spouseGender;
-  //       parsedFamilyObject.Members[1].RelationshipType = req.body.spouseRelationship;
-  //       parsedFamilyObject.Members[1].CountyName = req.body.spouseCounty;
-
-  //       if (req.body.spouseDateLastSmoked != '') {
-  //         parsedFamilyObject.Members[1].DateLastSmoked = req.body.spouseDateLastSmoked;
-  //         parsedFamilyObject.Members[1].IsSmoker = '1';
-  //       }
-  //       else {
-  //         parsedFamilyObject.Members[1].DateLastSmoked = '0';
-  //         parsedFamilyObject.Members[1].IsSmoker = '0';
-  //       } 
-  //     }
-  //     // End Spouse Field
-
-  //     //Dependents Fields
-  //     var i = 0;
-  //     parsedFamilyObject.Members.forEach( function(member) {
-  //       if (member.MemberType == 'Dependent') {
-  //         i++;
-
-  //         if (req.body['dependentLiveInHousehold'+i] == 'Y') {
-  //           HouseholdSize++;
-  //           parsedFamilyObject.HouseholdSize++;
-  //           member.LiveinHousehold = '1';
-  //         } else {
-  //           member.LiveinHousehold = '0';
-  //         }
-
-  //         member.Gender = req.body['dependentGender'+i];
-  //         member.RelationshipType = req.body['dependentRelationship'+i];
-  //         member.CountyName = req.body['dependentCounty'+i];
-
-  //         if (req.body['dependentDateLastSmoked'+i] != ''){
-  //           member.DateLastSmoked = req.body['dependentDateLastSmoked'+i];
-  //           member.IsSmoker = '1';
-  //         }
-  //         else {
-  //           member.DateLastSmoked = '0';
-  //           member.IsSmoker = '0';
-  //         }
-  //       }
-  //     });
-  //     //End Dependents Fields
-
-  //   }
-    
-  //   oldOnOff = '';
-  //   familyId = null;
-
-  //   res.redirect('/plans/subsidy/0');
-  // });
-
-
-  // // api ---------------------------------------------------------------------
-  // // get all plans
-  // allPlansCache.set( "allPlans" );
-
-  // app.get('/api/plans', function(req, res) {
-  //   var onOff = estimatedMaxMonthlyPremium > 0 ? "HealthOnExchange" : "HealthOffExchange";
-
-  //   if (onOff != oldOnOff) {
-  //     allPlansCache.set( "allPlans", null, function( err, success ) {
-  //       if (err) console.log(err);
-  //     });
-  //     oldOnOff = onOff;
-  //   }
-
-        
+          
   // application -------------------------------------------------------------
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

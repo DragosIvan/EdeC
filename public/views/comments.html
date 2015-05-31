@@ -1,4 +1,4 @@
-<section class='main-wrapper product-main-wrapper'>
+<section class='main-wrapper product-main-wrapper comments-main-wrapper'>
 	<section class='product'>
 		<div class ='product-left'>
 			<div class ='product-left-up'><img src='{{Product.image}}' alt='prod1'></div>
@@ -22,11 +22,10 @@
 			</div>
 		</div>
 	</section>
-
 	<section class= 'comment' ng-repeat='Comment in Comments'>
 		<div class= 'comm-left'>
 			<div class= 'comm-left-up'>
-				<div class= 'comm-left-up-name'><p>{{ Comment.username }}</p></div>
+				<div class= 'comm-left-up-name'><p>#{{ Comment.id_usercomm }} - {{ Comment.username }}</p></div>
 				<div class= 'comm-left-up-date'><p>{{ Comment.postDate }}</p></div>
 			</div>
 			<div class= 'comm-left-down'>{{ Comment.comm }}</div>
@@ -40,7 +39,15 @@
 			</span>
 		</div>
 	</section>
-	<a href='/product/{{ Product.id_product }}/comments/1' class='show-comments'>Show all comments</a>
+	<div class="pagination-centered">
+		<a href="/product/{{ Product.id_product }}/comments/{{ Pager }}" id="comments-previous" ng-if="Pager != 0"> 
+			<img src='images/previous.png' alt='Previous'>
+		</a>
+		
+		<a href="/product/{{ Product.id_product }}/comments/{{ PagerNext }}" id="comments-next" ng-if="PagerNext != 0">
+			<img  src='images/next.png' alt='Next'>
+		</a>
+	</div>
 </section>
 
 <script src="js/resize.js"></script>

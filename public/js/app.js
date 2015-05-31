@@ -29,28 +29,16 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/products.html',
 				controller: 'ProductsCtrl'
 			})
-			.when('/plans/subsidy/:subsid', {
-		  		templateUrl: 'views/planSubsidy.html',
-		    	controller: 'PlanSubsidyCtrl'
-		  	})
-		  	.when('/plans/listing/:subsidy', {
-		    	templateUrl: 'views/planList.html',
-		    	controller: 'PlanListCtrl'
-		  	})
-		  	.when('/plans/details/:id', {
-		    	templateUrl: 'views/planDetails.html',
-		    	controller: 'PlanDetailsCtrl'
-		  	})
-		  	.when('/plans/compare/:plansIds', {
-		    	templateUrl: 'views/planComparison.html',
-		    	controller: 'PlanComparisonCtrl'
-		  	})
 		  	.when('/faqs', {
 				templateUrl: 'views/faqs.html'
 			})
 			.when('/product/:idProduct', {
 				templateUrl: 'views/product.html',
 				controller: 'ProductCtrl'
+			})
+			.when('/product/:idProduct/comments/:pager', {
+				templateUrl: 'views/comments.html',
+				controller: 'CommentsCtrl'
 			})
 			.when('/profile', {
 				templateUrl: 'views/profile.html',

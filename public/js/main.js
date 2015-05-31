@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 // ######################################################################################################################################
 
-	// START REGISTRATION PAGE JS //
+	// START HOMEPAGE JS //
 	$('body').on('click', '.homepage-slider-nav', function() {
 		if (!$('.active-slide').hasClass('slide-' + $(this).data('nav'))) {
 			$('.active-slide').fadeOut(500);
@@ -72,7 +72,7 @@ $(document).ready(function() {
 		}
 
 	});
-	// END GENERAL JS //
+	// END HOMEPAGE JS //
 
 // ######################################################################################################################################
 
