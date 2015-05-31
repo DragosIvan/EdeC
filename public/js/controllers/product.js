@@ -24,7 +24,7 @@ $scope.Comments = [];
             var temp = {};
             temp.positiveRating = Math.round(comment.rating);
             temp.negativeRating = 5 - temp.positiveRating;
-            temp.comm = comment.commtext;
+            temp.comm = comment.comm;
             temp.username = comment.username;
             temp.postDate = comment.postDate;
             $scope.Comments.push(temp);

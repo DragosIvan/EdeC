@@ -21,11 +21,10 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-
 // Variables declaration
 
 var products = new NodeCache();
-var commentLimit = []; commentLimit[0] = 0;
+var commentLimit = []; commentLimit[0] = 0, globalIdProduct = 0;
 
 function timeConverter(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp*1000);
@@ -58,11 +57,61 @@ function getTodayDate() {
       mm='0'+mm
   } 
 
-  today = dd+'-'+mm+'-'+yyyy;
+  today = yyyy+'-'+mm+'-'+dd;
   return today;
 }
 
 //************************************************
+
+var commentText = "This is a test comment generated automatically, in order to populate the comments table with 500.000 records.";
+
+connection.query ('SELECT * FROM users', function(err, rows, fields) {
+  if (err) throw err;
+  else {
+  
+    // console.log(rows);
+
+    var i;
+
+    for (i = 0; i < 569; i++) {
+      var randomUser = (Math.floor((Math.random() * rows.length) + 1)) - 1;
+      // if (randomUser >= rows.length) randomUser = rows.length - 1;
+      // console.log(randomUser);
+      var userToComment = rows[randomUser].username;
+      var idUserToComment = rows[randomUser].id_users;
+      
+      var today = getTodayDate();
+      // console.log(today);
+
+      var numberOfCommentLines = Math.floor((Math.random() * 2) + 1);
+      // console.log(numberOfCommentLines);
+      var j, tempComment = commentText + " ";
+      for (j = 0; j < numberOfCommentLines; j++) {
+        tempComment += commentText + " ";
+      }
+
+      var tempRating = Math.floor((Math.random() * 5) + 1);
+
+      var productToComment = Math.floor((Math.random() * 50) + 1);
+
+      var comment = {
+        id_user    : idUserToComment,
+        id_product : productToComment,
+        postDate   : today,
+        comm       : tempComment,
+        rating     : tempRating
+      }
+
+      connection.query('UPDATE product SET rating = (totalRating+1)/(totalVoters+1), totalRating = totalRating+?, totalVoters = totalVoters+1 WHERE id_product = ?', [comment.rating, comment.id_product], function(err, rows, fields) {
+        if (err) throw err;
+      });
+
+      connection.query('INSERT INTO comments SET ?', comment, function(err, results) {
+        if (err) throw err;
+      });
+    }
+  }
+});
 
 // expose the routes to our app with module.exports
 module.exports = function(app) {
@@ -90,7 +139,7 @@ module.exports = function(app) {
     var limitUpperProduct = req.params.pager;
     var limitLowerProduct = req.params.pager - 1;
     var queryStringProducts = 'SELECT id_product, name, description, rating, image FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
-    connection.query (queryStringUsername, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
+    connection.query (queryStringProducts, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
          if (err) throw err;
          res.json(rows);
     });        
@@ -102,15 +151,21 @@ module.exports = function(app) {
       productComments: ''
     };
 
+    if (req.params.idProduct != globalIdProduct) {
+      commentLimit = []; commentLimit[0] = 0;
+      globalIdProduct = req.params.idProduct;
+    }
+
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
-    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.rating, c.comm, c.id_comm FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_comm > ? AND c.id_product=' + req.params.idProduct +  ' ORDER BY c.id_comm ASC LIMIT 12';
 
     connection.query(queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;
         response.productData = rows;
-        connection.query(queryStringComments, function(err, rows, fields) {
+        connection.query(queryStringComments, [commentLimit[req.params.pager-1]], function(err, rows, fields) {
         if (err) throw err;
          response.productComments = rows;
+         if (req.params.pager >= commentLimit.length) commentLimit.push(rows[rows.length-1].id_comm);
          res.json(response);
         });   
     });        
@@ -122,7 +177,7 @@ module.exports = function(app) {
       productComments: ''
     };
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
-    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d/%m/%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
 
     connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;

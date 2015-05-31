@@ -22,15 +22,15 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 			.when('/terms', {
 				templateUrl: 'views/termsAndConditions.html'
 			})
+			.when('/faqs', {
+				templateUrl: 'views/faqs.html'
+			})
 			.when('/privacy', {
 				templateUrl: 'views/privacyPolicy.html'
 			})
 			.when('/products/:pager', {
 				templateUrl: 'views/products.html',
 				controller: 'ProductsCtrl'
-			})
-		  	.when('/faqs', {
-				templateUrl: 'views/faqs.html'
 			})
 			.when('/product/:idProduct', {
 				templateUrl: 'views/product.html',
@@ -39,6 +39,10 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 			.when('/product/:idProduct/comments/:pager', {
 				templateUrl: 'views/comments.html',
 				controller: 'CommentsCtrl'
+			})
+			.when('/statistics/:pager', {
+				templateUrl: 'views/statistics.html',
+				controller: 'StatisticsCtrl'
 			})
 			.when('/profile', {
 				templateUrl: 'views/profile.html',
