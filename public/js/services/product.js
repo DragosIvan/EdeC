@@ -6,6 +6,9 @@ angular.module('EDeC')
 		return {
 			get : function() {
 				return $http.get('/api/product/' + $routeParams.idProduct);
+			},
+			post : function() {
+				return $http.get('/api/product/' + $routeParams.idProduct);
 			}
 		}
 	}]);

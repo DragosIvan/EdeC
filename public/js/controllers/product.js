@@ -4,6 +4,12 @@ angular.module('EDeC')
 $scope.Product;
 $scope.Comments = [];
 
+Product.post()
+    .success(function(data){
+    });  
+
+
+
  Product.get()
     .success(function(data) {
         console.log(data);

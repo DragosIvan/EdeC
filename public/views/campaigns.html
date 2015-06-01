@@ -1,0 +1,21 @@
+<section class='main-wrapper campaigns-main-wrapper'>
+	<section class='campaigns' ng-if="Campaigns.length > 0">
+		<h1 class='title'>Campaigns</h1>
+		<article ng-repeat="Campaign in Campaigns" class="edec-campaign">
+			<a href='/campaign/{{ Campaign.id_campaign }}'>
+				<div class = 'campaign-up'>
+					<span class='vertical-align-helper'></span>
+					<img src='{{Campaign.image}}' alt='prod1'>
+				</div> 
+				<div class = 'campaign-down'>
+					<p class='campaign-name'>{{Campaign.name}}</p>
+					<p class='nr-of-people'>{{Campaign.nr_people}} people have joined</p>
+					<p class='campaign-type'>{{Campaign.type}}</p>
+				</div>
+			</a>
+		</article>	
+	</section>
+
+
+</section> 
+<script src="js/resize.js"></script>

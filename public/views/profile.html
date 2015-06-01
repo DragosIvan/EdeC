@@ -9,41 +9,51 @@
 			<li>You have successfully changed your information !</li>
 		</ul>
 	</div>
-	<section class='profile'>
-		<article class="edec-profile" >
-			<span class="hidden-product-number">
-			{{Profile.id_users}}
-			</span>
-			<div class = 'profile-left'>
-				<h2>{{Profile.username}}</h2>
-				<article ng-if='Profile.name'>
-				{{Profile.name}} </article>
-				<article ng-if='Profile.lastname'>
-				{{Profile.lastname}} </article>
-				<article ng-if='Profile.gender'>
-				{{Profile.gender}} </article>
-				<article ng-if='Profile.birthday'>
-				{{Profile.birthday}} </article>
-				<article ng-if='Profile.mail'>
-				{{Profile.mail}} </article>
-				<article ng-if='Profile.address'>
-				{{Profile.address}} </article>
-			</div> 
 
-			<div class = 'profile-right' >
-			<!-- Prieteni	 -->
+	<section class="edec-profile">
+
+		<span class="hidden-product-number">
+		{{Profile.id_users}}
+		</span>
+
+		<div class = 'profile-left'>
+			<h2>{{Profile.username}}</h2>
+			<article ng-if='Profile.name'>
+			{{Profile.name}} </article>
+			<article ng-if='Profile.lastname'>
+			{{Profile.lastname}} </article>
+			<article ng-if='Profile.gender'>
+			{{Profile.gender}} </article>
+			<article ng-if='Profile.birthday'>
+			{{Profile.birthday}} </article>
+			<article ng-if='Profile.mail'>
+			{{Profile.mail}} </article>
+			<article ng-if='Profile.address'>
+			{{Profile.address}} </article>
+		</div> 
+
+		<div class = 'profile-right' >
 			<h2> Friends </h2>
-			<article class="my-friends">
-			<p>Hurdubae Diana </p>
-			<p>shjty </p>
-			<p>f Diana </p>
-			<p>Hurdubae kkk </p>
-			<p>Hurdubae Dykiana </p>
+			<article class = 'my-friends'>
+				<div class = 'friends-list'>
+					<p>1. Hurdubae Diana</p>
+					<p>2. Popescu Ion</p>
+					<p>3. Ivan Dragos</p>
+					<p>4. Lihaceanu Vlad</p>
+					<p>5. Ivanovici Sidonia</p>
+					<p>6. Hurdubae Diana</p>
+					<p>7. Popescu Ion</p>
+					<p>8. Ivan Dragos</p>
+					<p>9. Lihaceanu Vlad</p>
+					<p>10. Ivanovici Sidonia</p>
+				</div>
+				<div class = 'more-friends'>
+					<p>More Friends</p>
+				</div>
 			</article>
-			</div>
-		</article>	
-	
-	</section>
+		</div>
+
+	</section>		
 
 	<section class="edit-profile">
 		<article class="profile-info">

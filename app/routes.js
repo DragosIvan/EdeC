@@ -172,13 +172,14 @@ module.exports = function(app) {
   });
 
   app.get('/api/product/:idProduct', function(req, res) {
-    var response = {
-      productData: '',
-      productComments: ''
-    };
+   
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
     var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
 
+     var response = {
+      productData: '',
+      productComments: ''
+    };
     connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;
         response.productData = rows;
@@ -188,6 +189,34 @@ module.exports = function(app) {
          res.json(response);
         });   
     });        
+  }); 
+
+  app.post('/api/product/:idProduct', function(req, res) {
+    // console.log(body.req.ratingForm);
+    console.log(req.session.username);
+    var id;
+    var queryStringFindIdUser = 'SELECT id_users as idFound FROM users WHERE username = ?';
+    var queryStringInsertComment = 'INSERT INTO comments SET ?';
+    connection.query (queryStringFindIdUser, [req.session.username], function(err, rows, fields) {
+      if (err) throw err;
+      console.log(rows);
+
+      var date = getTodayDate();
+
+      var temp = {
+        id_user : rows[0].idFound,
+        id_product : req.body.productId,
+        postDate : date,
+        comm : req.body.commentForm,
+        rating : req.body.ratingForm
+      };
+      console.log(temp);
+      connection.query (queryStringInsertComment, temp, function(err, rows, fields) {
+          if (err) throw err;
+          res.redirect('/product/' + req.body.productId);
+      }); 
+    });
+          
   });
  
   app.get('/api/profile', function(req, res) {
@@ -239,6 +268,8 @@ module.exports = function(app) {
     }       
   });
   
+
+
   app.post('/api/register', function(req, res) {
     var ok=1;
     var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username = ? ';
@@ -285,6 +316,31 @@ module.exports = function(app) {
     }
   });
 
+app.get('/api/campaigns/:pager', function(req, res) {
+    var limitUpperProduct = req.params.pager;
+    var limitLowerProduct = req.params.pager - 1;
+    var queryStringUsername = 'SELECT c.id_campaign, c.name, c.id_product, c.nr_people, p.image FROM product p, campaign c WHERE c.id_product= p.id_product and  c.id_campaign BETWEEN 15*?+1 AND 15*?';
+    
+    connection.query (queryStringUsername,  [limitLowerProduct, limitUpperProduct] , function(err, rows, fields) {
+         if (err) throw err;
+         res.json(rows);
+    });         
+  });
+
+app.get('/api/campaign/:idProduct', function(req, res) {
+    // console.log(body.req.ratingForm);
+    console.log(req.session.username);
+    var id;
+    var queryStringFindIdCampaign = 'SELECT p.name, p.description, p.rating, p.price, p.image ,c.id_campaign, c.name as campaignName,c.type,c.nr_people,c.background,c.id_product FROM campaign c, product p WHERE c.id_campaign = ? and c.id_product=p.id_product';
+    connection.query (queryStringFindIdCampaign, [req.params.idProduct], function(err, rows, fields) {
+      if (err) throw err;
+      res.json(rows); 
+      
+    });
+          
+  });
+
+
   app.post('/api/login', function(req, res) {
     var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
     var loginErrorCode = 0;
@@ -314,3 +370,5 @@ module.exports = function(app) {
     res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
   });
 };
+
+

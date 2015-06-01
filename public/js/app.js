@@ -48,6 +48,14 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/profile.html',
 				controller: 'ProfileCtrl'
 			})
+			.when('/campaigns/:pager', {
+				templateUrl: 'views/campaigns.html',
+				controller: 'CampaignsCtrl'
+			})
+			.when('/campaign/:idProduct', {
+				templateUrl: 'views/campaign.html',
+				controller: 'CampaignCtrl'
+			})
 		  	.otherwise({
 		    	redirectTo: '/homepage'
 		  	});

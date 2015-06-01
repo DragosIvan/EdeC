@@ -1,0 +1,41 @@
+<section class='main-wrapper campaign-main-wrapper'>
+	<section class='campaign' >
+		<section class='campaign-product'>
+		<div class ='div-product-left'>
+			<div class ='div-product-left-up'>
+				<img src='{{Campaign.image}}' alt='image'></div>
+			<div class='div-product-left-down'>
+						<span ng-repeat='i in [] | range:Campaign.positiveRating'>
+					<span><img src='images/full_star.png' alt='a'></span>
+				</span>
+				<span ng-repeat='i in [] | range:Campaign.negativeRating'>
+					<span><img src='images/empty_star.png' alt='a'></span>
+				</span>
+			</div>
+		</div> 
+		<div class = 'div-product-right'>
+			<div class = 'div-product-right-up'>
+				<h3>{{Campaign.campaignName}}</h3>
+				<h3>{{Campaign.name}}</h3>
+				<p>{{Campaign.description}}</p>	
+			</div>
+			<div class = 'div-product-right-down'>
+				<div class = 'div-product-right-down-left'>
+					<div class = 'div-product-price'><p>{{Campaign.price}} RON</p></div>
+					<div class = 'div-product-cart'><p>Add to cart</p></div>
+				</div>
+				<div class = 'div-product-right-down-right'>
+					<div class = 'campaign-type'><p>{{Campaign.type}}</p></div>
+					<div class = 'join-button'><p>Join</p></div>
+				</div>
+			</div>
+		</div>
+		</section>
+		<section class='campaign-background'>
+			<div class='div-title'><h3>Campaign background</h3></div>
+			<div class='div-content'>{{Campaign.background}}</div>
+		</section>
+	</section>
+</section>
+
+<script src="js/resize.js"></script>
