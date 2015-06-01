@@ -60,6 +60,10 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/friendProfile.html',
 				controller: 'FriendProfileCtrl'
 			})
+			.when('/campaign/create/:idProduct', {
+				templateUrl: 'views/campaignForm.html',
+				controller: 'CampaignFormCtrl'
+			})
 		  	.otherwise({
 		    	redirectTo: '/homepage'
 		  	});

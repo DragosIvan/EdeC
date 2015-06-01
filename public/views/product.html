@@ -17,8 +17,15 @@
 				<p>{{Product.description}}</p>	
 			</div>
 			<div class = 'product-right-down'>
-				<div class = 'product-price'><p>{{Product.price}} RON</p></div>
-				<div class = 'product-cart'><p>Add to cart</p></div>
+				<div class = 'product-right-down-left'>
+					<a href="/campaign/create/{{Product.id_product}}"><!-- <p>Create campaign</p> -->
+						<button type='button' id='campaign'>Create Campaign</button>
+					</a>
+				</div>
+				<div class = 'product-right-down-right'>
+					<div class = 'product-price'><p>{{Product.price}} RON</p></div>
+					<button type = "button" id='product-cart'>Add to cart</button>
+				</div>
 			</div>
 		</div>
 	</section>

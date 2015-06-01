@@ -1,0 +1,64 @@
+<section class='main-wrapper campaignForm-main-wrapper'>
+
+	<section class = 'campaignForm'>
+		<section class = 'div-up'>
+			<div class ='div-product-left'>
+				<div class ='div-product-left-up'>
+					<img src='{{CampaignForm.image}}' alt='image'></div>
+				<div class='div-product-left-down'>
+					<span ng-repeat='i in [] | range:CampaignForm.positiveRating'>
+						<span><img src='images/full_star.png' alt='a'></span>
+					</span>
+					<span ng-repeat='i in [] | range:CampaignForm.negativeRating'>
+						<span><img src='images/empty_star.png' alt='a'></span>
+					</span>
+				</div>
+			</div> 
+			<div class = 'div-product-right'>
+				<div class = 'div-product-right-up'>
+					<h3>{{CampaignForm.name}}</h3>
+					<p>{{CampaignForm.description}}</p>	
+				</div>
+				<div class = 'div-product-right-down'>
+					<div class = 'div-product-right-down-left'>
+						<div class = 'div-product-price'><p>{{CampaignForm.price}} RON</p></div>
+						<button type = "button" id='product-cart'>Add to cart</button>
+					</div>
+					<div class = 'div-product-right-down-right'>
+						<select class='pro-con'>
+							<option value='pro' selected>PRO</option>
+							<option value='con'>CON</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class='div-down'>
+
+			<form class='add-campaign' method='post' action='api/campaignForm'>
+				<p>Campaign name</p>
+				<input type='text' name='campaign-name'>
+				<p>Campaign Background</p> 
+				<textarea name='campaign-background' required></textarea>
+				<input type='text' hidden name='pro-con' value='pro'>
+				<button type='submit' id='hidden-pro-con'>Submit</button>
+			</form>
+
+		</section>
+
+	</section>
+
+</section>
+
+
+
+<script src='js/resize.js'>
+	
+	$('body').on('click', '#pro-con', function() {
+		var temp = $('#pro-con').val();
+
+		$('#hidden-pro-con').val(temp);
+	});
+
+</script>

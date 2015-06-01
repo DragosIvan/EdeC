@@ -390,6 +390,18 @@ app.get('/api/campaign/:idProduct', function(req, res) {
   });
 
 
+// get - iau date doar ca sa le afisez
+app.get('/api/campaign/create/:idProduct', function(req, res) {
+    // console.log(req.session.username);
+    var queryStringProduct = 'SELECT * FROM product WHERE id_product = ?'; 
+    connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
+        if (err) throw err;
+        //console.log(rows);
+        res.json(rows);     
+    }); 
+          
+  });
+
   app.post('/api/login', function(req, res) {
     var queryStringLogin = 'SELECT password FROM users WHERE username = ?';
     var loginErrorCode = 0;
@@ -419,5 +431,7 @@ app.get('/api/campaign/:idProduct', function(req, res) {
     res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
   });
 };
+
+
 
 
