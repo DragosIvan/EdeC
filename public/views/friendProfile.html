@@ -1,0 +1,92 @@
+<section class='main-wrapper friend-profile-main-wrapper'>
+
+
+	<section class="friend-profile">
+
+		<span class="hidden-product-number">
+	<!-- 	{{Profile.id_users}} -->
+		</span>
+<!-- var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE id_users = ?';
+ -->  
+		<div class = 'friend-profile-left'>
+			<h2>{{FriendData.username}}</h2>
+			<article ng-if='FriendData.name'>
+			{{FriendData.name}} </article>
+			<article ng-if='FriendData.lastname'>
+			{{FriendData.lastname}} </article>
+			<article ng-if='FriendData.gender'>
+			{{FriendData.gender}} </article>
+			<article ng-if='FriendData.birthday'>
+			{{FriendData.birthday}} </article>
+			<article ng-if='FriendData.mail'>
+			{{FriendData.mail}} </article>
+			<article ng-if='FriendData.address'>
+			{{FriendData.address}} </article>
+		</div> 
+ 
+		<div class = 'friends-profile-right' >
+			<h2> Friends of Friend </h2>
+			<article class = 'friend-friends'>
+				<div class = 'friend-friends-list'>
+					<p>1. Hurdubae Diana</p>
+					<p>2. Popescu Ion</p>
+					<p>3. Ivan Dragos</p>
+					<p>4. Lihaceanu Vlad</p>
+					<p>5. Ivanovici Sidonia</p>
+					<p>6. Hurdubae Diana</p>
+					<p>7. Popescu Ion</p>
+					<p>8. Ivan Dragos</p>
+					<p>9. Lihaceanu Vlad</p>
+					<p>10. Ivanovici Sidonia</p>
+				</div>
+				<div class = 'more-friends'>
+					<p>More Friends</p>
+				</div>
+			</article>
+		</div>
+
+	</section>		
+
+	<section class="comments-of-friend">
+		<div class="pro-comm" >
+				<section class= 'comment' ng-repeat='GoodComment in GoodComments'>
+					<div class= 'comm-left'>
+						<div class= 'comm-left-up'>
+							<div class= 'comm-left-up-name'><p>{{ GoodComment.name }}</p></div>
+							<div class= 'comm-left-up-date'><p>{{ GoodComment.postDate }}</p></div>
+						</div>
+						<div class= 'comm-left-down'>{{ GoodComment.comm }}</div>
+					</div>
+					<div class= 'comm-right'>
+						<span ng-repeat='i in [] | range:GoodComment.positiveRating'>
+							<span><img src='images/full_star.png' alt='a'></span>
+						</span>
+						<span ng-repeat='i in [] | range:GoodComment.negativeRating'>
+							<span><img src='images/empty_star.png' alt='a'></span>
+						</span>
+					</div>
+				</section>
+						
+		</div>
+		<div class="con-comm">
+				<section class= 'comment' ng-repeat='BadComment in BadComments'>
+					<div class= 'comm-left'>
+						<div class= 'comm-left-up'>
+							<div class= 'comm-left-up-name'><p>{{ BadComment.name }}</p></div>
+							<div class= 'comm-left-up-date'><p>{{ BadComment.postDate }}</p></div>
+						</div>
+						<div class= 'comm-left-down'>{{ BadComment.comm }}</div>
+					</div>
+					<div class= 'comm-right'>
+						<span ng-repeat='i in [] | range:BadComment.positiveRating'>
+							<span><img src='images/full_star.png' alt='a'></span>
+						</span>
+						<span ng-repeat='i in [] | range:BadComment.negativeRating'>
+							<span><img src='images/empty_star.png' alt='a'></span>
+						</span>
+					</div>
+				</section>	
+		</div>
+	</section>
+</section>
+<script src="js/resize.js"></script>

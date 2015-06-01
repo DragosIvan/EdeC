@@ -45,73 +45,73 @@ function dateParser(date) {
 
 function getTodayDate() {
   var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1;
-  var yyyy = today.getFullYear();
+  // var dd = today.getDate();
+  // var mm = today.getMonth()+1;
+  // var yyyy = today.getFullYear();
 
-  if(dd < 10) {
-      dd='0'+dd
-  } 
+  // if(dd < 10) {
+  //     dd='0'+dd
+  // } 
 
-  if(mm < 10) {
-      mm='0'+mm
-  } 
+  // if(mm < 10) {
+  //     mm='0'+mm
+  // } 
 
-  today = yyyy+'-'+mm+'-'+dd;
+  // today = yyyy+'-'+mm+'-'+dd;
   return today;
 }
 
 //************************************************
 
-var commentText = "This is a test comment generated automatically, in order to populate the comments table with 500.000 records.";
+// var commentText = "This is a test comment generated automatically, in order to populate the comments table with 500.000 records.";
 
-connection.query ('SELECT * FROM users', function(err, rows, fields) {
-  if (err) throw err;
-  else {
+// connection.query ('SELECT * FROM users', function(err, rows, fields) {
+//   if (err) throw err;
+//   else {
   
-    // console.log(rows);
+//     // console.log(rows);
 
-    var i;
+//     var i;
 
-    for (i = 0; i < 569; i++) {
-      var randomUser = (Math.floor((Math.random() * rows.length) + 1)) - 1;
-      // if (randomUser >= rows.length) randomUser = rows.length - 1;
-      // console.log(randomUser);
-      var userToComment = rows[randomUser].username;
-      var idUserToComment = rows[randomUser].id_users;
+//     for (i = 0; i < 569; i++) {
+//       var randomUser = (Math.floor((Math.random() * rows.length) + 1)) - 1;
+//       // if (randomUser >= rows.length) randomUser = rows.length - 1;
+//       // console.log(randomUser);
+//       var userToComment = rows[randomUser].username;
+//       var idUserToComment = rows[randomUser].id_users;
       
-      var today = getTodayDate();
-      // console.log(today);
+//       var today = getTodayDate();
+//       // console.log(today);
 
-      var numberOfCommentLines = Math.floor((Math.random() * 2) + 1);
-      // console.log(numberOfCommentLines);
-      var j, tempComment = commentText + " ";
-      for (j = 0; j < numberOfCommentLines; j++) {
-        tempComment += commentText + " ";
-      }
+//       var numberOfCommentLines = Math.floor((Math.random() * 2) + 1);
+//       // console.log(numberOfCommentLines);
+//       var j, tempComment = commentText + " ";
+//       for (j = 0; j < numberOfCommentLines; j++) {
+//         tempComment += commentText + " ";
+//       }
 
-      var tempRating = Math.floor((Math.random() * 5) + 1);
+//       var tempRating = Math.floor((Math.random() * 5) + 1);
 
-      var productToComment = Math.floor((Math.random() * 50) + 1);
+//       var productToComment = Math.floor((Math.random() * 50) + 1);
 
-      var comment = {
-        id_user    : idUserToComment,
-        id_product : productToComment,
-        postDate   : today,
-        comm       : tempComment,
-        rating     : tempRating
-      }
+//       var comment = {
+//         id_user    : idUserToComment,
+//         id_product : productToComment,
+//         postDate   : today,
+//         comm       : tempComment,
+//         rating     : tempRating
+//       }
 
-      connection.query('UPDATE product SET rating = (totalRating+1)/(totalVoters+1), totalRating = totalRating+?, totalVoters = totalVoters+1 WHERE id_product = ?', [comment.rating, comment.id_product], function(err, rows, fields) {
-        if (err) throw err;
-      });
+//       connection.query('UPDATE product SET rating = (totalRating+1)/(totalVoters+1), totalRating = totalRating+?, totalVoters = totalVoters+1 WHERE id_product = ?', [comment.rating, comment.id_product], function(err, rows, fields) {
+//         if (err) throw err;
+//       });
 
-      connection.query('INSERT INTO comments SET ?', comment, function(err, results) {
-        if (err) throw err;
-      });
-    }
-  }
-});
+//       connection.query('INSERT INTO comments SET ?', comment, function(err, results) {
+//         if (err) throw err;
+//       });
+//     }
+//   }
+// });
 
 // expose the routes to our app with module.exports
 module.exports = function(app) {
@@ -157,7 +157,7 @@ module.exports = function(app) {
     }
 
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
-    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.rating, c.comm, c.id_comm FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_comm > ? AND c.id_product=' + req.params.idProduct +  ' ORDER BY c.id_comm ASC LIMIT 12';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.rating, c.comm, c.id_comm FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_comm > ? AND c.id_product=' + req.params.idProduct +  ' ORDER BY c.id_comm DESC LIMIT 12';
 
     connection.query(queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;
@@ -174,7 +174,7 @@ module.exports = function(app) {
   app.get('/api/product/:idProduct', function(req, res) {
    
     var queryStringProduct = 'SELECT * FROM product WHERE id_product=?';
-    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.comm, c.rating FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY c.postDate DESC LIMIT 4 ';
+    var queryStringComments = 'SELECT u.username, DATE_FORMAT(c.postDate,"%d-%m-%Y") AS postDate, c.comm, c.rating  FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct + ' ORDER BY  c.id_comm DESC LIMIT 4 ';
 
      var response = {
       productData: '',
@@ -182,11 +182,13 @@ module.exports = function(app) {
     };
     connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
         if (err) throw err;
+        
         response.productData = rows;
         connection.query (queryStringComments, function(err, rows, fields) {
         if (err) throw err;
          response.productComments = rows;
          res.json(response);
+
         });   
     });        
   }); 
@@ -197,35 +199,82 @@ module.exports = function(app) {
     var id;
     var queryStringFindIdUser = 'SELECT id_users as idFound FROM users WHERE username = ?';
     var queryStringInsertComment = 'INSERT INTO comments SET ?';
+    var queryStringGetRating = 'SELECT totalRating AS tr,totalVoters AS tv FROM product WHERE id_product = ?';
+    var queryStringUpdateRating = 'UPDATE product SET totalRating = ?, totalVoters = ? WHERE id_product = ?';
+   
     connection.query (queryStringFindIdUser, [req.session.username], function(err, rows, fields) {
       if (err) throw err;
-      console.log(rows);
+      if(rows.length<=0)
+         res.redirect('/login');
+      else
+      {
+          console.log(rows);
 
-      var date = getTodayDate();
+          var date = getTodayDate();
 
-      var temp = {
-        id_user : rows[0].idFound,
-        id_product : req.body.productId,
-        postDate : date,
-        comm : req.body.commentForm,
-        rating : req.body.ratingForm
-      };
-      console.log(temp);
-      connection.query (queryStringInsertComment, temp, function(err, rows, fields) {
-          if (err) throw err;
-          res.redirect('/product/' + req.body.productId);
-      }); 
+          var temp = {
+            id_user : rows[0].idFound,
+            id_product : req.body.productId,
+            postDate : date,
+            comm : req.body.commentForm,
+            rating : req.body.ratingForm
+          };
+          connection.query (queryStringInsertComment, temp, function(err, rows, fields) {
+              if (err) throw err;
+
+              connection.query (queryStringGetRating,[req.params.idProduct] , function(err, rows, fields) {
+                if (err) throw err;
+
+                var rating = parseInt(rows[0].tr ) + parseInt(temp.rating);
+                var increment = rows[0].tv + 1;
+
+                  connection.query (queryStringUpdateRating,[rating,increment ,req.params.idProduct] , function(err, rows, fields) {
+                  if (err) throw err;
+                 }); 
+             }); 
+              res.redirect('/product/' + req.body.productId);
+          }); 
+      }
     });
           
   });
+
+
+app.get('/api/friendProfile/:idUser', function(req, res) {
+  var queryStringFindGoodComm = 'SELECT c.id_comm, c.id_user, c.id_product, c.postDate, c.comm,c.rating ,p.name FROM comments c , users u ,product p WHERE c.rating >=3 AND u.id_users = ? AND u.id_users = c.id_user order by c.id_comm DESC limit 5';
+  var queryStringFindBadComm = 'SELECT c.id_comm, c.id_user, c.id_product, c.postDate, c.comm,c.rating ,p.name FROM comments c , users u ,product p WHERE c.rating <3 AND u.id_users = ? AND u.id_users = c.id_user order by c.id_comm DESC limit 5';
+  var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE id_users = ?';
+  
+  var response = {
+      GoodCommData : '',
+      BadCommData : '' ,
+      FriendData : ''
+    };
+
+    connection.query (queryStringUser, [req.params.idUser], function(err, rows, fields) {
+      if (err) throw err;
+      response.FriendData = rows ;
+        connection.query(queryStringFindGoodComm , [req.params.idUser] , function(err,rows){
+          if(err) throw err;
+          console.log(rows);
+          response.GoodCommData = rows;   
+             connection.query(queryStringFindBadComm , [req.params.idUser] , function(err,rows){
+              if(err) throw err; 
+                  response.BadCommData = rows  ;
+                  res.json(response);
+             });
+        });
+ 
+      });
+});
  
   app.get('/api/profile', function(req, res) {
     var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE username = ?';
     connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
          if (err) throw err;
          res.json(rows);
-    }); 
   });
+    }); 
 
   app.post('/api/profile', function(req, res) {
     if (req.body.mail !== undefined) {

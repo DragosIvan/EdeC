@@ -33,6 +33,7 @@ Product.post()
             temp.comm = comment.comm;
             temp.username = comment.username;
             temp.postDate = comment.postDate;
+            console.log(temp.postDate);
             $scope.Comments.push(temp);
         });
     });
