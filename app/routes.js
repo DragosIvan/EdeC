@@ -6,18 +6,18 @@ var NodeCache = require( "node-cache" );
 var mysql     = require('mysql');
 var bcrypt    = require('bcrypt-nodejs');
 
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   database : 'edec',
-//   user     : 'root'
-// });
-
 var connection = mysql.createConnection({
-  host     : '85.122.23.145',
-  database : 'EDeC',
-  user     : 'EDeC',
-  password : 'HYsMJeN3LH'
+  host     : 'localhost',
+  database : 'edec',
+  user     : 'root'
 });
+
+// var connection = mysql.createConnection({
+//   host     : '85.122.23.145',
+//   database : 'EDeC',
+//   user     : 'EDeC',
+//   password : 'HYsMJeN3LH'
+// });
 
 connection.connect();
 
@@ -244,8 +244,8 @@ module.exports = function(app) {
 
 
 app.get('/api/friendProfile/:idUser', function(req, res) {
-  var queryStringFindGoodComm = 'SELECT c.id_comm, c.id_user, c.id_product, c.postDate, c.comm,c.rating ,p.name FROM comments c , users u ,product p WHERE c.rating >=3 AND u.id_users = ? AND u.id_users = c.id_user order by c.id_comm DESC limit 5';
-  var queryStringFindBadComm = 'SELECT c.id_comm, c.id_user, c.id_product, c.postDate, c.comm,c.rating ,p.name FROM comments c , users u ,product p WHERE c.rating <3 AND u.id_users = ? AND u.id_users = c.id_user order by c.id_comm DESC limit 5';
+  var queryStringFindGoodComm = 'SELECT c.id_comm, c.id_product, c.postDate, c.comm, c.rating, p.name FROM comments c JOIN users u ON c.id_user=u.id_users JOIN product p ON c.id_product=p.id_product WHERE c.rating >= 3 AND u.id_users = ? order by c.id_comm DESC limit 5';
+  var queryStringFindBadComm = 'SELECT c.id_comm, c.id_product, c.postDate, c.comm, c.rating, p.name FROM comments c JOIN users u ON c.id_user=u.id_users JOIN product p ON c.id_product=p.id_product WHERE c.rating < 3 AND u.id_users = ? order by c.id_comm DESC limit 5';
   var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE id_users = ?';
   var queryStringFindFriends = 'SELECT f.id_friend,f.username FROM friends f, users u WHERE f.id_user= u.id_users and u.id_users = ? ';
    
@@ -254,7 +254,7 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
       BadCommData : '' ,
       FriendData : '' ,
       ListFriends : '' 
-    };
+  };
 
     connection.query (queryStringUser, [req.params.idUser], function(err, rows, fields) {
       if (err) throw err;
@@ -387,29 +387,6 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
     }
   });
 
-  app.get('/api/campaigns/:pager', function(req, res) {
-    var limitUpperProduct = req.params.pager;
-    var limitLowerProduct = req.params.pager - 1;
-    var queryStringUsername = 'SELECT c.id_campaign, c.name, c.id_product, c.nr_people, p.image FROM product p, campaign c WHERE c.id_product= p.id_product and  c.id_campaign BETWEEN 15*?+1 AND 15*?';
-    
-    connection.query (queryStringUsername,  [limitLowerProduct, limitUpperProduct] , function(err, rows, fields) {
-         if (err) throw err;
-         res.json(rows);
-    });         
-  });
-
-  app.get('/api/campaign/:idProduct', function(req, res) {
-    // console.log(body.req.ratingForm);
-    console.log(req.session.username);
-    var id;
-    var queryStringFindIdCampaign = 'SELECT p.name, p.description, p.rating, p.price, p.image ,c.id_campaign, c.name as campaignName,c.type,c.nr_people,c.background,c.id_product FROM campaign c, product p WHERE c.id_campaign = ? and c.id_product=p.id_product';
-    connection.query (queryStringFindIdCampaign, [req.params.idProduct], function(err, rows, fields) {
-      if (err) throw err;
-      res.json(rows); 
-      
-    });     
-  });
-
   app.get('/api/statistics', function(req, res) {
     var queryStringProductStatistics = 'SELECT totalSales, price, name FROM product';
     var queryStringStarStatistics = 'SELECT ' + 
@@ -467,44 +444,68 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
     }); 
   });
 
-// get - iau date doar ca sa le afisez
-app.get('/api/campaign/create/:idProduct', function(req, res) {
-    // console.log(req.session.username);
-    var queryStringProduct = 'SELECT * FROM product WHERE id_product = ?'; 
-    connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
-        if (err) throw err;
-        //console.log(rows);
-        res.json(rows);     
-    }); 
-          
+  app.get('/api/campaigns/:pager', function(req, res) {
+    var limitUpperProduct = req.params.pager;
+    var limitLowerProduct = req.params.pager - 1;
+    var queryStringUsername = 'SELECT c.id_campaign, c.name, c.id_product, c.nr_people, p.image FROM product p, campaign c WHERE c.id_product= p.id_product and  c.id_campaign BETWEEN 15*?+1 AND 15*?';
+    
+    connection.query (queryStringUsername,  [limitLowerProduct, limitUpperProduct] , function(err, rows, fields) {
+         if (err) throw err;
+         res.json(rows);
+    });         
   });
 
-app.post('/api/joinCampaign/:idProduct' , function(req,res) {
+  // get - iau date doar ca sa le afisez
+  app.get('/api/campaign/create/:idProduct', function(req, res) {
+      // console.log(req.session.username);
+      var queryStringProduct = 'SELECT * FROM product WHERE id_product = ?'; 
+      connection.query (queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
+          if (err) throw err;
+          //console.log(rows);
+          res.json(rows);     
+      }); 
+            
+    });
+
+   app.get('/api/campaign/:idProduct', function(req, res) {
+    var response = {
+      userJoined: 0,
+      campaign: ''
+    }
+    var id;
+    var queryStringFindIdCampaign = 'SELECT p.name, p.description, p.rating, p.price, p.image, c.id_campaign, c.name as campaignName,c.type,c.nr_people,c.background,c.id_product FROM campaign c, product p WHERE c.id_campaign = ? and c.id_product=p.id_product';
+    connection.query (queryStringFindIdCampaign, [req.params.idProduct], function(err, rows, fields) {
+      if (err) throw err;
+      res.json(rows); 
+      
+    });     
+  });
+
+  app.post('/api/campaign/:idProduct' , function(req,res) {
    var queryStringFindIdUser = 'SELECT id_users as idFound FROM users WHERE username = ?';
-   var queryStringFindCamapign = 'SELECT id_campaign  FROM campaign WHERE id_product = ?';
    var queryStringInsert = 'INSERT INTO intermediar_campaign SET ?';
+   var queryStringUpdateNrPeople= 'UPDATE campaign SET nr_people = ? WHERE id_campaign = ?';
+   var increment =  parseInt(req.body.nrPeople) + parseInt(1);
+   console.log(increment);
+   var id_camp;
   
-  temp = {};
-  console.log('cacat1');
+    temp = {
+      id_campaign: req.body.campaignId,
+      id_user: ''
+    };
    
     connection.query (queryStringFindIdUser, [req.session.username], function(err, rows, fields) {
       if (err) throw err;
-      if(rows.length<=0)
-      
-         res.redirect('/login');
-   
-      else
-      {   temp.id_user=rows[0];
-          connection.query (queryStringFindCampaign, [req.params.idProduct], function(err, rows, fields) {
-               if (err) throw err;
-               temp.id_campaign = rows[0];
-                console.log('cacat2');
-   
-               connection.query (queryStringInsert, temp , function(err, rows, fields) {
-                    if (err) throw err;
-                    console.log('cacat3');
-   
-                  });
+      if(rows.length<=0) res.redirect('/login');
+      else {   
+        temp.id_user=rows[0].idFound;   
+          connection.query (queryStringInsert, temp , function(err, rows, fields) {
+            if (err) throw err;
+
+                connection.query (queryStringUpdateNrPeople, [increment, req.body.campaignId] , function(err, rows, fields) {
+                  if (err) throw err;
+                  res.redirect('/campaign/'+ req.body.campaignId);
+             });
           });
         }
       });
@@ -514,18 +515,18 @@ app.post('/api/campaign/create/:idProduct', function(req, res) {
     // console.log(req.session.username);
     
     var temp = {   
-        name     : req.body.campaignName ,
+        name : req.body.campaignName ,
         type : req.body.proOrCon ,
         nr_people : 0 , 
         background : req.body.campaignBackground ,
-        id_product : 29
+        id_product : req.body.productId
     };
      console.log(temp); //---------------------------ia doar pro, nu si con req.nody.proOrCon si nu ia req.params.idProduct
      var queryStringValidate = 'SELECT name FROM campaign WHERE id_product = ?';
       var queryStringInsert = 'INSERT INTO campaign SET ?';
     
 
-       connection.query(queryStringValidate , [29], function(err, rows, fields) {
+       connection.query(queryStringValidate , [req.body.productId], function(err, rows, fields) {
        if (err) throw err; 
 
           connection.query(queryStringInsert , temp ,  function(err, rows, fields) {

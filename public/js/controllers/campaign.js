@@ -26,8 +26,7 @@ Campaign.post()
         temp.id_product = campaign.id_product;
         $scope.Campaign = temp;
         console.log("dupa inserare ");
-       console.log(temp);
-
+        console.log(temp);
     });
 }]);
   

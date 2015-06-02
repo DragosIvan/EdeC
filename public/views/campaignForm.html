@@ -36,12 +36,13 @@
 
 		<section class='div-down'>
 
-			<form class='add-campaign' method='post' action='/api/campaign/create/{{CampaignForm.id_product}}'>
+			<form class='add-campaign' method='post' action='/api/campaign/create/1'>
 				<p>Campaign name</p>
-				<input type='text' name='campaignName' id='campaignName'>
+				<input type='text' name='campaignName' id='campaignName' required>
 				<p>Campaign Background</p> 
 				<textarea name='campaignBackground' id='campaignBackground' required></textarea>
-				<input type='text' hidden name='proOrCon' value='pro'>
+				<input type='text' hidden name='proOrCon' id='hiddenProCon' value='pro'>
+				<input type='text' hidden name='productId' value='{{CampaignForm.id_product}}'>
 				<button type='submit' id='hiddenProCon'>Submit</button>
 			</form>
 
@@ -53,11 +54,11 @@
 
 
 
-<script src='js/resize.js'>
-	
+<script src='js/resize.js'></script>
+<script type='text/javascript'>	
 	$('body').on('click', '#proOrCon', function() {
 		var temp = $('#proOrCon').val();
-
+		console.log(temp);
 		$('#hiddenProCon').val(temp);
 	});
 

@@ -26,8 +26,11 @@
 				</div>
 				<div class = 'div-product-right-down-right'>
 					<div class = 'campaign-type'><p>{{Campaign.type}}</p></div>
-					<form action='/api/joinCampaign/{{Campaign.id_product}}' method="post">
-					<button type = "button" id='join-button'>Join</button>
+					<form action='/api/campaign/1' method="post">
+						<input type='text' name='productId' hidden value='{{Campaign.id_product}}'>
+						<input type='text' name='nrPeople' hidden value='{{Campaign.nr_people}}'>
+						<input type='text' name='campaignId' hidden value='{{Campaign.id_campaign}}'>;
+						<button type = "submit" id='join-button'>Join</button>
 					</form>
 				</div>
 			</div>

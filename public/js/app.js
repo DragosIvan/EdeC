@@ -71,10 +71,6 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/campaignForm.html',
 				controller: 'CampaignFormCtrl'
 			})
-			.when('/joinCampaign/:idProduct', {
-				templateUrl: 'views/campaign.html',
-				controller: 'JoinCampaignFormCtrl'
-			})
 		  	.otherwise({
 		    	redirectTo: '/homepage'
 		  	});
