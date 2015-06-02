@@ -26,6 +26,7 @@ $scope.FriendInfo;
             temp.positiveRating = Math.round(comment.rating);
             temp.negativeRating = 5 - temp.positiveRating;
             temp.name= comment.name;
+            console.log(temp.id_product);
 
             $scope.GoodComments.push(temp);
         });

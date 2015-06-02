@@ -15,18 +15,12 @@
 
 		<div class = 'profile-left'>
 			<h2>{{Profile.username}}</h2>
-			<article ng-if='Profile.name'>
-			{{Profile.name}} </article>
-			<article ng-if='Profile.lastname'>
-			{{Profile.lastname}} </article>
-			<article ng-if='Profile.gender'>
-			{{Profile.gender}} </article>
-			<article ng-if='Profile.birthday'>
-			{{Profile.birthday}} </article>
-			<article ng-if='Profile.mail'>
-			{{Profile.mail}} </article>
-			<article ng-if='Profile.address'>
-			{{Profile.address}} </article>
+			<article ng-if='Profile.name'>Firstname: {{Profile.name}} </article>
+			<article ng-if='Profile.lastname'>Lastname: {{Profile.lastname}} </article>
+			<article ng-if='Profile.gender'>Gender: {{Profile.gender}} </article>
+			<article ng-if='Profile.birthday'>Birthday: {{Profile.birthday}} </article>
+			<article ng-if='Profile.mail'>Mail: {{Profile.mail}} </article>
+			<article ng-if='Profile.address'>{{Profile.address}} </article>
 		</div> 
 
 		<div class = 'profile-right' > 
@@ -37,11 +31,7 @@
 				<div class = 'friends-list'>
 					<a href='/friendProfile/{{ ProfileFriend.id_friend }}' >
 						<p>{{ProfileFriend.username}}</p>
-					</a>
-					
-				</div>
-				<div class = 'more-friends'>
-					<!-- <p>More Friends</p> -->
+					</a>					
 				</div>
 			</article>
 		</div>

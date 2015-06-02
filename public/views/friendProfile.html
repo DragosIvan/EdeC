@@ -1,35 +1,23 @@
 <section class='main-wrapper friend-profile-main-wrapper'>
-	<section class="friend-profile">
-
-		
+	<section class="friend-profile">		
 
 		<div class = 'friend-profile-left'>
 			<h2>{{FriendInfo.username}}</h2>
-			<article ng-if='FriendInfo.name'>
-			{{FriendInfo.name}} </article> 
-			<article ng-if='FriendInfo.lastname'>
-			{{FriendInfo.lastname}} </article>
-			<article ng-if='FriendInfo.gender'>
-			{{FriendInfo.gender}} </article>
-			<article ng-if='FriendInfo.birthday'>
-			{{FriendInfo.birthday}} </article>
-			<article ng-if='FriendInfo.mail'>
-			{{FriendInfo.mail}} </article>
-			<article ng-if='FriendInfo.address'>
-			{{FriendInfo.address}} </article>
+			<article ng-if='FriendInfo.name'>Firstname: {{FriendInfo.name}}</article> 
+			<article ng-if='FriendInfo.lastname'>Lastname: {{FriendInfo.lastname}}</article>
+			<article ng-if='FriendInfo.gender'>Gender: {{FriendInfo.gender}}</article>
+			<article ng-if='FriendInfo.birthday'>Birthday: {{FriendInfo.birthday}}</article>
+			<article ng-if='FriendInfo.mail'>Mail: {{FriendInfo.mail}}</article>
+			<article ng-if='FriendInfo.address'>{{FriendInfo.address}}</article>
 		</div> 
  
-		<div class = 'friends-profile-right' >
-			<h2> Friends of Friend </h2>
+		<div class = 'friend-profile-right' >
+			<h2> Friends </h2>
 			<article class = 'friends-of-friends'  ng-repeat='FriendList in FriendsList' >
 				<div class = 'friends-list'>
 					<a href='/friendProfile/{{ FriendList.id_friend }}' >
 						<p>{{FriendList.username}}</p>
-					</a>
-					
-				</div>
-				<div class = 'more-friends'>
-	
+					</a>					
 				</div>
 			</article>
 		</div>
@@ -37,45 +25,53 @@
 	</section>		
 
 	<section class="comments-of-friend">
-		<div class="pro-comm" >
-				<section class= 'comment' ng-repeat='GoodComment in GoodComments'>
-					<div class= 'comm-left'>
-						<div class= 'comm-left-up'>
-							<div class= 'comm-left-up-name'><p>{{ GoodComment.name }}</p></div>
-							<div class= 'comm-left-up-date'><p>{{ GoodComment.postDate }}</p></div>
+
+			<article class= 'p-comment'>
+				<h2>Pro Comments</h2>
+				<section class= 'pro-comment' ng-repeat='GoodComment in GoodComments'>
+					<div class= 'comment'>
+						<div class= 'comm-up'>
+							<a href = "/product/{{GoodComment.id_product}}"><div class= 'comm-up-name'><p>{{ GoodComment.name }}</p></div></a>
+							<div class= 'comm-up-date'><p>{{ GoodComment.postDate }}</p></div>
+							<!-- <div class= 'comm-up-date'><p>25.03.2007</p></div> -->
 						</div>
-						<div class= 'comm-left-down'>{{ GoodComment.comm }}</div>
-					</div>
-					<div class= 'comm-right'>
-						<span ng-repeat='i in [] | range:GoodComment.positiveRating'>
-							<span><img src='images/full_star.png' alt='a'></span>
-						</span>
-						<span ng-repeat='i in [] | range:GoodComment.negativeRating'>
-							<span><img src='images/empty_star.png' alt='a'></span>
-						</span>
+						<div class= 'comm-down'>{{ GoodComment.comm }}</div>
+						<div class= 'stars'>
+							<span ng-repeat='i in [] | range:GoodComment.positiveRating'>
+								<span><img src='images/full_star.png' alt='a'></span>
+							</span>
+							<span ng-repeat='i in [] | range:GoodComment.negativeRating'>
+								<span><img src='images/empty_star.png' alt='a'></span>
+							</span>
+						</div>
 					</div>
 				</section>
-						
-		</div>
-		<div class="con-comm">
-				<section class= 'comment' ng-repeat='BadComment in BadComments'>
-					<div class= 'comm-left'>
-						<div class= 'comm-left-up'>
-							<div class= 'comm-left-up-name'><p>{{ BadComment.name }}</p></div>
-							<div class= 'comm-left-up-date'><p>{{ BadComment.postDate }}</p></div>
+			</article>						
+
+			<article class = 'c-comment'>
+				<h2>Con Comments</h2>
+				<section class= 'con-comment' ng-repeat='BadComment in BadComments'>
+					<div class= 'comment'>
+						<div class= 'comm-up'>
+							<a href = "/product/{{GoodComment.id_product}}"><div class= 'comm-up-name'><p>{{ BadComment.name }}</p></div></a>
+							<div class= 'comm-up-date'><p>{{ BadComment.postDate }}</p></div>
+							<!-- <div class= 'comm-up-date'><p>25.03.2010</p></div> -->
 						</div>
-						<div class= 'comm-left-down'>{{ BadComment.comm }}</div>
+						<div class= 'comm-down'>{{ BadComment.comm }}</div>
+						<div class='stars'>
+							<span ng-repeat='i in [] | range:BadComment.positiveRating'>
+								<span><img src='images/full_star.png' alt='a'></span>
+							</span>
+							<span ng-repeat='i in [] | range:BadComment.negativeRating'>
+								<span><img src='images/empty_star.png' alt='a'></span>
+							</span>
+						</div>
 					</div>
-					<div class= 'comm-right'>
-						<span ng-repeat='i in [] | range:BadComment.positiveRating'>
-							<span><img src='images/full_star.png' alt='a'></span>
-						</span>
-						<span ng-repeat='i in [] | range:BadComment.negativeRating'>
-							<span><img src='images/empty_star.png' alt='a'></span>
-						</span>
-					</div>
-				</section>	
-		</div>
+				</section>
+			</article>	
+
 	</section>
+
 </section>
+
 <script src="js/resize.js"></script>

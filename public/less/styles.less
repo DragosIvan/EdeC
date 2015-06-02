@@ -370,8 +370,11 @@ footer {
 			height: 100%;	
 			float: left;
 			text-align: left;
+			font-size: 20px;
+			color: @darkBlue;
 
 			h2 {
+				color: #000000;
 				margin-left: 30px;
 				margin-top: 20px;				
 			}
@@ -400,19 +403,12 @@ footer {
 					text-align: left;
 					margin-left: 60px;	
 					margin-bottom: 2px;
-				}
-			}
+					font-size: 20px;
+					color: @darkBlue;
 
-			.more-friends {
-				height: 20%;
-				vertical-align: center;
-				position: absolute;
-
-				p {
-					text-align: center;
-					background-color: @lightGreen;
-					margin-top: 17px;
-					margin-left: 80px;
+					&:hover {
+						color: @lightGreen;
+					}
 				}
 			}
 		}
@@ -1089,6 +1085,7 @@ footer {
 						color: @darkBlue;
 						}
 					}
+
 				}
 
 				.product-right-down-right {
@@ -1168,33 +1165,23 @@ footer {
 					width: 100%;
 					float: left;
 					margin-bottom: 10px;
+				}
+
+
+				.div3 {
+					width: 100%;
+					float: left;
+					margin-bottom: 10px;
 
 					button {
 						width: 15%;
-						color: @white;
-						background-color: @darkBlue;
-
-						&:hover {
-							color: @darkBlue;
-							background-color: @lightGreen;
-						}
+						color: #ffffff;
+						background-color: #505766;
+						font-size: 15px;
+						vertical-align: middle;
+						border: 1px solid #23262d;
 					}
-
-					.div3 {
-						width: 100%;
-						float: left;
-						margin-bottom: 10px;
-
-						button {
-							width: 15%;
-							color: #ffffff;
-							background-color: #505766;
-							font-size: 20px;
-							vertical-align: middle;
-							border: 1px solid #23262d;
-						}
-					}		
-				}
+				}		
 			} 
 		}
 	}
@@ -1617,6 +1604,243 @@ footer {
 }
 
 /*END CAMPAIGNFORM LESS*/
+
+
+/*START FRIEND PROFILE LESS*/
+
+.friend-profile-main-wrapper {
+
+		.friend-profile {
+		width: 100%;
+		height: 330px;
+		background-color: @grey;
+		margin-top: 10px;
+		margin-bottom: 30px;
+		// background: url('../images/login_logo.png') no-repeat center;
+		// background-size: contain;
+
+		.friend-profile-left {
+			height: 100%;	
+			float: left;
+			text-align: left;
+			font-size: 20px;
+			color: @darkBlue;
+
+			h2 {
+				color: #000000;
+				margin-left: 30px;
+				margin-top: 20px;				
+			}
+
+			article {
+				margin-left: 60px;
+				padding-top: 5px;
+			}		
+		}
+
+		.friend-profile-right {
+			height: 100%;
+			text-align: left;
+			float: right;
+			background-color: @darkerGrey;
+
+			h2 {	
+				margin-right: 120px;
+				margin-top: 30px;
+				margin-left: 30px;
+			}
+
+			.friends-list {
+				height: 80%;
+				p {
+					text-align: left;
+					margin-left: 60px;	
+					margin-bottom: 2px;
+					font-size: 20px;
+					color: @darkBlue;
+
+					&:hover {
+						color: @lightGreen;
+					}
+				}
+			}
+		}
+	}
+
+	.comments-of-friend {
+		width: 100%;
+		min-height: 100%;
+		max-height: 100%;
+		display: inline-block;
+		margin-bottom: 20px;
+		text-align: justify;
+		margin-right: 10px;
+
+		h2 {
+				text-align: center;
+				margin-bottom: 30px;
+			}
+
+		.p-comment {
+			width: 48%; 
+			display: inline-block;
+			min-height: 100%;
+			max-height: 100%;
+			float: left;
+			margin-left: 5px;
+			margin-right: 5px;
+			margin-bottom: 10px;
+
+			.pro-comment {
+				width: 100%;
+				height: 200px;
+				border: 2px solid @darkBlue;
+				display: inline-block;
+				position: relative;
+
+				.comment {
+					width: 100%;
+					height: 100%;
+					margin-right: 5px;
+					float: left;
+
+					.comm-up {
+						width: 100%;
+						height: 30px;
+						margin-bottom: 5px;
+
+						p {
+						text-align: center;
+						margin-top: 5px;
+						}
+
+						.comm-up-name {
+							width: 50%;
+							height: 100%;
+							color: @darkBlue;
+							background-color: @grey;
+							float: left;
+
+							&:hover {
+								background-color: @lightGreen;
+							}
+						}
+
+						.comm-up-date {
+							width: 50%;
+							height: 100%;
+							color: @white;
+							background-color: @darkBlue;
+							float: right;
+						}
+					}
+
+					.comm-down {
+						height: 110px;
+						margin-bottom: 5px;
+						text-align: left;
+						padding-left: 10px;
+					}
+
+					.stars {
+					height: 15px;
+					position: absolute;
+					bottom: 10px;
+					right: 10px;
+
+					img {
+						max-width: 100%;
+						height: 100%;
+						position: relative;
+						display: inline;
+						vertical-align: middle;
+					}
+				}
+			}		
+		}
+	}
+			.c-comment {
+			width: 48%; 
+			display: inline-block;
+			min-height: 100%;
+			max-height: 100%;
+			float: right;
+			margin-right: 5px;
+			margin-bottom: 10px;
+
+			.con-comment {
+				width: 100%;
+				height: 200px;
+				border: 2px solid @darkBlue;
+				display: inline-block;
+				position: relative;
+
+				.comment {
+					width: 100%;
+					height: 100%;
+					margin-right: 5px;
+					float: left;
+
+					.comm-up {
+						width: 100%;
+						height: 30px;
+						margin-bottom: 5px;
+
+						p {
+						text-align: center;
+						margin-top: 5px;
+						}
+
+						.comm-up-name {
+							width: 50%;
+							height: 100%;
+							color: @darkBlue;
+							background-color: @grey;
+							float: left;
+
+							&:hover {
+								background-color: @lightGreen;
+							}
+						}
+
+						.comm-up-date {
+							width: 50%;
+							height: 100%;
+							color: @white;
+							background-color: @darkBlue;
+							float: right;
+						}
+					}
+
+					.comm-down {
+						height: 110px;
+						margin-bottom: 5px;
+						text-align: left;
+						padding-left: 10px;
+					}
+
+					.stars {
+					height: 15px;
+					position: absolute;
+					bottom: 10px;
+					right: 10px;
+
+					img {
+						max-width: 100%;
+						height: 100%;
+						position: relative;
+						display: inline;
+						vertical-align: middle;
+					}
+				}
+			}
+		}
+	}
+}
+				
+}
+
+/*END FRIEND PROFILE LESS*/
 
 
 
