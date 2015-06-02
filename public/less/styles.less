@@ -1068,22 +1068,22 @@ footer {
 
 			.product-right-down {
 				width: 100%;
+				position: relative;
+  				display: inline-block;
 
 				.product-right-down-left {
-					height: 100%;
 					width: 50%;
 					float: left;
+					bottom: -35px;
+					position: absolute;
 
 					button {
-
-						color: @white;
-						background-color: @darkBlue;
+						color: #ffffff;
+						background-color: #505766;
 						font-size: 20px;
 						vertical-align: middle;
-						margin-top: 56px;
-						margin-left: 55px;
-
-
+						border: 1px solid #23262d;
+						
 						&:hover {
 						background-color: @lightGreen;
 						color: @darkBlue;
@@ -1187,6 +1187,11 @@ footer {
 
 						button {
 							width: 15%;
+							color: #ffffff;
+							background-color: #505766;
+							font-size: 20px;
+							vertical-align: middle;
+							border: 1px solid #23262d;
 						}
 					}		
 				}
@@ -1618,7 +1623,9 @@ footer {
 /* START MEDIA QUERIES */
 
 @media screen and (max-width: 1093px) {
-	
+	.product-main-wrapper .product .product-right .product-right-down .product-right-down-right .product-price {
+		font-size: 20px;
+	}
 }
 
 @media screen and (max-width: 1071px) {
@@ -1674,6 +1681,10 @@ footer {
 @media screen and (max-width: 768px) {
 	.main-wrapper {
 		width: 89%;
+	}
+
+	.products-main-wrapper .products article {
+		width: 100%;
 	}
 }
 
