@@ -25,7 +25,7 @@
 						<button type = "button" id='product-cart'>Add to cart</button>
 					</div>
 					<div class = 'div-product-right-down-right'>
-						<select class='pro-con'>
+						<select class='pro-con' name='proOrCon' id='proOrCon'>
 							<option value='pro' selected>PRO</option>
 							<option value='con'>CON</option>
 						</select>
@@ -36,13 +36,13 @@
 
 		<section class='div-down'>
 
-			<form class='add-campaign' method='post' action='api/campaignForm'>
+			<form class='add-campaign' method='post' action='/api/campaign/create/{{CampaignForm.id_product}}'>
 				<p>Campaign name</p>
-				<input type='text' name='campaign-name'>
+				<input type='text' name='campaignName' id='campaignName'>
 				<p>Campaign Background</p> 
-				<textarea name='campaign-background' required></textarea>
-				<input type='text' hidden name='pro-con' value='pro'>
-				<button type='submit' id='hidden-pro-con'>Submit</button>
+				<textarea name='campaignBackground' id='campaignBackground' required></textarea>
+				<input type='text' hidden name='proOrCon' value='pro'>
+				<button type='submit' id='hiddenProCon'>Submit</button>
 			</form>
 
 		</section>
@@ -55,10 +55,10 @@
 
 <script src='js/resize.js'>
 	
-	$('body').on('click', '#pro-con', function() {
-		var temp = $('#pro-con').val();
+	$('body').on('click', '#proOrCon', function() {
+		var temp = $('#proOrCon').val();
 
-		$('#hidden-pro-con').val(temp);
+		$('#hiddenProCon').val(temp);
 	});
 
 </script>

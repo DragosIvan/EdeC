@@ -206,7 +206,7 @@ module.exports = function(app) {
     var queryStringInsertComment = 'INSERT INTO comments SET ?';
     var queryStringGetRating = 'SELECT totalRating AS tr,totalVoters AS tv FROM product WHERE id_product = ?';
     var queryStringUpdateRating = 'UPDATE product SET totalRating = ?, totalVoters = ? WHERE id_product = ?';
-   
+  
     connection.query (queryStringFindIdUser, [req.session.username], function(err, rows, fields) {
       if (err) throw err;
       if(rows.length<=0)
@@ -258,7 +258,6 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
 
     connection.query (queryStringUser, [req.params.idUser], function(err, rows, fields) {
       if (err) throw err;
-      console.log("cacat3");
       response.FriendData = rows ;
         connection.query(queryStringFindGoodComm , [req.params.idUser] , function(err,rows){
           if(err) throw err;
@@ -270,9 +269,7 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
                   connection.query (queryStringFindFriends , [req.params.idUser] , function(err, rows, fields) {
                      if (err) throw err;
                      response.ListFriends = rows;
-                     console.log("cacat");
                         res.json(response);
-                        console.log("cacat2");
                         console.log(response);
                       });
              });
@@ -479,6 +476,67 @@ app.get('/api/campaign/create/:idProduct', function(req, res) {
         //console.log(rows);
         res.json(rows);     
     }); 
+          
+  });
+
+app.post('/api/joinCampaign/:idProduct' , function(req,res) {
+   var queryStringFindIdUser = 'SELECT id_users as idFound FROM users WHERE username = ?';
+   var queryStringFindCamapign = 'SELECT id_campaign  FROM campaign WHERE id_product = ?';
+   var queryStringInsert = 'INSERT INTO intermediar_campaign SET ?';
+  
+  temp = {};
+  console.log('cacat1');
+   
+    connection.query (queryStringFindIdUser, [req.session.username], function(err, rows, fields) {
+      if (err) throw err;
+      if(rows.length<=0)
+      
+         res.redirect('/login');
+   
+      else
+      {   temp.id_user=rows[0];
+          connection.query (queryStringFindCampaign, [req.params.idProduct], function(err, rows, fields) {
+               if (err) throw err;
+               temp.id_campaign = rows[0];
+                console.log('cacat2');
+   
+               connection.query (queryStringInsert, temp , function(err, rows, fields) {
+                    if (err) throw err;
+                    console.log('cacat3');
+   
+                  });
+          });
+        }
+      });
+});
+
+app.post('/api/campaign/create/:idProduct', function(req, res) {
+    // console.log(req.session.username);
+    
+    var temp = {   
+        name     : req.body.campaignName ,
+        type : req.body.proOrCon ,
+        nr_people : 0 , 
+        background : req.body.campaignBackground ,
+        id_product : 29
+    };
+     console.log(temp); //---------------------------ia doar pro, nu si con req.nody.proOrCon si nu ia req.params.idProduct
+     var queryStringValidate = 'SELECT name FROM campaign WHERE id_product = ?';
+      var queryStringInsert = 'INSERT INTO campaign SET ?';
+    
+
+       connection.query(queryStringValidate , [29], function(err, rows, fields) {
+       if (err) throw err; 
+
+          connection.query(queryStringInsert , temp ,  function(err, rows, fields) {
+          if (err) throw err; 
+            res.redirect('/campaigns/1');
+
+        });
+
+     });
+
+    
           
   });
 

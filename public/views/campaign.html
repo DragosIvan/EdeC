@@ -26,7 +26,9 @@
 				</div>
 				<div class = 'div-product-right-down-right'>
 					<div class = 'campaign-type'><p>{{Campaign.type}}</p></div>
+					<form action='/api/joinCampaign/{{Campaign.id_product}}' method="post">
 					<button type = "button" id='join-button'>Join</button>
+					</form>
 				</div>
 			</div>
 		</div>

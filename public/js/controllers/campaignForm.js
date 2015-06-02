@@ -5,6 +5,7 @@ $scope.CampaignForm;
 
 CampaignForm.post()
     .success(function(data){
+        console.log(data);
     });  
 
  CampaignForm.get()
