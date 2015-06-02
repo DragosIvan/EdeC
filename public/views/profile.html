@@ -11,10 +11,7 @@
 	</div>
 
 	<section class="edec-profile">
-
-		<span class="hidden-product-number">
-		{{Profile.id_users}}
-		</span>
+		
 
 		<div class = 'profile-left'>
 			<h2>{{Profile.username}}</h2>
@@ -32,23 +29,19 @@
 			{{Profile.address}} </article>
 		</div> 
 
-		<div class = 'profile-right' >
+		<div class = 'profile-right' > 
 			<h2> Friends </h2>
-			<article class = 'my-friends'>
+			<input type='text' value="{{ Profile.id_friend }}" hidden name='userIdUser' />
+	
+			<article class = 'my-friends'  ng-repeat='ProfileFriend in ProfileFriends' >
 				<div class = 'friends-list'>
-					<p>1. Hurdubae Diana</p>
-					<p>2. Popescu Ion</p>
-					<p>3. Ivan Dragos</p>
-					<p>4. Lihaceanu Vlad</p>
-					<p>5. Ivanovici Sidonia</p>
-					<p>6. Hurdubae Diana</p>
-					<p>7. Popescu Ion</p>
-					<p>8. Ivan Dragos</p>
-					<p>9. Lihaceanu Vlad</p>
-					<p>10. Ivanovici Sidonia</p>
+					<a href='/friendProfile/{{ ProfileFriend.id_friend }}' >
+						<p>{{ProfileFriend.username}}</p>
+					</a>
+					
 				</div>
 				<div class = 'more-friends'>
-					<p>More Friends</p>
+					<!-- <p>More Friends</p> -->
 				</div>
 			</article>
 		</div>

@@ -1,46 +1,35 @@
 <section class='main-wrapper friend-profile-main-wrapper'>
-
-
 	<section class="friend-profile">
 
-		<span class="hidden-product-number">
-	<!-- 	{{Profile.id_users}} -->
-		</span>
-<!-- var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE id_users = ?';
- -->  
+		
+
 		<div class = 'friend-profile-left'>
-			<h2>{{FriendData.username}}</h2>
-			<article ng-if='FriendData.name'>
-			{{FriendData.name}} </article>
-			<article ng-if='FriendData.lastname'>
-			{{FriendData.lastname}} </article>
-			<article ng-if='FriendData.gender'>
-			{{FriendData.gender}} </article>
-			<article ng-if='FriendData.birthday'>
-			{{FriendData.birthday}} </article>
-			<article ng-if='FriendData.mail'>
-			{{FriendData.mail}} </article>
-			<article ng-if='FriendData.address'>
-			{{FriendData.address}} </article>
+			<h2>{{FriendInfo.username}}</h2>
+			<article ng-if='FriendInfo.name'>
+			{{FriendInfo.name}} </article> 
+			<article ng-if='FriendInfo.lastname'>
+			{{FriendInfo.lastname}} </article>
+			<article ng-if='FriendInfo.gender'>
+			{{FriendInfo.gender}} </article>
+			<article ng-if='FriendInfo.birthday'>
+			{{FriendInfo.birthday}} </article>
+			<article ng-if='FriendInfo.mail'>
+			{{FriendInfo.mail}} </article>
+			<article ng-if='FriendInfo.address'>
+			{{FriendInfo.address}} </article>
 		</div> 
  
 		<div class = 'friends-profile-right' >
 			<h2> Friends of Friend </h2>
-			<article class = 'friend-friends'>
-				<div class = 'friend-friends-list'>
-					<p>1. Hurdubae Diana</p>
-					<p>2. Popescu Ion</p>
-					<p>3. Ivan Dragos</p>
-					<p>4. Lihaceanu Vlad</p>
-					<p>5. Ivanovici Sidonia</p>
-					<p>6. Hurdubae Diana</p>
-					<p>7. Popescu Ion</p>
-					<p>8. Ivan Dragos</p>
-					<p>9. Lihaceanu Vlad</p>
-					<p>10. Ivanovici Sidonia</p>
+			<article class = 'friends-of-friends'  ng-repeat='FriendList in FriendsList' >
+				<div class = 'friends-list'>
+					<a href='/friendProfile/{{ FriendList.id_friend }}' >
+						<p>{{FriendList.username}}</p>
+					</a>
+					
 				</div>
 				<div class = 'more-friends'>
-					<p>More Friends</p>
+	
 				</div>
 			</article>
 		</div>

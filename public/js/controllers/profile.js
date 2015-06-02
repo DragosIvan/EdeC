@@ -13,13 +13,14 @@ angular.module('EDeC')
 
        
 $scope.Profile;
+$scope.ProfileFriends = [];
 $scope.errorCode = $routeParams.error;
 
 Profile.get()
     .success(function(data) {
-        var profile = data[0];
+        var profile = data.UserData[0];
         var temp = {};
-        temp.id_users = profile.id_users;
+        temp.id_users = profile.idUser;
         temp.username = profile.username;
         temp.mail = profile.mail;
         temp.name = profile.name;
@@ -28,6 +29,15 @@ Profile.get()
         temp.birthday = profile.birthday;
         temp.address = profile.address;
         $scope.Profile = temp; 
+
+        data.FriendData.forEach(function(friends) {
+            var temp2 = {}; 
+            temp2.id_friend = friends.id_friend;
+            temp2.username = friends.username;
+            $scope.ProfileFriends.push(temp2);
+            console.log(temp2);
+
+        });
     });
 
  Profile.post()

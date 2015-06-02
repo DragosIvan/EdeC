@@ -247,15 +247,18 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
   var queryStringFindGoodComm = 'SELECT c.id_comm, c.id_user, c.id_product, c.postDate, c.comm,c.rating ,p.name FROM comments c , users u ,product p WHERE c.rating >=3 AND u.id_users = ? AND u.id_users = c.id_user order by c.id_comm DESC limit 5';
   var queryStringFindBadComm = 'SELECT c.id_comm, c.id_user, c.id_product, c.postDate, c.comm,c.rating ,p.name FROM comments c , users u ,product p WHERE c.rating <3 AND u.id_users = ? AND u.id_users = c.id_user order by c.id_comm DESC limit 5';
   var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE id_users = ?';
-  
+  var queryStringFindFriends = 'SELECT f.id_friend,f.username FROM friends f, users u WHERE f.id_user= u.id_users and u.id_users = ? ';
+   
   var response = {
       GoodCommData : '',
       BadCommData : '' ,
-      FriendData : ''
+      FriendData : '' ,
+      ListFriends : '' 
     };
 
     connection.query (queryStringUser, [req.params.idUser], function(err, rows, fields) {
       if (err) throw err;
+      console.log("cacat3");
       response.FriendData = rows ;
         connection.query(queryStringFindGoodComm , [req.params.idUser] , function(err,rows){
           if(err) throw err;
@@ -264,7 +267,14 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
              connection.query(queryStringFindBadComm , [req.params.idUser] , function(err,rows){
               if(err) throw err; 
                   response.BadCommData = rows  ;
-                  res.json(response);
+                  connection.query (queryStringFindFriends , [req.params.idUser] , function(err, rows, fields) {
+                     if (err) throw err;
+                     response.ListFriends = rows;
+                     console.log("cacat");
+                        res.json(response);
+                        console.log("cacat2");
+                        console.log(response);
+                      });
              });
         });
  
@@ -272,12 +282,26 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
 });
  
   app.get('/api/profile', function(req, res) {
-    var queryStringUser = 'SELECT id_users, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE username = ?';
+
+      var response = {
+      UserData : '',
+      FriendData : ''
+    };
+ 
+    var id =3;
+    var queryStringUser = 'SELECT id_users as idUser, username, mail, name, lastname, gender, DATE_FORMAT(birthday,"%d/%m/%Y") AS birthday, address FROM users WHERE username = ?';
+    var queryStringFindFriends = 'SELECT f.id_friend,f.username FROM friends f, users u WHERE f.id_user= u.id_users and u.id_users = ? ';
     connection.query (queryStringUser, [req.session.username], function(err, rows, fields) {
          if (err) throw err;
-         res.json(rows);
+         response.UserData = rows;
+         connection.query (queryStringFindFriends,[rows[0].idUser] , function(err, rows, fields) {
+           if (err) throw err;
+           response.FriendData = rows;
+           res.json(response);
+           console.log(response);
+       });
   });
-    }); 
+ }); 
 
   app.post('/api/profile', function(req, res) {
     if (req.body.mail !== undefined) {

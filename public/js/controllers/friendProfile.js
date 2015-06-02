@@ -3,7 +3,9 @@ angular.module('EDeC')
 
 $scope.GoodComments = [];
 $scope.BadComments = [];
-$scope.FriendData ;
+$scope.FriendsList = [];
+$scope.FriendInfo;
+
 
 // FriendProfile.post()
 //     .success(function(data){
@@ -37,7 +39,6 @@ $scope.FriendData ;
             temp2.positiveRating = Math.round(comment.rating);
             temp2.negativeRating = 5 - temp2.positiveRating;
             temp2.name= comment.name;
-            //console.log(temp2);
 
             $scope.BadComments.push(temp2);
         });
@@ -52,11 +53,19 @@ $scope.FriendData ;
             temp3.birthday = profile.birthday;
             temp3.address = profile.address;
 
-            $scope.Profile = temp3; 
-            console.log(temp3);
+            $scope.FriendInfo = temp3; 
+
+
+          data.ListFriends.forEach(function(friend) {
+            var temp4 = {};
+            temp4.id_friend = friend.id_friend;
+            temp4.username = friend.username;
+
+            $scope.FriendsList.push(temp4);   
 
 
     });
+      });
 
 }]);
   
