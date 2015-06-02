@@ -34,6 +34,9 @@ $(document).ready(function() {
 			}, 750);
 		} else {
 			$('body .outer-circular-menu').addClass('closed');
+			if (!$('body .menu-bubble-statistics').hasClass('closed')) $('body .menu-bubble-statistics').addClass('closed');
+			$('body .menu-second-bubble-1').fadeOut(500);
+			$('body .menu-second-bubble-2').fadeOut(500);
 			$('body .menu-bubble-3').fadeOut(500);
 			setTimeout(function() {
 				$('body .menu-bubble-2').fadeOut(500);
@@ -48,6 +51,33 @@ $(document).ready(function() {
 		}
 	});
 
+	$('body').on('click', '.menu-bubble-statistics', function() {
+		if ($('body .menu-bubble-statistics').hasClass('closed')) {
+			$('body .menu-bubble-statistics').removeClass('closed');
+			setTimeout(function() {
+				$('body .menu-second-bubble-1').fadeIn(500);
+			}, 150);
+			setTimeout(function() {
+				$('body .menu-second-bubble-2').fadeIn(500);
+			}, 250);
+		} else {
+			$('body .menu-bubble-statistics').addClass('closed');
+			setTimeout(function() {
+				$('body .menu-second-bubble-2').fadeOut(500);
+			}, 150);
+			setTimeout(function() {
+				$('body .menu-second-bubble-1').fadeOut(500);
+			}, 250);
+		}
+	});
+
+	$('body').on('mouseenter', '.menu-second-bubble-wrapper', function() {
+		$(this).find('img').attr('src', $(this).find('img').attr('src').split('.')[0] + '-blue.png');
+	});
+
+	$('body').on('mouseleave', '.menu-second-bubble-wrapper', function() {
+		$(this).find('img').attr('src', $(this).find('img').attr('src').split('-')[0] + '-' + $(this).find('img').attr('src').split('-')[1] + '.png');
+	});
 
 	// END GENERAL JS //
 

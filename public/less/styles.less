@@ -77,10 +77,6 @@ a, a:hover, a:active, a:focus {
 	}
 }
 
-.notification-message {
-
-}
-
 .validation-message {
 	background-color: rgba(28, 231, 38, 0.21);
   	border: 2px solid rgba(17, 113, 26, 0.35);
@@ -95,7 +91,6 @@ a, a:hover, a:active, a:focus {
 		font-size: 15px;
 	}
 }
-
 
 .hidden-product-number {
 	display: none;
@@ -210,7 +205,7 @@ header {
 		}
 	}
 
-	.menu-bubble-wrapper {
+	.menu-bubble-wrapper, .menu-second-bubble-wrapper {
 		  width: 94px;
 		  height: 94px;
 		  border-radius: 57px;
@@ -220,7 +215,7 @@ header {
 		  background-color: #ffffff;
 		  right: -10px;
 
-		.menu-bubble {
+		.menu-bubble, .menu-second-bubble {
 			display: block;
 			width: 80px;
 			height: 80px;
@@ -258,6 +253,41 @@ header {
 			display: none;
 		}
 	}
+
+	.menu-second-bubble-wrapper {
+		width: 51px;
+		height: 51px;
+		border-radius: 25px;
+		right: -30px;
+
+		&.closed {
+			display: none;
+		}
+
+		&.menu-second-bubble-1 {
+			top: -20px;
+		}
+
+		&.menu-second-bubble-2 {
+			bottom: -20px;
+		}
+
+		.menu-second-bubble {
+			width: 45px;
+			height: 45px;
+			border-radius: 22.5px;
+			top: 1px;
+			left: 1px;
+
+			img {
+				max-height: 65%;
+				max-width: 65%;
+				vertical-align: initial !important;
+				position: relative;
+				top: -11px;
+			}
+		}
+	}
 }
 
 footer {
@@ -267,7 +297,7 @@ footer {
 	background-color: @grey;
 
 	img  {
-		height: 100%;
+		max-height: 100%;
 	}
 
 	a {
@@ -451,7 +481,6 @@ footer {
 
 	}
 }
-
 
 /* END PROFILE LESS */
 
@@ -734,7 +763,6 @@ footer {
 			}
 		}
 	}
-
 }
 /* END REGISTER LESS */
 
@@ -904,98 +932,37 @@ footer {
 /*END PRODUCTS LESS*/
 
 
+/* START STATISTICS LESS */
 
-/* START MEDIA QUERIES */
-
-@media screen and (max-width: 1071px) {
-	.homepage-main-wrapper .cool-products article {
+.statistics-main-wrapper {
+	.statistic {
 		width: 100%;
-	}
-}
+		display: inline-block;
+		border: 2px solid darken(@grey, 20%);
+		border-radius: 5px;
+		font-size: 18px;
+		margin-bottom: 10px;
 
-@media screen and (max-width: 960px) {
-	.homepage-main-wrapper .slider-wrapper {
-		height: 748px;
-
-		.homepage-slider {
-			width: 100%;
-			height: 496px;
-			float: none;
-			border-right: none;
+		&:hover {
+			background-color: @grey;
+			cursor: pointer;
 		}
 
-		.slider-products {
-			width: 100%;
-			height: 250px;
-			border-left: none;
-			border-top: 2px solid @darkBlue;
+		span {
+			width: 50%;
+			display: block;
+			padding: 10px 30px;
 
-			.slider-product-1, .slider-product-2 {
-				width: 50%;
-				height: 100%;
-				float: left;
-				border: none;
-				border-left: 1px solid @darkBlue;
-			}
-
-			.slider-product-1 {
-				border-right: 1px solid @darkBlue;
-				border-left: none;
+			&:last-of-type {
+				background-color: @grey;
+				text-align: right;
 			}
 		}
 	}
 }
 
-@media screen and (max-width: 821px) {
-	footer {
-		height: 140px;
-		text-align: center;
+/* END STATISTICS LESS */
 
-		.footer-pull-right {
-			float: none;
-		}
-	}
-}
-
-@media screen and (max-width: 768px) {
-	.main-wrapper {
-		width: 89%;
-	}
-}
-
-@media screen and (max-width: 522px) {
-
-	.homepage-main-wrapper .slider-wrapper .slider-products {
-		height: 242px;
-	}
-
-}
-
-@media screen and (max-width: 450px) {
-	.register-main-wrapper p {
-		margin-left: 10px;
-	}
-
-	footer {
-		a {
-			padding: 0 2px;
-		}
-	}
-}
-
-@media screen and (max-width: 1103px) {
-	.product-main-wrapper .comment {
-		.comm-right {
-			top: 4px;
-  			left: 43%;
-		}
-
-	}
-}
-
-
-
-/* END MEDIA QUERIES */
 
 /*START ABOUT LESS*/
 .aboutUs-main-wrapper {
@@ -1010,6 +977,8 @@ footer {
 }
 /*END ABOUT LESS*/
 
+
+
 /*START TERMS LESS*/
 .termsAndConditions-main-wrapper {
 	.termsAndConditions {
@@ -1022,6 +991,8 @@ footer {
 }
 /*END TERMS LESS*/
 
+
+
 /*START PRIVACY LESS*/
 .privacyPolicy-main-wrapper {
 	.privacyPolicy {
@@ -1033,6 +1004,7 @@ footer {
 	}
 }
 /*END PRIVACY LESS*/
+
 
 /*START PRODUCT LESS*/
 
@@ -1122,6 +1094,7 @@ footer {
 				.product-right-down-right {
 					width: 50%;
 					float: right;
+					position: relative;
 
 					.product-price {
 						text-align: right;
@@ -1129,13 +1102,14 @@ footer {
 					}
 
 					button {
-
-						color: @white;
+						color: #FFF;
 						background-color: @darkBlue;
 						font-size: 20px;
 						vertical-align: middle;
 						margin-top: 3px;
-						margin-left: 75px;
+						right: 0px;
+						position: absolute;
+						border: 1px solid darken(@darkBlue, 20%);
 
 						&:hover {
 						background-color: @lightGreen;
@@ -1147,80 +1121,78 @@ footer {
 		}
 	}
 
-
 	.add-comment {
 		width: 100%;
 		height: 50px;
 		margin-top: 20px;
 
 		.div-title-comm {
-		text-align: left;
+			text-align: left;
 		}
 
 		.div-form-comm {
-		float: left;
-		width: 100%;
-		margin-bottom: 20px;
-		
-		form {
+			float: left;
 			width: 100%;
-			position: relative;
-			margin: 0 auto;
-
-			input {
+			margin-bottom: 20px;
+			
+			form {
 				width: 100%;
-			}
+				position: relative;
+				margin: 0 auto;
 
-			.div1 {
-				width: 100%;
-				float: left;
-
-				label {
+				input {
 					width: 100%;
-					font-size: 20px;
-					color: @darkBlue;
 				}
 
-				textarea {
+				.div1 {
 					width: 100%;
-					color: @white;
-					color: @darkBlue;
-					border: 2px solid darken(@darkBlue, 20%);
-					border: 2px solid @darkBlue;
-					padding: 5px 5px;
-				}
-			}
+					float: left;
 
-			.div2 {
-				width: 100%;
-				float: left;
-				margin-bottom: 10px;
-
-				select {
-					height: 20%;
-					width: 15%;
-				}
-			}
-
-			.div3 {
-				width: 100%;
-				float: left;
-				margin-bottom: 10px;
-
-				button {
-					width: 15%;
-					color: @white;
-					background-color: @darkBlue;
-
-					&:hover {
+					label {
+						width: 100%;
+						font-size: 20px;
 						color: @darkBlue;
-						background-color: @lightGreen;
+					}
+
+					textarea {
+						width: 100%;
+						color: @white;
+						color: @darkBlue;
+						border: 2px solid darken(@darkBlue, 20%);
+						border: 2px solid @darkBlue;
+						padding: 5px 5px;
 					}
 				}
-			}		
+
+				.div2 {
+					width: 100%;
+					float: left;
+					margin-bottom: 10px;
+
+					button {
+						width: 15%;
+						color: @white;
+						background-color: @darkBlue;
+
+						&:hover {
+							color: @darkBlue;
+							background-color: @lightGreen;
+						}
+					}
+
+					.div3 {
+						width: 100%;
+						float: left;
+						margin-bottom: 10px;
+
+						button {
+							width: 15%;
+						}
+					}		
+				}
+			} 
 		}
-	} 
-}
+	}
 
 	.comment {
 		width: 100%;
@@ -1296,8 +1268,8 @@ footer {
 /*END PRODUCT LESS*/
 
 
-
 /*START CAMPAIGNS LESS*/
+
 .campaigns-main-wrapper {
 	.campaigns {
 		height: 100%;
@@ -1351,7 +1323,10 @@ footer {
 		}
 	}
 }
+
 /*END CAMPAIGNS LESS*/
+
+
 
 /*START CAMPAIGN LESS*/
 
@@ -1481,6 +1456,8 @@ footer {
 }
 
 /*END CAMPAIGN LESS*/
+
+
 
 /*START CAMPAIGNFORM LESS*/
 
@@ -1635,4 +1612,100 @@ footer {
 }
 
 /*END CAMPAIGNFORM LESS*/
+
+
+
+/* START MEDIA QUERIES */
+
+@media screen and (max-width: 1093px) {
+	
+}
+
+@media screen and (max-width: 1071px) {
+	.homepage-main-wrapper .cool-products article {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	.homepage-main-wrapper .slider-wrapper {
+		height: 748px;
+
+		.homepage-slider {
+			width: 100%;
+			height: 496px;
+			float: none;
+			border-right: none;
+		}
+
+		.slider-products {
+			width: 100%;
+			height: 250px;
+			border-left: none;
+			border-top: 2px solid @darkBlue;
+
+			.slider-product-1, .slider-product-2 {
+				width: 50%;
+				height: 100%;
+				float: left;
+				border: none;
+				border-left: 1px solid @darkBlue;
+			}
+
+			.slider-product-1 {
+				border-right: 1px solid @darkBlue;
+				border-left: none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 821px) {
+	footer {
+		height: 140px;
+		text-align: center;
+
+		.footer-pull-right {
+			float: none;
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.main-wrapper {
+		width: 89%;
+	}
+}
+
+@media screen and (max-width: 522px) {
+
+	.homepage-main-wrapper .slider-wrapper .slider-products {
+		height: 242px;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.register-main-wrapper p {
+		margin-left: 10px;
+	}
+
+	footer {
+		a {
+			padding: 0 2px;
+		}
+	}
+}
+
+@media screen and (max-width: 1103px) {
+	.product-main-wrapper .comment {
+		.comm-right {
+			top: 4px;
+  			left: 43%;
+		}
+	}
+}
+
+/* END MEDIA QUERIES */
+
+
 

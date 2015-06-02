@@ -40,9 +40,16 @@ angular.module('EDeC', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgc
 				templateUrl: 'views/comments.html',
 				controller: 'CommentsCtrl'
 			})
+			.when('/statistics', {
+				templateUrl: 'views/statisticsGeneral.html'
+			})
 			.when('/statistics/:pager', {
 				templateUrl: 'views/statistics.html',
 				controller: 'StatisticsCtrl'
+			})
+			.when('/statistic/:idProduct', {
+				templateUrl: 'views/statistic.html',
+				controller: 'StatisticCtrl'
 			})
 			.when('/profile', {
 				templateUrl: 'views/profile.html',

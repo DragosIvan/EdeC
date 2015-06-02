@@ -73,7 +73,7 @@ function getTodayDate() {
 
 //     var i;
 
-//     for (i = 0; i < 569; i++) {
+//     for (i = 0; i < 500; i++) {
 //       var randomUser = (Math.floor((Math.random() * rows.length) + 1)) - 1;
 //       // if (randomUser >= rows.length) randomUser = rows.length - 1;
 //       // console.log(randomUser);
@@ -102,7 +102,7 @@ function getTodayDate() {
 //         rating     : tempRating
 //       }
 
-//       connection.query('UPDATE product SET rating = (totalRating+1)/(totalVoters+1), totalRating = totalRating+?, totalVoters = totalVoters+1 WHERE id_product = ?', [comment.rating, comment.id_product], function(err, rows, fields) {
+//       connection.query('UPDATE product SET rating = (totalRating+1)/(totalVoters+1), totalRating = totalRating+?, totalVoters = totalVoters+1, total_' + comment.rating + ' = ' + comment.rating + ' WHERE id_product = ?', [comment.rating, comment.id_product], function(err, rows, fields) {
 //         if (err) throw err;
 //       });
 
@@ -163,10 +163,15 @@ module.exports = function(app) {
         if (err) throw err;
         response.productData = rows;
         connection.query(queryStringComments, [commentLimit[req.params.pager-1]], function(err, rows, fields) {
-        if (err) throw err;
-         response.productComments = rows;
-         if (req.params.pager >= commentLimit.length) commentLimit.push(rows[rows.length-1].id_comm);
-         res.json(response);
+          if (err) throw err;
+          if (rows.length <= 0) {
+            console.log('here');
+            res.redirect('/product/' + req.params.idProduct + '/comments/' + req.params.pager-1);
+          } else {
+            response.productComments = rows;
+            if (req.params.pager >= commentLimit.length) commentLimit.push(rows[rows.length-1].id_comm);
+            res.json(response);
+          }
         });   
     });        
   });
@@ -224,7 +229,6 @@ module.exports = function(app) {
 
               connection.query (queryStringGetRating,[req.params.idProduct] , function(err, rows, fields) {
                 if (err) throw err;
-
                 var rating = parseInt(rows[0].tr ) + parseInt(temp.rating);
                 var increment = rows[0].tv + 1;
 
@@ -236,7 +240,6 @@ module.exports = function(app) {
           }); 
       }
     });
-          
   });
 
 
@@ -317,8 +320,6 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
     }       
   });
   
-
-
   app.post('/api/register', function(req, res) {
     var ok=1;
     var queryStringUsername = 'SELECT Count(username) AS userNumber FROM users WHERE username = ? ';
@@ -365,7 +366,7 @@ app.get('/api/friendProfile/:idUser', function(req, res) {
     }
   });
 
-app.get('/api/campaigns/:pager', function(req, res) {
+  app.get('/api/campaigns/:pager', function(req, res) {
     var limitUpperProduct = req.params.pager;
     var limitLowerProduct = req.params.pager - 1;
     var queryStringUsername = 'SELECT c.id_campaign, c.name, c.id_product, c.nr_people, p.image FROM product p, campaign c WHERE c.id_product= p.id_product and  c.id_campaign BETWEEN 15*?+1 AND 15*?';
@@ -376,7 +377,7 @@ app.get('/api/campaigns/:pager', function(req, res) {
     });         
   });
 
-app.get('/api/campaign/:idProduct', function(req, res) {
+  app.get('/api/campaign/:idProduct', function(req, res) {
     // console.log(body.req.ratingForm);
     console.log(req.session.username);
     var id;
@@ -385,10 +386,65 @@ app.get('/api/campaign/:idProduct', function(req, res) {
       if (err) throw err;
       res.json(rows); 
       
-    });
-          
+    });     
   });
 
+  app.get('/api/statistics', function(req, res) {
+    var queryStringProductStatistics = 'SELECT totalSales, price, name FROM product';
+    var queryStringStarStatistics = 'SELECT ' + 
+    '(SELECT count(total_1) FROM product WHERE total_1 != 0) AS total1,' +
+    '(SELECT count(total_2) FROM product WHERE total_2 != 0) AS total2,' +
+    '(SELECT count(total_3) FROM product WHERE total_3 != 0) AS total3,' +
+    '(SELECT count(total_4) FROM product WHERE total_4 != 0) AS total4,' +
+    '(SELECT count(total_5) FROM product WHERE total_5 != 0) AS total5';
+    var response = {
+      products: '',
+      stars: ''
+    }
+
+    connection.query(queryStringProductStatistics, function(err, rows) {
+      if (err) throw err;
+      else {
+        response.products = rows;
+        connection.query(queryStringStarStatistics, function(err, rows) {
+          if (err) throw err;
+          else {
+            console.log(rows);
+            response.stars = rows;
+            res.json(response);
+          }
+        });
+      }
+    })
+  });
+
+  app.get('/api/statistics/:pager', function(req, res) {
+    var limitUpperProduct = req.params.pager;
+    var limitLowerProduct = req.params.pager - 1;
+    var queryStringGetStatistics = 'SELECT name, id_product, totalSales FROM product WHERE id_product BETWEEN 12*?+1 AND 12*?';
+    connection.query (queryStringGetStatistics, [limitLowerProduct, limitUpperProduct], function(err, rows, fields) {
+       if (err) throw err;
+       res.json(rows);
+    }); 
+  });
+
+  app.get('/api/statistic/:idProduct', function(req, res) {
+    var response = {
+      product: '',
+      comments: ''
+    }
+    var queryStringProduct = 'SELECT * FROM product WHERE id_product = ?';
+    var queryStringComments = 'SELECT u.username, c.rating, c.id_comm FROM comments c JOIN users u ON c.id_user=u.id_users WHERE c.id_product=' + req.params.idProduct +  ' ORDER BY c.id_comm ASC';
+    connection.query(queryStringProduct, [req.params.idProduct], function(err, rows, fields) {
+       if (err) throw err;
+       response.product = rows;
+       connection.query(queryStringComments, function(err, rows) {
+        if (err) throw err;
+        response.comments = rows;
+        res.json(response);
+       })
+    }); 
+  });
 
 // get - iau date doar ca sa le afisez
 app.get('/api/campaign/create/:idProduct', function(req, res) {

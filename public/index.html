@@ -16,6 +16,9 @@
 
 		<script src="libs/jquery/jquery-2.1.1.js" type='text/javascript'></script>
 		<script src="libs/jqueryui/jquery-ui-1.9.2.custom.min.js" type='text/javascript'></script>
+		<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script src="http://www.amcharts.com/lib/3/xy.js"></script>
+		<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
 	</head>
 
 	<body>
@@ -49,7 +52,15 @@
 			</section>
 			<section class='menu-bubble-wrapper menu-bubble-1 closed'><a href='/products/1' class='menu-bubble'>Products</a></section>
 			<section class='menu-bubble-wrapper menu-bubble-2 closed'><a href='/campaings' class='menu-bubble'>Campaign</a></section>
-			<section class='menu-bubble-wrapper menu-bubble-3 closed'><a href='/statistics' class='menu-bubble'>Statistics</a></section>
+			<section class='menu-bubble-wrapper menu-bubble-3 closed'>
+				<a href='' class='menu-bubble menu-bubble-statistics closed'>Statistics</a>
+				<section class='menu-second-bubble-wrapper menu-second-bubble-1 closed'>
+					<a href='/statistics' class='menu-second-bubble'><img src='images/chart-all.png' alt='Chart all' /></a>
+				</section>
+				<section class='menu-second-bubble-wrapper menu-second-bubble-2 closed'>
+					<a href='/statistics/1' class='menu-second-bubble'><img src='images/chart-products.png' alt='Chart products' /></a>
+				</section>
+			</section>
 		</aside>
 
 		<div ng-view></div>
@@ -97,11 +108,10 @@
 		<script src="js/controllers/comments.js"></script>
 		<script src="js/controllers/campaigns.js"></script>
 		<script src="js/controllers/campaign.js"></script>
-<<<<<<< Updated upstream
 		<script src="js/controllers/friendProfile.js"></script>
-=======
 		<script src="js/controllers/campaignForm.js"></script>
->>>>>>> Stashed changes
+		<script src="js/controllers/statistics.js"></script>
+		<script src="js/controllers/statistic.js"></script>
 		<!-- Controllers END -->
 
 		<!-- Services include section -->
@@ -114,11 +124,10 @@
 		<script src="js/services/comments.js"></script>
 		<script src="js/services/campaigns.js"></script>
 		<script src="js/services/campaign.js"></script>
-<<<<<<< Updated upstream
 		<script src="js/services/friendProfile.js"></script>
-=======
 		<script src="js/services/campaignForm.js"></script>
->>>>>>> Stashed changes
+		<script src="js/services/statistics.js"></script>
+		<script src="js/services/statistic.js"></script>
 		<!-- Services END -->
 
 	</body>
